@@ -1,0 +1,53 @@
+<aside
+    class="fixed top-0 left-0 w-64 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0">
+    <div class="h-full overflow-y-auto bg-sidebar py-4 px-3 space-y-2">
+
+        @for (item of menu; track item) {
+            <p class="uppercase text-slate-100 font-bold text-xs">{{ item.name }}</p>
+            <ul class="text-sm">
+                @for (value of item.values; track value) {
+                    <!-- Se debe agregar el modulo de permisos *appPermissionModule="{module: value.module, action: value.action}"-->
+                    <li>
+                        <a [routerLink]="[value.path]" [routerLinkActive]="['bg-[#7d6b4b]']"
+                           class="flex items-center p-2 text-white rounded-lg group">
+                            <i class="pi {{value.icon}}"></i>
+                            <span class="ms-3">{{ value.title }}</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+
+        <!--@for (item of menu; track item; let firstItem = $first, last = $last) {
+            <ul class="text-sm">
+                <li>
+                    <div
+                        pRipple
+                        pStyleClass="@next"
+                        enterFromClass="hidden"
+                        enterActiveClass="animate-slidedown"
+                        leaveToClass="hidden"
+                        leaveActiveClass="animate-slideup"
+                        class="p-2 flex items-center justify-between text-surface-600 dark:text-surface-200 cursor-pointer p-ripple"
+                        (click)="toggle(item.name)"
+                    >
+                        <span class="font-medium uppercase">{{ item.name  }}</span>
+                        <i class="pi" [ngClass]="activeItem == item.name ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+                    </div>
+
+                    <ul class="list-none py-0 pr-0 m-0 hidden overflow-y-hidden transition-all ease-in-out" >
+                        @for (value of item.values; track value) {
+                            <li>
+                                <a [routerLink]="[value.path]" [routerLinkActive]="['bg-[#7d6b4b]']"
+                                   class="flex items-center py-2 pl-4  space-x-2 cursor-pointer rounded-border text-white duration-150 transition-colors p-ripple">
+                                    <i class="pi {{value.icon}}"></i>
+                                    <span class="font-medium">{{ value.title }}</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        }-->
+    </div>
+</aside>

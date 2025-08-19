@@ -1,0 +1,53 @@
+<div class="relative w-full h-full overflow-hidden">
+    <!-- Fondo con imagen -->
+    <div class="absolute inset-0 bg-[#99825D] bg-cover bg-no-repeat bg-center"></div>
+
+    <!-- Overlay oscuro -->
+    <!--<div class="absolute inset-0 bg-black/60"></div>-->
+
+    <!-- Contenido encima -->
+    <div class="relative z-10 flex flex-col justify-center items-center w-full h-full">
+        <div class="w-1/2 p-3 rounded-3xl bg-white shadow-lg">
+            <div class="grid grid-cols-2">
+                <div class="p-16 space-y-5">
+
+                    <div>
+                        <h3 class="text-3xl font-bold primary-color-text">Bienvenido</h3>
+                        <p class="font-normal text-stone-600">Ingresa tus credenciales</p>
+                    </div>
+
+                    <form [formGroup]="loginForm" class="space-y-3" (keydown.enter)="onLogin()">
+                        <div>
+                            <label>Email</label>
+                            <input type="text" pInputText formControlName="email"/>
+                        </div>
+                        <div>
+                            <label>Password</label>
+                            <p-password [feedback]="false" [toggleMask]="true" formControlName="password"/>
+                        </div>
+                        <p-button
+                            label="Login"
+                            size="small"
+                            icon="pi pi-sign-in"
+                            class="p-login-button"
+                            (click)="onLogin()"
+                            [loading]="isLoading"
+                        />
+                    </form>
+                </div>
+                <div class="relative w-full h-full rounded-2xl overflow-hidden">
+                    <!-- Fondo con imagen -->
+                    <div class="absolute inset-0 bg-[#D6D1CA] bg-cover bg-no-repeat bg-center"></div>
+
+                    <!-- Contenido encima -->
+                    <div class="relative z-10 flex flex-col justify-center items-center w-full h-full">
+                        <img src="isotipo-playa-del-carmen.png" class="mx-auto w-1/2">
+                        <!--<span class="primary-color-text">Project Name (if required)</span>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-white mt-3">&#64; {{ currentYear }} Company. All rights reserved.</p>
+    </div>
+</div>
