@@ -8,6 +8,8 @@ import {Observable} from "rxjs";
 })
 export class AlertsService {
 
+    private confirmationService = inject(ConfirmationService);
+
     successAlert(message: string) {
         const confirmation = Swal.fire({
             title: 'Successful process!',
@@ -50,26 +52,33 @@ export class AlertsService {
         });
     }
 
-    confirmRequest(message: string) {
-        const confirmation = Swal.fire({
-            title: message,
-            text: "This action cannot be reversed",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Continue',
-            cancelButtonText: 'Cancel',
-            allowOutsideClick: false,
-            customClass: {
-                popup: 'rounded-xl',
-                title: 'text-xl px-14',
-                confirmButton: 'text-white bg-green-600 rounded-lg px-3 py-2 text-center mr-2',
-                cancelButton: 'text-white bg-red-500 rounded-lg px-3 py-2 text-center'
-            },
-            buttonsStyling: false,
-            heightAuto: false
-        });
-
-        return confirmation;
+    confirmRequest(message: string, event?: Event): Observable<any> {
+        return new Observable<boolean>(observer => {
+            this.confirmationService.confirm({
+                target: event?.target as EventTarget,
+                message,
+                header: 'Confirmación',
+                icon: 'pi pi-question-circle',
+                rejectLabel: 'Cancel',
+                rejectButtonProps: {
+                    label: 'Cancel',
+                    severity: 'secondary',
+                    outlined: true,
+                },
+                acceptButtonProps: {
+                    label: 'Continue',
+                    severity: 'pimary',
+                },
+                accept: () => {
+                    observer.next(true);
+                    observer.complete();
+                },
+                reject: () => {
+                    observer.error(false);
+                    observer.complete();
+                },
+            });
+        })
     }
 
     confirmDelete(message: string) {

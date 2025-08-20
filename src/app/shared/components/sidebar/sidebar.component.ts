@@ -17,7 +17,9 @@ import {NgClass} from '@angular/common';
         RippleModule,
         RouterLink,
         RouterLinkActive,
-        DrawerModule, ButtonModule, Ripple, AvatarModule, StyleClass, NgClass
+        DrawerModule,
+        ButtonModule,
+        AvatarModule
     ],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss'

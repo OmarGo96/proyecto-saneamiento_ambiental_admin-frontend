@@ -13,6 +13,7 @@ import {CompaniesStatus} from '../../constants/companies-status';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {UnlinkCompaniesDialogComponent} from '../../dialogs/unlink-companies-dialog/unlink-companies-dialog.component';
 import {CompaniesGeolocationComponent} from '../../dialogs/companies-geolocation/companies-geolocation.component';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
     selector: 'app-companies-with-representative',
@@ -25,7 +26,7 @@ import {CompaniesGeolocationComponent} from '../../dialogs/companies-geolocation
         ButtonModule,
         TableSkeletonComponent
     ],
-    providers: [DialogService],
+    providers: [DialogService, AlertsService, ConfirmationService],
     templateUrl: './companies-with-representative.component.html',
     styleUrl: './companies-with-representative.component.scss'
 })
@@ -69,7 +70,7 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
     public openUnlinkCompaniesDialog(){
         this.dialogRef = this.dialogService.open(UnlinkCompaniesDialogComponent, {
             header: 'Desvincular empresa',
-            width: '20vw',
+            width: '30vw',
             closeOnEscape: false,
             modal: true,
             closable: true,
@@ -90,7 +91,7 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
     public openGeolocationDialog(){
         this.dialogRef = this.dialogService.open(CompaniesGeolocationComponent, {
             header: 'Geolocalización de la empresa',
-            width: '50vw',
+            width: '40vw',
             closeOnEscape: false,
             modal: true,
             closable: true,

@@ -3,7 +3,7 @@ import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
-import {UsersService} from '../../services/users.service';
+import {UsersService} from '../../../../core/services/users.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Router} from '@angular/router';

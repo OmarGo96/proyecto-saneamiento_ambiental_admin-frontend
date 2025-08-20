@@ -130,12 +130,22 @@ export const MenuItems = [
         role: []
     },
     {
+        path: 'reportes/recaudacion',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Recaudación',
+        icon: 'pi-chart-bar',
+        class: '',
+        role: []
+    },
+    {
         path: 'reportes/ano-mes',
         group: 'Reportes',
         module: 'reports',
         action: 'show',
         title: 'Por año/mes',
-        icon: 'pi-chart-bar',
+        icon: 'pi-chart-pie',
         class: '',
         role: []
     },
