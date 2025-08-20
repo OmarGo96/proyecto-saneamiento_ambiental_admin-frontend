@@ -23,116 +23,36 @@
         </div>
 
 
-
         <div class="col-span-2 space-y-6">
-            <div class="grid grid-cols-2 gap-6">
-                <div class="flex flex-col space-y-5">
-                    <!-- Card -->
-                    <div class="flex flex-col bg-white border border-gray-200  border-l-4 border-l-[#721538] shadow-2xs rounded-xl">
-                        <div class="p-4 md:p-5">
-                            <div class="flex items-center gap-x-2">
-                                <p class="text-xs uppercase text-gray-500">
-                                    Contribuyentes
-                                </p>
-
-                            </div>
-
-                            <div class="mt-1 flex items-center gap-x-2">
-                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-                                    254
-                                </h3>
-                                <span class="flex items-center gap-x-1 text-green-600">
-              <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-              <span class="inline-block text-sm">
-                1.7%
-              </span>
-            </span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Card -->
-
-                    <!-- Card -->
-                    <div class="flex flex-col bg-white border border-gray-200 border-l-4 border-l-[#721538] shadow-2xs rounded-xl">
-                        <div class="p-4 md:p-5">
-                            <div class="flex items-center gap-x-2">
-                                <p class="text-xs uppercase text-gray-500">
-                                    Empresas
-                                </p>
-                            </div>
-
-                            <div class="mt-1 flex items-center gap-x-2">
-                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-                                    654
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Card -->
-
-                </div>
-
-                <div class="flex flex-col space-y-5">
-
-                    <!-- Card -->
-                    <div class="flex flex-col bg-white border border-gray-200 border-l-4 border-l-[#721538] shadow-2xs rounded-xl">
-                        <div class="p-4 md:p-5">
-                            <div class="flex items-center gap-x-2">
-                                <p class="text-xs uppercase text-gray-500">
-                                    Declaración anual
-                                </p>
-                            </div>
-
-                            <div class="mt-1 flex items-center gap-x-2">
-                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-                                    365
-                                </h3>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Card -->
-
-                    <!-- Card -->
-                    <div class="flex flex-col bg-white border border-gray-200 border-l-4 border-l-[#721538] shadow-2xs rounded-xl">
-                        <div class="p-4 md:p-5">
-                            <div class="flex items-center gap-x-2">
-                                <p class="text-xs uppercase text-gray-500">
-                                    Total declaraciones
-                                </p>
-                            </div>
-
-                            <div class="mt-1 flex items-center gap-x-2">
-                                <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-                                    7,459
-                                </h3>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Card -->
-                </div>
-            </div>
-            <div class="p-5 border rounded-xl text-sm">
-                <p-table [value]="declarationsStatus" [tableStyle]="{ 'min-width': '50rem' }" size="small">
-                    <ng-template #header>
-                        <tr>
-                            <th>Status</th>
-                            <th>Total declaraciones</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template #body let-declaration>
-                        <tr>
-                            <td>{{ declaration.name }}</td>
-                            <td>
-                                <span class="{{ declaration.styles }} p-1 rounded-md">{{ declaration.count }}</span>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
+            <app-statements-summary-cards></app-statements-summary-cards>
+            <app-statements-summary-by-status></app-statements-summary-by-status>
         </div>
 
+    </div>
+
+    <div class="p-5 border rounded-xl text-sm mt-6">
+        <div>
+            <h3 class="text-xl font-semibold ">Solicitudes de registros</h3>
+            <p class="text-sm text-gray-500">Empresas con solicitud pendiente de registro</p>
+        </div>
+        <p-table [value]="registrationRequest" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template #header>
+                <tr>
+                    <th>Licencia de Funcionamiento</th>
+                    <th>Establecimiento</th>
+                    <th>Nombre</th>
+                    <th>Correo electrónico</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-request>
+                <tr>
+                    <td>{{ request.codigo }}</td>
+                    <td>{{ request.nombre_establecimiento }}</td>
+                    <td>{{ request.nombre_contacto }}</td>
+                    <td>{{ request.email }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>
 
