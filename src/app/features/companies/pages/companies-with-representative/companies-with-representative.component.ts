@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {CompaniesStatus} from '../../constants/companies-status';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {UnlinkCompaniesDialogComponent} from '../../dialogs/unlink-companies-dialog/unlink-companies-dialog.component';
+import {CompaniesGeolocationComponent} from '../../dialogs/companies-geolocation/companies-geolocation.component';
 
 @Component({
     selector: 'app-companies-with-representative',
@@ -67,8 +68,29 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
 
     public openUnlinkCompaniesDialog(){
         this.dialogRef = this.dialogService.open(UnlinkCompaniesDialogComponent, {
-            header: 'Create new user',
+            header: 'Desvincular empresa',
             width: '20vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getCompaniesWithRepresentative();
+            }
+        });
+    }
+
+    public openGeolocationDialog(){
+        this.dialogRef = this.dialogService.open(CompaniesGeolocationComponent, {
+            header: 'Geolocalización de la empresa',
+            width: '50vw',
             closeOnEscape: false,
             modal: true,
             closable: true,
