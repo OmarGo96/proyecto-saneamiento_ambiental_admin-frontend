@@ -11,6 +11,7 @@ import {CompaniesStatus} from '../../constants/companies-status';
 import {CompaniesService} from '../../services/companies.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {Router} from '@angular/router';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
     selector: 'app-companies-list',
@@ -23,6 +24,7 @@ import {Router} from '@angular/router';
         ButtonModule,
         TableSkeletonComponent
     ],
+    providers: [AlertsService, ConfirmationService],
     templateUrl: './companies-list.component.html',
     styleUrl: './companies-list.component.scss'
 })

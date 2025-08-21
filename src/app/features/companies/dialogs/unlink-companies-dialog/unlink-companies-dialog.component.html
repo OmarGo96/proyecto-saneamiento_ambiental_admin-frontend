@@ -1,47 +1,52 @@
-<form [formGroup]="unlinkForm" class="space-y-3">
-    <div>
-        <label>Tipo de desvinculación</label>
-        <p-select
-            (onChange)="selectUnlinkType($event)"
-            [options]="unlinkTypes"
-            optionLabel="name"
-            optionValue="value"
-            placeholder="Selecciona una opción"
-            appendTo="body"
-            class="w-full"
-        />
-    </div>
-    @if (unlinkType === 'new_user') {
+@if (unlinkForm) {
+    <form [formGroup]="unlinkForm" class="space-y-3">
         <div>
-            <label>Nombre del contribuyente</label>
-            <input type="text" formControlName="nombre" pInputText/>
-        </div>
-        <div>
-            <label>Teléfono del contribuyente</label>
-            <input type="number" formControlName="telefono" pInputText/>
-        </div>
-        <div>
-            <label>Correo del contribuyente</label>
-            <input type="email" formControlName="email" pInputText/>
-        </div>
-    } @else if (unlinkType === 'user_in_system') {
-        <div>
-            <label>Usuarios del sistema</label>
+            <label>Tipo de desvinculación</label>
             <p-select
-                [options]="users"
-                optionLabel="nombre"
-                optionValue="id"
-                placeholder="Selecciona un usuario"
+                (onChange)="selectUnlinkType($event)"
+                [options]="unlinkTypes"
+                optionLabel="name"
+                optionValue="value"
+                placeholder="Selecciona una opción"
                 appendTo="body"
                 class="w-full"
             />
         </div>
-    }
+        @if (unlinkType === 'new_user') {
+            <div>
+                <label>Nombre del contribuyente</label>
+                <input type="text" formControlName="nombre" pInputText/>
+            </div>
+            <div>
+                <label>Teléfono del contribuyente</label>
+                <input type="number" formControlName="telefono" pInputText/>
+            </div>
+            <div>
+                <label>Correo del contribuyente</label>
+                <input type="email" formControlName="email" pInputText/>
+            </div>
+        } @else if (unlinkType === 'user_in_system') {
+            <div>
+                <label>Usuarios del sistema</label>
+                <p-select
+                    [options]="users"
+                    optionLabel="nombre"
+                    optionValue="id"
+                    placeholder="Selecciona un usuario"
+                    appendTo="body"
+                    class="w-full"
+                />
+            </div>
+        }
 
-    <div>
-        <p-button label="Desvincular" (click)="unlinkCompany()"/>
-    </div>
-
-</form>
-
+        <div>
+            <p-button
+                label="{{ isLoading ? 'Desvinculando' : 'Desvincular' }}"
+                [loading]="isLoading"
+                [disabled]="isLoading"
+                (click)="confirmUnlinkRequest()"
+            />
+        </div>
+    </form>
+}
 <p-confirm-dialog/>

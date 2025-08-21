@@ -14,6 +14,8 @@ import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {UnlinkCompaniesDialogComponent} from '../../dialogs/unlink-companies-dialog/unlink-companies-dialog.component';
 import {CompaniesGeolocationComponent} from '../../dialogs/companies-geolocation/companies-geolocation.component';
 import {ConfirmationService} from 'primeng/api';
+import {ConfirmDialog} from 'primeng/confirmdialog';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'app-companies-with-representative',
@@ -24,7 +26,8 @@ import {ConfirmationService} from 'primeng/api';
         TableModule,
         PopoverModule,
         ButtonModule,
-        TableSkeletonComponent
+        TableSkeletonComponent,
+        ConfirmDialog
     ],
     providers: [DialogService, AlertsService, ConfirmationService],
     templateUrl: './companies-with-representative.component.html',
@@ -37,10 +40,12 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private router = inject(Router);
 
     public companies: any;
     public isLoading: boolean = false;
+    public isDisabling: boolean = false;
 
     public companiesStatus = CompaniesStatus;
 
@@ -67,27 +72,6 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
         this.router.navigate(['/empresas/detalle']);
     }
 
-    public openUnlinkCompaniesDialog(){
-        this.dialogRef = this.dialogService.open(UnlinkCompaniesDialogComponent, {
-            header: 'Desvincular empresa',
-            width: '30vw',
-            closeOnEscape: false,
-            modal: true,
-            closable: true,
-            baseZIndex: 1,
-            breakpoints: {
-                '960px': '75vw',
-                '640px': '90vw'
-            },
-        });
-
-        this.dialogRef.onClose.subscribe((result) => {
-            if (result) {
-                this.getCompaniesWithRepresentative();
-            }
-        });
-    }
-
     public openGeolocationDialog(){
         this.dialogRef = this.dialogService.open(CompaniesGeolocationComponent, {
             header: 'Geolocalización de la empresa',
@@ -107,6 +91,76 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
                 this.getCompaniesWithRepresentative();
             }
         });
+    }
+
+    public openUnlinkCompaniesDialog(company: any){
+        this.dialogRef = this.dialogService.open(UnlinkCompaniesDialogComponent, {
+            header: 'Desvincular empresa',
+            width: '30vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                company
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getCompaniesWithRepresentative();
+            }
+        });
+    }
+
+    public disableCompany(company: any){
+        this.alertsService.confirmRequest('¿Está completamente seguro de desactivar la empresa?')
+            .subscribe({
+                next: res => {
+                    this.spinner.show();
+                    this.companiesService.disableCompany(company.id).subscribe({
+                        next: res => {
+                            this.spinner.hide();
+                            this.alertsService.successAlert(res.message).then(res => {
+                                if (res.isConfirmed) {
+                                    this.getCompaniesWithRepresentative();
+                                }
+                            })
+                        },
+                        error: err => {
+                            this.spinner.hide();
+                            this.alertsService.errorAlert(err.error.errors);
+                        }
+                    })
+                }
+            });
+    }
+
+    public enableCompany(company: any){
+        this.alertsService.confirmRequest('¿Está completamente seguro de activar la empresa?')
+            .subscribe({
+                next: res => {
+                    this.spinner.show();
+                    this.companiesService.enableCompany(company.id).subscribe({
+                        next: res => {
+                            this.spinner.hide();
+                            this.alertsService.successAlert(res.message).then(res => {
+                                if (res.isConfirmed) {
+                                    this.getCompaniesWithRepresentative();
+                                }
+                            })
+                        },
+                        error: err => {
+                            this.spinner.hide();
+                            this.alertsService.errorAlert(err.error.errors);
+                        }
+                    })
+                }
+            });
     }
 
     applyFilter(event: Event) {

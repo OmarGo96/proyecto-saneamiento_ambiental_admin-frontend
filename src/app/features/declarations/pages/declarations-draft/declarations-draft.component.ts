@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {DeclarationsService} from '../../services/declarations.service';
 import {CurrencyPipe} from '@angular/common';
 import {DeclarationsStatus} from '../../constants/declarations-status';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
     selector: 'app-declarations-draft',
@@ -25,7 +26,7 @@ import {DeclarationsStatus} from '../../constants/declarations-status';
         TableSkeletonComponent,
         CurrencyPipe
     ],
-    providers: [DialogService],
+    providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './declarations-draft.component.html',
     styleUrl: './declarations-draft.component.scss'
 })
@@ -47,7 +48,7 @@ export class DeclarationsDraftComponent implements OnInit {
         this.getDraftDeclarations()
     }
 
-    public getDraftDeclarations(){
+    public getDraftDeclarations() {
         this.isLoading = true;
         this.declarationsService.getDeclarationsByStatus('borrador').subscribe({
             next: res => {

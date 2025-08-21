@@ -75,24 +75,27 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a (click)="openUnlinkCompaniesDialog()"
+                                            <a (click)="openUnlinkCompaniesDialog(company)"
                                                 class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                 <i class="pi pi-lock-open"></i>
                                                 <span>Desvincular</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
-                                                <i class="pi pi-times"></i>
-                                                <span>Desactivar</span>
-                                            </a>
-                                        </li>
-                                       <!-- <li>
-                                            <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
-                                                <i class="pi pi-external-link"></i>
-                                                <span>Activar</span>
-                                            </a>
-                                        </li>-->
+                                        @if (company.estatus === 1) {
+                                            <li>
+                                                <a (click)="disableCompany(company)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                    <i class="pi pi-times"></i>
+                                                    <span>Desactivar</span>
+                                                </a>
+                                            </li>
+                                        } @else {
+                                            <li>
+                                                <a  (click)="enableCompany(company)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                    <i class="pi pi-check-circle"></i>
+                                                    <span>Activar</span>
+                                                </a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </p-popover>
@@ -116,3 +119,4 @@
         }
     </div>
 </div>
+<p-confirm-dialog/>

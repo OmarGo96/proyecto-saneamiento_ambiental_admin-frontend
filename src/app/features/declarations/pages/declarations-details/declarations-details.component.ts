@@ -8,6 +8,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {SelectModule} from 'primeng/select';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {CurrencyPipe, Location, PercentPipe} from '@angular/common';
+import {ConfirmationService} from 'primeng/api';
+import {MessageModule} from 'primeng/message';
 
 @Component({
     selector: 'app-declarations-details',
@@ -17,8 +19,10 @@ import {CurrencyPipe, Location, PercentPipe} from '@angular/common';
         ReactiveFormsModule,
         InputTextModule,
         SelectModule,
-        CurrencyPipe
+        CurrencyPipe,
+        MessageModule
     ],
+    providers: [AlertsService, ConfirmationService],
     templateUrl: './declarations-details.component.html',
     styleUrl: './declarations-details.component.scss'
 })

@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {DeclarationsService} from '../../services/declarations.service';
 import {CurrencyPipe} from '@angular/common';
 import {DeclarationsStatus} from '../../constants/declarations-status';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
     selector: 'app-declarations-payment-receipt',
@@ -25,7 +26,7 @@ import {DeclarationsStatus} from '../../constants/declarations-status';
         TableSkeletonComponent,
         CurrencyPipe
     ],
-    providers: [DialogService],
+    providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './declarations-payment-receipt.component.html',
     styleUrl: './declarations-payment-receipt.component.scss'
 })

@@ -10,20 +10,22 @@ import {TableModule} from 'primeng/table';
 import {PopoverModule} from 'primeng/popover';
 import {ButtonModule} from 'primeng/button';
 import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
-  selector: 'app-companies-without-representative',
-  imports: [
-      IconFieldModule,
-      InputIconModule,
-      InputTextModule,
-      TableModule,
-      PopoverModule,
-      ButtonModule,
-      TableSkeletonComponent
-  ],
-  templateUrl: './companies-without-representative.component.html',
-  styleUrl: './companies-without-representative.component.scss'
+    selector: 'app-companies-without-representative',
+    imports: [
+        IconFieldModule,
+        InputIconModule,
+        InputTextModule,
+        TableModule,
+        PopoverModule,
+        ButtonModule,
+        TableSkeletonComponent
+    ],
+    providers: [AlertsService, ConfirmationService],
+    templateUrl: './companies-without-representative.component.html',
+    styleUrl: './companies-without-representative.component.scss'
 })
 export class CompaniesWithoutRepresentativeComponent implements OnInit {
     @ViewChild('table') table: any | undefined;
@@ -41,7 +43,7 @@ export class CompaniesWithoutRepresentativeComponent implements OnInit {
         this.getCompaniesWithoutRepresentative()
     }
 
-    public getCompaniesWithoutRepresentative(){
+    public getCompaniesWithoutRepresentative() {
         this.isLoading = true;
         this.companiesService.getCompaniesByStatus('free').subscribe({
             next: res => {

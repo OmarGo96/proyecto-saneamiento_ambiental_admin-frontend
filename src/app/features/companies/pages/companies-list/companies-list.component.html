@@ -26,9 +26,10 @@
                 <ng-template pTemplate="header">
                     <tr class="font-medium uppercase">
                         <th>RFC</th>
-                        <th>Licencia de funcionamiento</th>
+                        <th>Lic. de func.</th>
                         <th>Nombre del establecimiento</th>
                         <th>Habitaciones</th>
+                        <th>Habitaciones API</th>
                         <th>Propietario</th>
                         <th>Estatus</th>
                         <th>Acciones</th>
@@ -40,6 +41,7 @@
                         <td >{{ company.licencia_funcionamiento_id }}</td>
                         <td>{{ company.nombre_establecimiento }}</td>
                         <td>{{ company.habitaciones }}</td>
+                        <td>1</td>
                         <td>{{ company.propietario_nombre }}</td>
                         <td>
                             @for (status of companiesStatus; track status){

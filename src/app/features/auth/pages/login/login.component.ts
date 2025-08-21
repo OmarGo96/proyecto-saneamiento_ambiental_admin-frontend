@@ -7,17 +7,19 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PasswordModule} from 'primeng/password';
 import {ButtonModule} from 'primeng/button';
 import moment from 'moment';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
-  selector: 'app-login',
+    selector: 'app-login',
     imports: [
         ReactiveFormsModule,
         InputTextModule,
         PasswordModule,
         ButtonModule
     ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    providers: [AlertsService, ConfirmationService],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
     public loginForm: any;

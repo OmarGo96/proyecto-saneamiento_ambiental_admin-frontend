@@ -9,6 +9,7 @@ import {AlertsService} from '../../../../core/services/alerts.service';
 import {ButtonModule} from 'primeng/button';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 
 @Component({
     selector: 'app-unlink-companies-dialog',
@@ -31,9 +32,13 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
     private usersService = inject(UsersService);
     private alertsService = inject(AlertsService);
     private formBuilder = inject(FormBuilder);
+    private dialogRef = inject(DynamicDialogRef);
+    private dialogConfig = inject(DynamicDialogConfig);
 
     public unlinkType: string;
     public users: any;
+    public company: any;
+    public isLoading: boolean;
 
     public unlinkTypes = [
         {name: 'Liberar empresa', value: 'release'},
@@ -42,17 +47,19 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
     ];
 
     ngOnInit() {
+        this.company = this.dialogConfig.data.company;
+
         forkJoin({
             users: this.usersService.getUsers()
         }).subscribe({
             next: ({users}) => {
                 this.users = users.users;
+                this.initUnlinkForm();
             },
             error: err => {
                 this.alertsService.errorAlert(err.error.errors);
             }
         });
-        this.initUnlinkForm();
     }
 
     initUnlinkForm() {
@@ -64,15 +71,57 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
         })
     }
 
-    unlinkCompany() {
+    confirmUnlinkRequest() {
         this.alertsService.confirmRequest('¿Está completamente seguro de querer realizar esta acción?')
             .subscribe({
                 next: res => {
-
-                },
-                error: err => {
+                    this.isLoading = true;
+                    if (this.unlinkType != 'release') {
+                        this.unlinkCompany();
+                    } else {
+                        this.releaseCompany();
+                    }
                 }
             });
+    }
+
+    unlinkCompany() {
+        const data = this.unlinkForm.value;
+        this.companiesService.unlinkCompany(data, this.company.id).subscribe({
+            next: res => {
+                this.isLoading = false;
+                this.alertsService.successAlert(res.message).then(
+                    res => {
+                        if (res.isConfirmed) {
+                            this.dialogRef.close(true);
+                        }
+                    }
+                );
+            },
+            error: err => {
+                this.isLoading = false;
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        });
+    }
+
+    releaseCompany() {
+        this.companiesService.releaseCompany(this.company.id).subscribe({
+            next: res => {
+                this.isLoading = false;
+                this.alertsService.successAlert(res.message).then(
+                    res => {
+                        if (res.isConfirmed) {
+                            this.dialogRef.close(true);
+                        }
+                    }
+                );
+            },
+            error: err => {
+                this.isLoading = false;
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        });
     }
 
     selectUnlinkType(event: any) {
