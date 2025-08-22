@@ -9,6 +9,7 @@ import {SelectModule} from 'primeng/select';
 import {CompaniesService} from '../../services/companies.service';
 import {CompaniesStatus} from '../../constants/companies-status';
 import {InputNumberModule} from 'primeng/inputnumber';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
     selector: 'app-companies-detail',
@@ -21,6 +22,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
         InputNumberModule,
         DatePipe
     ],
+    providers: [AlertsService, ConfirmationService],
     templateUrl: './companies-detail.component.html',
     styleUrl: './companies-detail.component.scss'
 })
@@ -45,7 +47,7 @@ export class CompaniesDetailComponent implements OnInit {
 
     }
 
-    initBedroomsForm(){
+    initBedroomsForm() {
         this.bedroomsForm = this.formBuilder.group({
             habitaciones: [this.company.habitaciones, Validators.required],
         });

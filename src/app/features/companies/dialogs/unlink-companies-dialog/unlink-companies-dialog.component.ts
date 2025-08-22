@@ -100,7 +100,7 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
             },
             error: err => {
                 this.isLoading = false;
-                this.alertsService.errorAlert(err.error.errors);
+                this.alertsService.errorAlert([{ message: err.error.errors}]);
             }
         });
     }
@@ -126,5 +126,6 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
 
     selectUnlinkType(event: any) {
         this.unlinkType = event.value;
+        this.unlinkForm.reset();
     }
 }

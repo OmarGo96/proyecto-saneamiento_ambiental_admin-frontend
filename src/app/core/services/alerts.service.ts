@@ -12,7 +12,7 @@ export class AlertsService {
 
     successAlert(message: string) {
         const confirmation = Swal.fire({
-            title: 'Successful process!',
+            title: '¡Proceso existoso!',
             text: message,
             icon: 'success',
             confirmButtonText: 'Finish',
@@ -36,7 +36,7 @@ export class AlertsService {
         });
 
         Swal.fire({
-            title: 'Ups, something went wrong',
+            title: 'Ups, algo salió mal',
             text: msg,
             icon: 'error',
             confirmButtonText: 'Ok',
