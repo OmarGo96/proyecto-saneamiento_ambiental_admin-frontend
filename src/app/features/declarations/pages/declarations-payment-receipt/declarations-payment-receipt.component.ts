@@ -14,6 +14,16 @@ import {CurrencyPipe} from '@angular/common';
 import {DeclarationsStatus} from '../../constants/declarations-status';
 import {ConfirmationService} from 'primeng/api';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {
+    CompaniesGeolocationComponent
+} from '../../../companies/dialogs/companies-geolocation/companies-geolocation.component';
+import {
+    UploadDeclarationPaymentReceiptDialogComponent
+} from '../../dialogs/upload-declaration-payment-receipt-dialog/upload-declaration-payment-receipt-dialog.component';
+import {ConfirmDialog} from 'primeng/confirmdialog';
+import {
+    RejectDeclarationDialogComponent
+} from '../../dialogs/reject-declaration-dialog/reject-declaration-dialog.component';
 
 @Component({
     selector: 'app-declarations-payment-receipt',
@@ -25,7 +35,8 @@ import {NgxSpinnerService} from 'ngx-spinner';
         PopoverModule,
         ButtonModule,
         TableSkeletonComponent,
-        CurrencyPipe
+        CurrencyPipe,
+        ConfirmDialog
     ],
     providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './declarations-payment-receipt.component.html',
@@ -81,6 +92,77 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
                 this.alertsService.errorAlert([{message: err.error.errors}]);
             }
         })
+    }
+
+    acceptDeclaration(declaration: any){
+        this.alertsService.confirmRequest('¿Estás seguro de aceptar esta declaración?').subscribe({
+            next: res => {
+                this.spinner.show();
+                const data = { estatus: 2, statement_id: declaration.id };
+                this.declarationsService.processDeclaration(data).subscribe({
+                    next: (res: any) => {
+                        this.spinner.hide();
+                        this.alertsService.successAlert(res.message).then(res => {
+                            if (res.isConfirmed){
+                                this.getDeclarationsPaymentReceipt();
+                            }
+                        })
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.alertsService.errorAlert(err.error.errors);
+                    }
+                })
+            }
+        })
+    }
+
+    rejectDeclaration(declaration: any){
+        this.dialogRef = this.dialogService.open(RejectDeclarationDialogComponent, {
+            header: 'Rechazo de declaración',
+            width: '30vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                declaration
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getDeclarationsPaymentReceipt();
+            }
+        });
+    }
+
+    public openUploadPaymentReceipt(declaration: any){
+        this.dialogRef = this.dialogService.open(UploadDeclarationPaymentReceiptDialogComponent, {
+            header: 'Adjuntar recibo de pago',
+            width: '40vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                declaration
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getDeclarationsPaymentReceipt();
+            }
+        });
     }
 
     public viewDeclarationDetails(declaration: any) {

@@ -1,1 +1,15 @@
-<p>reject-declaration-dialog works!</p>
+<form [formGroup]="rejectForm">
+    <p-iftalabel>
+        <textarea pTextarea id="description" rows="5" cols="30" class="w-full" formControlName="observaciones"></textarea>
+        <label for="description">Favor de proporcionar las observaciones</label>
+    </p-iftalabel>
+
+    <div>
+        <p-button
+            (click)="rejectDeclaration()"
+            label="Rechazar declaración"
+            [disabled]="isRejecting"
+            [loading]="isRejecting"
+        />
+    </div>
+</form>

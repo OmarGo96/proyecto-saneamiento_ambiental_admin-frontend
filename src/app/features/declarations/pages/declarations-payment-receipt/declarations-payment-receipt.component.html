@@ -88,7 +88,7 @@
 
                                         @if (!declaration.recibo && declaration.banco == 'OPERGOB' || declaration.estatus == 2 && declaration.recibo) {
                                             <li>
-                                                <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                <a (click)="openUploadPaymentReceipt(declaration)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                     <i class="pi pi-upload"></i>
                                                     @if (!declaration.recibo && declaration.banco == 'OPERGOB') {
                                                         <span>Adjuntar recibo</span>
@@ -99,9 +99,9 @@
                                             </li>
                                         }
 
-                                        @if(!declaration.recibo){
+                                        @if(declaration.recibo){
                                             <li>
-                                                <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                <a (click)="acceptDeclaration(declaration)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                     <i class="pi pi-check-circle"></i>
                                                     <span>Aceptar solicitud</span>
                                                 </a>
@@ -109,7 +109,7 @@
                                         }
 
                                         <li>
-                                            <a class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
+                                            <a (click)="rejectDeclaration(declaration)" class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
                                                 <i class="pi pi-times"></i>
                                                 <span>Eliminar solicitud</span>
                                             </a>
@@ -137,3 +137,4 @@
         }
     </div>
 </div>
+<p-confirm-dialog/>

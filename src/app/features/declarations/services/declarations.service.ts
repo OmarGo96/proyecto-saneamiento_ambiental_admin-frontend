@@ -20,4 +20,12 @@ export class DeclarationsService {
     validatePayment(id: any): Observable<any> {
         return this.httpClient.get(`${this.url}/statement/check-payment/${id}`);
     }
+
+    processDeclaration(data: any){
+        return this.httpClient.post(`${this.url}/statement/process`, data);
+    }
+
+    attachPaymentReceipt(declarationId: any, data: any){
+        return this.httpClient.post(`${this.url}/statement/attach-receipt/${declarationId}`, data);
+    }
 }

@@ -1,0 +1,39 @@
+<dl class="grid grid-cols-3">
+    <div>
+        <dt class="mb-2 font-semibold leading-none text-gray-900">Nombre del establecimiento</dt>
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ declaration.nombre_establecimiento }}</dd>
+    </div>
+    <div>
+        <dt class="mb-2 font-semibold leading-none text-gray-900">Licencia de funcionamiento</dt>
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+            {{ declaration.licencia_funcionamiento_id }}
+        </dd>
+    </div>
+    <div>
+        <dt class="mb-2 font-semibold leading-none text-gray-900">Total a pagar</dt>
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+            {{ declaration.total_pagar | currency }}
+        </dd>
+    </div>
+</dl>
+
+<label>Recibo de pago en formato PDF</label>
+<div class="flex items-center space-x-5">
+    <p-fileupload #fu
+                  [customUpload]="true"
+                  (uploadHandler)="onUpload($event)"
+                  [disabled]="isUploading"
+                  mode="basic"
+                  chooseLabel="Seleccionar PDF"
+                  chooseIcon="pi pi-upload"
+                  accept="application/pdf"
+                  maxFileSize="1000000"
+    />
+    <p-button
+        label="Adjuntar recibo de pago"
+        (onClick)="fu.upload()"
+        severity="contrast"
+        [loading]="isUploading"
+    />
+</div>
+<p-confirm-dialog/>
