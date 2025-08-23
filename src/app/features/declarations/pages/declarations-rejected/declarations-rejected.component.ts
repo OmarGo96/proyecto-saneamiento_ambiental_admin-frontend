@@ -63,6 +63,11 @@ export class DeclarationsRejectedComponent implements OnInit {
         });
     }
 
+    public viewDeclarationDetails(declaration: any) {
+        localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
+        this.router.navigate(['/declaraciones/detalle']);
+    }
+
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.table?.filterGlobal(filterValue, 'contains');

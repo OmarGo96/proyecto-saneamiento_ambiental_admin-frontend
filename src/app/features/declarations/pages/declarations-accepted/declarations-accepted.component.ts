@@ -12,6 +12,7 @@ import {AlertsService} from '../../../../core/services/alerts.service';
 import {Router} from '@angular/router';
 import {DeclarationsStatus} from '../../constants/declarations-status';
 import {CurrencyPipe} from '@angular/common';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
     selector: 'app-declarations-accepted',
@@ -25,7 +26,7 @@ import {CurrencyPipe} from '@angular/common';
         TableSkeletonComponent,
         CurrencyPipe
     ],
-    providers: [DialogService],
+    providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './declarations-accepted.component.html',
     styleUrl: './declarations-accepted.component.scss'
 })
@@ -60,6 +61,11 @@ export class DeclarationsAcceptedComponent implements OnInit {
                 this.alertsService.errorAlert(err.error.errors);
             }
         });
+    }
+
+    public viewDeclarationDetails(declaration: any) {
+        localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
+        this.router.navigate(['/declaraciones/detalle']);
     }
 
     applyFilter(event: Event) {
