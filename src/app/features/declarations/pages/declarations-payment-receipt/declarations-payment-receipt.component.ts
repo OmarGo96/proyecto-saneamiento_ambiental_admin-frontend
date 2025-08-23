@@ -13,6 +13,7 @@ import {DeclarationsService} from '../../services/declarations.service';
 import {CurrencyPipe} from '@angular/common';
 import {DeclarationsStatus} from '../../constants/declarations-status';
 import {ConfirmationService} from 'primeng/api';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'app-declarations-payment-receipt',
@@ -36,6 +37,7 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
 
     private declarationsService = inject(DeclarationsService)
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -61,6 +63,24 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
                 this.alertsService.errorAlert(err.error.errors);
             }
         });
+    }
+
+    public validatePayment(declaration: any){
+        this.spinner.show();
+        this.declarationsService.validatePayment(declaration.id).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.alertsService.successAlert(res.message).then(res => {
+                    if (res.isConfirmed){
+                        this.getDeclarationsPaymentReceipt();
+                    }
+                });
+            },
+            error: err => {
+                this.spinner.hide();
+                this.alertsService.errorAlert([{message: err.error.errors}]);
+            }
+        })
     }
 
     public viewDeclarationDetails(declaration: any) {

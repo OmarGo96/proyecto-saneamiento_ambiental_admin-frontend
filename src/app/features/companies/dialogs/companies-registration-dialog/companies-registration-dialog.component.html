@@ -1,0 +1,14 @@
+@if (searchForm) {
+    <form [formGroup]="searchForm">
+        <div class="flex items-center gap-3">
+            <input pInputText placeholder="Buscar empresa" formControlName="nombre_establecimiento"/>
+
+            <p-button
+                icon="pi pi-search"
+                [rounded]="true"
+                [loading]="isSearching"
+                (click)="searchCompany()"
+            />
+        </div>
+    </form>
+}

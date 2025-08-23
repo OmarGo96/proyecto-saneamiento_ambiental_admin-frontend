@@ -17,4 +17,7 @@ export class DeclarationsService {
         return this.httpClient.get(`${this.url}/statement/index/${status}`);
     }
 
+    validatePayment(id: any): Observable<any> {
+        return this.httpClient.get(`${this.url}/statement/check-payment/${id}`);
+    }
 }

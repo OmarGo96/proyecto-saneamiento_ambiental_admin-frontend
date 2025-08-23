@@ -16,6 +16,10 @@ export class CompaniesService {
         return this.httpClient.get(`${this.url}/companies/index/${status}`);
     }
 
+    searchCompanies(data: any): Observable<any> {
+        return this.httpClient.post(`${this.url}/companies/search`, data);
+    }
+
     updateBedrooms(companyId: any, data: any): Observable<any> {
         return this.httpClient.put(`${this.url}/companies/updateBedrooms/${companyId}`, data);
     }

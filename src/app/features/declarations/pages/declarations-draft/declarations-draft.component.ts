@@ -44,6 +44,8 @@ export class DeclarationsDraftComponent implements OnInit {
     public isLoading: boolean = false;
     public isDeleting: boolean = false;
 
+    public declarationsStatus = DeclarationsStatus;
+
     ngOnInit() {
         this.getDraftDeclarations()
     }
@@ -62,10 +64,14 @@ export class DeclarationsDraftComponent implements OnInit {
         });
     }
 
+    public viewDeclarationDetails(declaration: any) {
+        localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
+        this.router.navigate(['/declaraciones/detalle']);
+    }
+
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.table?.filterGlobal(filterValue, 'contains');
     }
 
-    protected readonly declarationsStatus = DeclarationsStatus;
 }

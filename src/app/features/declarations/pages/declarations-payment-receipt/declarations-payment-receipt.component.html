@@ -69,7 +69,7 @@
                             />
 
                             <p-popover #op>
-                                <div class="w-48">
+                                <div class="w-52">
                                     <ul class="py-2 text-sm text-gray-700">
                                         <li>
                                             <a (click)="viewDeclarationDetails(declaration)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
@@ -77,16 +77,41 @@
                                                 <span>Ver detalle</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
-                                                <i class="pi pi-receipt"></i>
-                                                <span>Validar pago</span>
-                                            </a>
-                                        </li>
+                                        @if (declaration.estatus == 1 && !declaration.banco && declaration.ceros == 0) {
+                                            <li>
+                                                <a (click)="validatePayment(declaration)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                    <i class="pi pi-receipt"></i>
+                                                    <span>Validar pago</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                        @if (!declaration.recibo && declaration.banco == 'OPERGOB' || declaration.estatus == 2 && declaration.recibo) {
+                                            <li>
+                                                <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                    <i class="pi pi-upload"></i>
+                                                    @if (!declaration.recibo && declaration.banco == 'OPERGOB') {
+                                                        <span>Adjuntar recibo</span>
+                                                    } @else if(declaration.estatus == 2 && declaration.recibo){
+                                                        <span>Resubir recibo </span>
+                                                    }
+                                                </a>
+                                            </li>
+                                        }
+
+                                        @if(!declaration.recibo){
+                                            <li>
+                                                <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                    <i class="pi pi-check-circle"></i>
+                                                    <span>Aceptar solicitud</span>
+                                                </a>
+                                            </li>
+                                        }
+
                                         <li>
                                             <a class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
                                                 <i class="pi pi-times"></i>
-                                                <span>Rechazar</span>
+                                                <span>Eliminar solicitud</span>
                                             </a>
                                         </li>
                                     </ul>
