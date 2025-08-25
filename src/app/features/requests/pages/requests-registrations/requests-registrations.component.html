@@ -1,7 +1,7 @@
 <div class="space-y-5">
     <div class="flex items-center space-x-2">
         <i class="pi pi-receipt"></i>
-        <h3 class="text-xl font-semibold ">Declaraciones aceptadas</h3>
+        <h3 class="text-xl font-semibold ">Solicitudes</h3>
     </div>
 
     <p-iconfield iconPosition="left" class="w-1/3">
@@ -14,7 +14,7 @@
 
     <div class="p-5 border rounded-xl text-sm">
         @if (!isLoading) {
-            <p-table #table [value]="declarations"
+            <p-table #table [value]="requests"
                      [paginator]="true"
                      [rows]="10"
                      [showCurrentPageReport]="true"
@@ -34,21 +34,14 @@
                         <th>Menú</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-declaration>
+                <ng-template pTemplate="body" let-request>
                     <tr>
-                        <td>{{ declaration.company.nombre_establecimiento }}</td>
-                        <td>{{ declaration.company.licencia_funcionamiento_id }}</td>
-                        <td>{{ declaration.anio }}</td>
-                        <td>{{ declaration.mes }}</td>
-                        <td>{{ declaration.created_at }}</td>
-                        <td>
-                            @if (declaration.tipo_declaracion === 1) {
-                                <span>Normal</span>
-                            } @else if(declaration.tipo_declaracion === 2) {
-                                <span>Complementaria</span>
-                            }
-                        </td>
-                        <td>{{ declaration.total_pagar | currency }}</td>
+                        <td>{{ request.representante }}</td>
+                        <td>{{ request.email }}</td>
+                        <td>{{ request.telefono }}</td>
+                        <td>{{ request.licencia_funcionamiento }}</td>
+                        <td>{{ request.nombre_establecimiento }}</td>
+                        <td>{{ request.created_at | date }}</td>
                         <td class="space-x-3">
                             <p-button icon="pi pi-ellipsis-v"
                                       [rounded]="true"
@@ -61,8 +54,8 @@
                                 <div class="w-48">
                                     <ul class="py-2 text-sm text-gray-700">
                                         <li>
-                                            <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
-                                                <i class="pi pi-external-link"></i>
+                                            <a (click)="openRequestsFileDialog(request)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                <i class="pi pi-file-pdf"></i>
                                                 <span>Ver PDF</span>
                                             </a>
                                         </li>
