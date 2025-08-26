@@ -60,13 +60,13 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                            <a (click)="acceptRequest(request)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                 <i class="pi pi-check-circle"></i>
                                                 <span>Aceptar</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
+                                            <a (click)="openRejectRequestDialog(request)" class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
                                                 <i class="pi pi-times"></i>
                                                 <span>Rechazar</span>
                                             </a>
@@ -94,3 +94,4 @@
         }
     </div>
 </div>
+<p-confirm-dialog/>

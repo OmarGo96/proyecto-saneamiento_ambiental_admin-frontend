@@ -17,6 +17,9 @@ import {
     UploadDeclarationPaymentReceiptDialogComponent
 } from '../../../declarations/dialogs/upload-declaration-payment-receipt-dialog/upload-declaration-payment-receipt-dialog.component';
 import {RequestsFileDialogComponent} from '../../dialogs/requests-file-dialog/requests-file-dialog.component';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {ConfirmDialog} from 'primeng/confirmdialog';
+import {RejectRequestsDialogComponent} from '../../dialogs/reject-requests-dialog/reject-requests-dialog.component';
 
 @Component({
     selector: 'app-requests-registrations',
@@ -27,9 +30,9 @@ import {RequestsFileDialogComponent} from '../../dialogs/requests-file-dialog/re
         TableModule,
         PopoverModule,
         ButtonModule,
-        CurrencyPipe,
         TableSkeletonComponent,
-        DatePipe
+        DatePipe,
+        ConfirmDialog
     ],
     providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './requests-registrations.component.html',
@@ -41,6 +44,7 @@ export class RequestsRegistrationsComponent implements OnInit {
 
     private requestsService = inject(RequestsService)
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -71,6 +75,53 @@ export class RequestsRegistrationsComponent implements OnInit {
     public openRequestsFileDialog(request: any){
         this.dialogRef = this.dialogService.open(RequestsFileDialogComponent, {
             header: 'Documento de la Solicitud',
+            width: '40vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                request
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getCreatedRequests();
+            }
+        });
+    }
+
+    public acceptRequest(request: any){
+        this.alertsService.confirmRequest("¿Está seguro de realizar esta acción?").subscribe({
+            next: res => {
+                this.spinner.show();
+                const data = { register_id: request.id, estatus: '1' }
+                this.requestsService.processRequest(data).subscribe({
+                    next: res => {
+                        this.spinner.hide();
+                        this.alertsService.successAlert(res.message).then(res => {
+                            if (res.isConfirmed){
+                                this.getCreatedRequests();
+                            }
+                        });
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.alertsService.errorAlert(err.error.errors);
+                    }
+                })
+            }
+        })
+    }
+
+    public openRejectRequestDialog(request: any){
+        this.dialogRef = this.dialogService.open(RejectRequestsDialogComponent, {
+            header: 'Rechazo de solicitud',
             width: '40vw',
             closeOnEscape: false,
             modal: true,

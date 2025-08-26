@@ -1,0 +1,15 @@
+<form [formGroup]="rejectForm">
+    <p-iftalabel>
+        <textarea pTextarea id="description" rows="5" cols="30" class="w-full" formControlName="observaciones"></textarea>
+        <label for="description">Favor de proporcionar las observaciones</label>
+    </p-iftalabel>
+
+    <div>
+        <p-button
+            (click)="rejectRequest()"
+            label="Rechazar solicitud"
+            [disabled]="isRejecting"
+            [loading]="isRejecting"
+        />
+    </div>
+</form>
