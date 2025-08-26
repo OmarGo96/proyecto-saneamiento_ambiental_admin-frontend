@@ -14,6 +14,10 @@ export class RequestsService {
         return this.httpClient.get(`${this.url}/registration/index/${status}`);
     }
 
+    getUserRequests(): Observable<any> {
+        return this.httpClient.get(`${this.url}/user-request/index/all`);
+    }
+
     processRequest(data: any): Observable<any> {
         return this.httpClient.post(`${this.url}/registration/process`, data);
     }

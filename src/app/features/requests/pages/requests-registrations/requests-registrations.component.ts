@@ -9,13 +9,9 @@ import {AlertsService} from '../../../../core/services/alerts.service';
 import {ConfirmationService} from 'primeng/api';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Router} from '@angular/router';
-import {CurrencyPipe, DatePipe} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
-import {DeclarationsStatus} from '../../../declarations/constants/declarations-status';
 import {RequestsService} from '../../services/requests.service';
-import {
-    UploadDeclarationPaymentReceiptDialogComponent
-} from '../../../declarations/dialogs/upload-declaration-payment-receipt-dialog/upload-declaration-payment-receipt-dialog.component';
 import {RequestsFileDialogComponent} from '../../dialogs/requests-file-dialog/requests-file-dialog.component';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ConfirmDialog} from 'primeng/confirmdialog';
