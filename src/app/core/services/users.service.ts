@@ -12,6 +12,22 @@ export class UsersService {
 
 
     getUsers(): Observable<any> {
-        return this.httpClient.get(`${this.url}/users/index`);
+        return this.httpClient.get(`${this.url}/administrators/index/all`);
+    }
+
+    createUser(data: any): Observable<any> {
+        return this.httpClient.post(`${this.url}/administrators/store`, data);
+    }
+
+    updateUser(userId: any, data: any): Observable<any> {
+        return this.httpClient.put(`${this.url}/administrators/update/${userId}`, data);
+    }
+
+    deleteUser(userId: any): Observable<any> {
+        return this.httpClient.delete(`${this.url}/administrators/delete/${userId}`);
+    }
+
+    reactiveUser(userId: any): Observable<any> {
+        return this.httpClient.put(`${this.url}/administrators/reactive/${userId}`, {});
     }
 }

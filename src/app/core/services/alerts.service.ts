@@ -15,7 +15,7 @@ export class AlertsService {
             title: '¡Proceso existoso!',
             text: message,
             icon: 'success',
-            confirmButtonText: 'Finish',
+            confirmButtonText: 'Finalizar',
             allowOutsideClick: false,
             customClass: {
                 popup: 'rounded-xl',
@@ -88,7 +88,7 @@ export class AlertsService {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Continuar',
-            cancelButtonText: 'Cancel',
+            cancelButtonText: 'Cancelar',
             allowOutsideClick: false,
             customClass: {
                 confirmButton:

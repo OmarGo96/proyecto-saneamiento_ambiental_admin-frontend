@@ -1,1 +1,39 @@
-<p>create-users-dialog works!</p>
+@if (createUserForm) {
+    <form [formGroup]="createUserForm" class="space-y-3">
+        <div>
+            <label>Nombre</label>
+            <input type="text" pInputText formControlName="nombre"/>
+        </div>
+
+        <div>
+            <label>Apellidos</label>
+            <input type="text" pInputText formControlName="apellidos"/>
+        </div>
+
+        <div>
+            <label>Correo electrónico</label>
+            <input type="email" pInputText formControlName="email"/>
+        </div>
+
+        <div>
+            <label>Rol del usuario</label>
+            <p-select
+                formControlName="rol"
+                [options]="usersRoles"
+                optionLabel="name"
+                optionValue="value"
+                appendTo="body"
+                class="w-full"
+            />
+        </div>
+
+        <div>
+            <p-button
+                label="{{ isLoading ? 'Creando' : 'Crear' }}"
+                [loading]="isLoading"
+                [disabled]="isLoading"
+                (click)="createUser()"
+            />
+        </div>
+    </form>
+}

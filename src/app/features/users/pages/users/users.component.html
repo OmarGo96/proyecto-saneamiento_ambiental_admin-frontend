@@ -1,7 +1,7 @@
 <div class="space-y-5">
     <div class="flex items-center space-x-2">
         <i class="pi pi-users"></i>
-        <h3 class="text-xl font-semibold ">Users</h3>
+        <h3 class="text-xl font-semibold ">Administración de usuarios</h3>
     </div>
 
     <div class="flex justify-between">
@@ -9,13 +9,14 @@
             <p-inputicon styleClass="pi pi-search"/>
             <input type="text"
                    pInputText
-                   placeholder="Search register by keyword"/>
+                   placeholder="Buscar por palabra clave"/>
         </p-iconfield>
 
         <p-button
-            label="Create user"
+            (click)="openCreateUsersDialog()"
+            label="Crear usuario"
             icon="pi pi-user-plus"
-            severity="success"/>
+            severity="primary"/>
     </div>
 
     <div class="p-5 border rounded-xl text-sm">
@@ -26,21 +27,29 @@
                      [showCurrentPageReport]="true"
                      currentPageReportTemplate="Showing {first} to {last} from {totalRecords} records"
                      [rowsPerPageOptions]="[10, 20, 30]"
-                     [globalFilterFields]="['name', 'status', 'createdAt']"
+                     [globalFilterFields]="['rol', 'nombre', 'apellidos', 'email']"
                      size="small"
             >
                 <ng-template pTemplate="header">
                     <tr class="font-medium uppercase">
-                        <th>Name</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                        <th>Menu</th>
+                        <th>Rol de Usuario</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Correo eletrónico</th>
+                        <th>Menú</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-user>
                     <tr>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.lastname }}</td>
+                        <td>
+                            @if (user.rol == '1') {
+                                <span>Normal</span>
+                            } @else if (user.rol == '2') {
+                                <span>Administrador</span>
+                            }
+                        </td>
+                        <td>{{ user.nombre }}</td>
+                        <td>{{ user.apellidos }}</td>
                         <td>{{ user.email }}</td>
                         <td class="space-x-3">
                             <p-button icon="pi pi-ellipsis-v"
@@ -54,17 +63,28 @@
                                 <div class="w-48">
                                     <ul class="py-2 text-sm text-gray-700">
                                         <li>
-                                            <a (click)="openUpdateUserDialog(user)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                            <a (click)="openUpdateUserDialog(user)"
+                                               class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                 <i class="pi pi-user-edit"></i>
-                                                <span>Edit user</span>
+                                                <span>Actualizar</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a (click)="deleteUser(user.uuid)" class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
-                                                <i class="pi pi-trash"></i>
-                                                <span>Delete user</span>
-                                            </a>
-                                        </li>
+                                        @if (user.estatus == '1') {
+                                            <li>
+                                                <a (click)="deleteUser(user.id)"
+                                                   class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
+                                                    <i class="pi pi-trash"></i>
+                                                    <span>Desactivar</span>
+                                                </a>
+                                            </li>
+                                        } @else if (user.estatus == '-1') {
+                                            <li>
+                                                <a (click)="reactiveUser(user.id)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                    <i class="pi pi-check-circle"></i>
+                                                    <span>Reactivar</span>
+                                                </a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </p-popover>

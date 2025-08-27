@@ -12,7 +12,8 @@ import {TableModule} from 'primeng/table';
 import {PopoverModule} from 'primeng/popover';
 import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
 import {UpdateUsersDialogComponent} from '../../dialogs/update-users-dialog/update-users-dialog.component';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'app-users',
@@ -25,7 +26,7 @@ import {MessageService} from 'primeng/api';
         ButtonModule,
         TableSkeletonComponent
     ],
-    providers: [DialogService],
+    providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './users.component.html',
     styleUrl: './users.component.scss'
 })
@@ -33,6 +34,7 @@ export class UsersComponent implements OnInit {
 
     private usersService = inject(UsersService);
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -46,12 +48,22 @@ export class UsersComponent implements OnInit {
     }
 
     private getUsers() {
-        console.log('Getting users...');
+        this.isLoading = true;
+        this.usersService.getUsers().subscribe({
+            next: data => {
+                this.isLoading = false;
+                this.users = data.admins;
+            },
+            error: err => {
+                this.isLoading = false;
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        })
     }
 
     openCreateUsersDialog() {
         this.dialogRef = this.dialogService.open(CreateUsersDialogComponent, {
-            header: 'Create new user',
+            header: 'Crear nuevo usuario',
             width: '20vw',
             closeOnEscape: false,
             modal: true,
@@ -92,30 +104,55 @@ export class UsersComponent implements OnInit {
                 this.getUsers();
             }
         });
+
     }
 
-    public deleteUser(userUuid: string) {
-        this.alertsService.confirmDelete('Please confirm that you would like to delete this user?')
+    public deleteUser(userId: any) {
+        this.alertsService.confirmDelete('¿Estás seguro de querer realizar esta acción?')
             .then(result => {
                 if (result.isConfirmed) {
-                    this.isDeleting = true;
+                    this.spinner.show();
 
-                    // TODO: Se solicita la eliminación del usuario
 
-                    /*this.usersService.deleteUsers(userUuid).subscribe({
-                        next: res => {
-                            this.isDeleting = false;
-                            this.alertsService.successAlert(res.message).then(result => {
+                    this.usersService.deleteUser(userId).subscribe({
+                        next: data => {
+                            this.spinner.hide();
+                            this.alertsService.successAlert(data.message).then(result => {
                                 if (result.isConfirmed) {
                                     this.getUsers()
                                 }
                             });
                         },
                         error: err => {
-                            this.isDeleting = false;
+                            this.spinner.hide();
                             this.alertsService.errorAlert(err.error.errors);
                         }
-                    })*/
+                    })
+                }
+            })
+    }
+
+    public reactiveUser(userId: any) {
+        this.alertsService.confirmDelete('¿Estás seguro de querer realizar esta acción?')
+            .then(result => {
+                if (result.isConfirmed) {
+                    this.spinner.show();
+
+
+                    this.usersService.reactiveUser(userId).subscribe({
+                        next: data => {
+                            this.spinner.hide();
+                            this.alertsService.successAlert(data.message).then(result => {
+                                if (result.isConfirmed) {
+                                    this.getUsers()
+                                }
+                            });
+                        },
+                        error: err => {
+                            this.spinner.hide();
+                            this.alertsService.errorAlert(err.error.errors);
+                        }
+                    })
                 }
             })
     }
