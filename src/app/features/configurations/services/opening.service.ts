@@ -14,6 +14,10 @@ export class OpeningService {
         return this.httpClient.get(`${this.url}/opening/by-year/${year}`);
     }
 
+    opening(data: any): Observable<any> {
+        return this.httpClient.post(`${this.url}/opening/store`, data);
+    }
+
     exception(companyId: any, data: any): Observable<any> {
         return this.httpClient.post(`${this.url}/exceptions/store/${companyId}`, data);
     }

@@ -6,14 +6,17 @@
 
     <!-- Grid -->
     <div class="grid grid-cols-4 gap-6">
-        <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
-            <div>
-                <h3 class="text-xl font-semibold ">Declaraciones mensuales</h3>
-                <p class="text-sm text-gray-500">Correspondientes a Agosto 2025</p>
-            </div>
-            <app-total-monthly-declarations-chart></app-total-monthly-declarations-chart>
-        </div>
+        @if (currentMonthStatements) {
+            <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+                <div>
+                    <h3 class="text-xl font-semibold ">Declaraciones mensuales</h3>
+                    <p class="text-sm text-gray-500">Correspondientes a {{ currentMonthStatements.date | date:'MMMM y' }}</p>
+                </div>
 
+                <app-total-monthly-declarations-chart
+                    [totalMonthlyDeclarationsData]="currentMonthStatements"></app-total-monthly-declarations-chart>
+            </div>
+        }
         <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
             <div>
                 <h3 class="text-xl font-semibold ">Declaraciones en borrador</h3>

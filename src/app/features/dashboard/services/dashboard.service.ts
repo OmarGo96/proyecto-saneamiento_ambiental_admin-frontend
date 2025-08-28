@@ -1,9 +1,17 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {environment} from '../../../../environments/environment.development';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class DashboardService {
 
-  constructor() { }
+    private url = environment.urlApi;
+    private httpClient = inject(HttpClient);
+
+    getStatisticsReport(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/statistics`);
+    }
 }

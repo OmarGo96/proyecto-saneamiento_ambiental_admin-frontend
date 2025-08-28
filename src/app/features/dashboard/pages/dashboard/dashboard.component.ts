@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {
     TotalMonthlyDeclarationsChartComponent
 } from '../../components/total-monthly-declarations-chart/total-monthly-declarations-chart.component';
@@ -14,6 +14,10 @@ import {
     StatementsSummaryByStatusComponent
 } from '../../components/statements-summary-by-status/statements-summary-by-status.component';
 import {RegistrationRequest} from '../../constants/demo';
+import {DashboardService} from '../../services/dashboard.service';
+import {AlertsService} from '../../../../core/services/alerts.service';
+import {ConfirmationService} from 'primeng/api';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-dashboard',
@@ -22,13 +26,38 @@ import {RegistrationRequest} from '../../constants/demo';
         TotalMonthlyDeclarationsChartComponent,
         TotalDraftsDeclarationsChartComponent,
         StatementsSummaryCardsComponent,
-        StatementsSummaryByStatusComponent
+        StatementsSummaryByStatusComponent,
+        DatePipe
     ],
+    providers: [AlertsService, ConfirmationService],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+
+    private dashboardService = inject(DashboardService);
+    private alertsService = inject(AlertsService);
+
+    public currentMonthStatements: any;
+    public summary: any;
 
     public registrationRequest = RegistrationRequest;
     public declarationsStatus = DeclarationsStatus
+
+    ngOnInit() {
+        this.getStatisticsReport();
+    }
+
+    getStatisticsReport(){
+        this.dashboardService.getStatisticsReport().subscribe({
+            next: data => {
+                console.log(data);
+                this.currentMonthStatements = data.current_month_statements;
+                this.summary = data.resumen;
+            },
+            error: err => {
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        })
+    }
 }

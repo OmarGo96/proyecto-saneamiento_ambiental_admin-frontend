@@ -5,7 +5,7 @@ import {InputIcon, InputIconModule} from 'primeng/inputicon';
 import {InputText, InputTextModule} from 'primeng/inputtext';
 import {CurrencyPipe} from '@angular/common';
 import {Popover, PopoverModule} from 'primeng/popover';
-import {PrimeTemplate} from 'primeng/api';
+import {ConfirmationService, PrimeTemplate} from 'primeng/api';
 import {TableModule} from 'primeng/table';
 import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
 import {DeclarationsStatus} from '../../constants/declarations-status';
@@ -24,9 +24,9 @@ import {Router} from '@angular/router';
         PopoverModule,
         ButtonModule,
         TableSkeletonComponent,
-        CurrencyPipe
+        CurrencyPipe,
     ],
-    providers: [DialogService],
+    providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './declarations-rejected.component.html',
     styleUrl: './declarations-rejected.component.scss'
 })

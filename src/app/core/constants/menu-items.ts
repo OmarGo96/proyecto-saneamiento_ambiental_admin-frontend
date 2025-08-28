@@ -85,7 +85,7 @@ export const MenuItems = [
         module: 'solicitudes',
         action: 'show',
         title: 'Usuarios',
-        icon: 'pi-users',
+        icon: 'pi-address-book',
         class: '',
         role: []
     },
@@ -115,7 +115,7 @@ export const MenuItems = [
         module: 'empresas',
         action: 'show',
         title: 'Con representante',
-        icon: 'pi-user',
+        icon: 'pi-user-plus',
         class: '',
         role: []
     },
