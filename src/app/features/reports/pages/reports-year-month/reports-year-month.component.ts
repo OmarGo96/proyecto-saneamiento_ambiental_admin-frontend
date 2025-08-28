@@ -28,7 +28,7 @@ export class ReportsYearMonthComponent implements OnInit {
     private alertsService = inject(AlertsService);
     private formBuilder = inject(FormBuilder);
 
-    public years: any = ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025']
+    public years: any;
     public months = Months;
 
     ngOnInit() {

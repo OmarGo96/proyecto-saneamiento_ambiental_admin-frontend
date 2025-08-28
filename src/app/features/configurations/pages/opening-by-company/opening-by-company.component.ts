@@ -11,6 +11,13 @@ import {CompaniesStatus} from '../../../companies/constants/companies-status';
 import {CompaniesService} from '../../../companies/services/companies.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {Router} from '@angular/router';
+import {
+    CompaniesGeolocationComponent
+} from '../../../companies/dialogs/companies-geolocation/companies-geolocation.component';
+import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {
+    OpeningByCompanyDialogComponent
+} from '../../dialogs/opening-by-company-dialog/opening-by-company-dialog.component';
 
 @Component({
     selector: 'app-opening-by-company',
@@ -23,16 +30,18 @@ import {Router} from '@angular/router';
         ButtonModule,
         TableSkeletonComponent
     ],
-    providers: [AlertsService, ConfirmationService],
+    providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './opening-by-company.component.html',
     styleUrl: './opening-by-company.component.scss'
 })
-export class OpeningByCompanyComponent implements OnInit{
+export class OpeningByCompanyComponent implements OnInit {
 
     @ViewChild('table') table: any | undefined;
 
     private companiesService = inject(CompaniesService);
     private alertsService = inject(AlertsService);
+    private dialogService = inject(DialogService);
+    private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
 
     public companies: any;
@@ -41,10 +50,10 @@ export class OpeningByCompanyComponent implements OnInit{
     public companiesStatus = CompaniesStatus;
 
     ngOnInit() {
-        this.getDraftDeclarations()
+        this.getAllCompanies()
     }
 
-    public getDraftDeclarations() {
+    public getAllCompanies() {
         this.isLoading = true;
         this.companiesService.getCompaniesByStatus('all').subscribe({
             next: res => {
@@ -54,6 +63,30 @@ export class OpeningByCompanyComponent implements OnInit{
             error: err => {
                 this.isLoading = false;
                 this.alertsService.errorAlert(err.error.errors);
+            }
+        });
+    }
+
+    public openOpeningCompanyDialog(company: any) {
+        this.dialogRef = this.dialogService.open(OpeningByCompanyDialogComponent, {
+            header: 'Apertura por empresa',
+            width: '30vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                company
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getAllCompanies();
             }
         });
     }
