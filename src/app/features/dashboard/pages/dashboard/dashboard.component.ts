@@ -18,6 +18,8 @@ import {DashboardService} from '../../services/dashboard.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {ConfirmationService} from 'primeng/api';
 import {DatePipe} from '@angular/common';
+import {SkeletonModule} from 'primeng/skeleton';
+import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
 
 @Component({
     selector: 'app-dashboard',
@@ -27,7 +29,9 @@ import {DatePipe} from '@angular/common';
         TotalDraftsDeclarationsChartComponent,
         StatementsSummaryCardsComponent,
         StatementsSummaryByStatusComponent,
-        DatePipe
+        SkeletonModule,
+        DatePipe,
+        TableSkeletonComponent
     ],
     providers: [AlertsService, ConfirmationService],
     templateUrl: './dashboard.component.html',

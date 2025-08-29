@@ -6,34 +6,81 @@
 
     <!-- Grid -->
     <div class="grid grid-cols-4 gap-6">
-        @if (currentMonthStatements) {
-            <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+        <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+            @if (currentMonthStatements) {
                 <div>
                     <h3 class="text-xl font-semibold ">Declaraciones mensuales</h3>
-                    <p class="text-sm text-gray-500">Correspondientes a {{ currentMonthStatements.date | date:'MMMM y' }}</p>
+                    <p class="text-sm text-gray-500">Correspondientes
+                        a {{ currentMonthStatements.date | date:'MMMM y' }}</p>
+                </div>
+                <app-total-monthly-declarations-chart
+                    [totalMonthlyDeclarationsData]="currentMonthStatements"></app-total-monthly-declarations-chart>
+            } @else {
+                <div class="space-y-2">
+                    <div>
+                        <p-skeleton width="15rem" borderRadius="16px"/>
+                    </div>
+                    <div>
+                        <p-skeleton width="8rem" borderRadius="16px"/>
+                    </div>
+
                 </div>
 
-                <app-total-monthly-declarations-chart [totalMonthlyDeclarationsData]="currentMonthStatements"></app-total-monthly-declarations-chart>
-            </div>
-        }
+                <div class="mx-auto block">
+                    <p-skeleton shape="circle" size="18rem"/>
+                </div>
+            }
 
-        @if (acceptedStatements) {
-            <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+
+        </div>
+
+
+        <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+            @if (acceptedStatements) {
                 <div>
                     <h3 class="text-xl font-semibold ">Declaraciones acceptadas</h3>
-                    <p class="text-sm text-gray-500">Correspondientes a {{ acceptedStatements.date | date:'MMMM y' }}</p>
+                    <p class="text-sm text-gray-500">Correspondientes
+                        a {{ acceptedStatements.date | date:'MMMM y' }}</p>
                 </div>
-                <app-total-drafts-declarations-chart [totalAcceptedDeclarationsData]="acceptedStatements"></app-total-drafts-declarations-chart>
-            </div>
-        }
+                <app-total-drafts-declarations-chart
+                    [totalAcceptedDeclarationsData]="acceptedStatements"></app-total-drafts-declarations-chart>
+
+            } @else {
+                <div class="space-y-2">
+                    <div>
+                        <p-skeleton width="15rem" borderRadius="16px"/>
+                    </div>
+                    <div>
+                        <p-skeleton width="8rem" borderRadius="16px"/>
+                    </div>
+
+                </div>
+
+                <div class="mx-auto block">
+                    <p-skeleton shape="circle" size="18rem"/>
+                </div>
+            }
+
+
+        </div>
+
 
         <div class="col-span-2 space-y-6">
             @if (summary) {
                 <app-statements-summary-cards [summaryData]="summary"></app-statements-summary-cards>
+            } @else {
+                <div class="grid grid-cols-2 gap-6">
+                    <p-skeleton width="100%" height="92px" />
+                    <p-skeleton width="100%" height="92px" />
+                    <p-skeleton width="100%" height="92px" />
+                    <p-skeleton width="100%" height="92px" />
+                </div>
             }
+
             @if (globalStatements) {
-                <app-statements-summary-by-status [globalStatementsData]="globalStatements"></app-statements-summary-by-status>
-            }
+                <app-statements-summary-by-status
+                    [globalStatementsData]="globalStatements"></app-statements-summary-by-status>
+            } 
         </div>
 
     </div>
@@ -43,24 +90,29 @@
             <h3 class="text-xl font-semibold ">Solicitudes de registros</h3>
             <p class="text-sm text-gray-500">Empresas con solicitud pendiente de registro</p>
         </div>
-        <p-table [value]="registrationRequest" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template #header>
-                <tr>
-                    <th>Licencia de Funcionamiento</th>
-                    <th>Establecimiento</th>
-                    <th>Nombre</th>
-                    <th>Correo electrónico</th>
-                </tr>
-            </ng-template>
-            <ng-template #body let-request>
-                <tr>
-                    <td>{{ request.licencia_funcionamiento }}</td>
-                    <td>{{ request.nombre_establecimiento }}</td>
-                    <td>{{ request.representante }}</td>
-                    <td>{{ request.email }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
+        @if (registrationRequest) {
+            <p-table [value]="registrationRequest" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template #header>
+                    <tr>
+                        <th>Licencia de Funcionamiento</th>
+                        <th>Establecimiento</th>
+                        <th>Nombre</th>
+                        <th>Correo electrónico</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-request>
+                    <tr>
+                        <td>{{ request.licencia_funcionamiento }}</td>
+                        <td>{{ request.nombre_establecimiento }}</td>
+                        <td>{{ request.representante }}</td>
+                        <td>{{ request.email }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        } @else {
+            <app-table-skeleton></app-table-skeleton>
+        }
+
     </div>
 </div>
 
