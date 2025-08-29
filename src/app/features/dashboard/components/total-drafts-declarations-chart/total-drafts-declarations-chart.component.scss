@@ -1,0 +1,29 @@
+.chart-container {
+    position: relative;
+    width: 300px; /* Ajusta según necesites */
+    height: 300px;
+}
+
+.chart-center-text {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    line-height: 1.3em;
+}
+
+.chart-center-text .main-text {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.chart-center-text .sub-text {
+    display: block;
+    font-size: 1rem;
+    color: #999;
+    margin-top: 5px;
+}

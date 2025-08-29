@@ -1,1 +1,9 @@
-<p-chart type="doughnut" [data]="data" [options]="options" class="w-full md:w-[30rem]" />
+<div class="relative">
+    <p-chart type="doughnut" [data]="data" [options]="options" class="w-full"/>
+
+    <div class="chart-center-text">
+        <span class="main-text">Total</span>
+        <span class="sub-text">{{ totalMonthlyDeclarationsData.total | number}} declaraciones</span>
+    </div>
+
+</div>

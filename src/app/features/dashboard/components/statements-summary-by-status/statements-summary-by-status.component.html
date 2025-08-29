@@ -1,5 +1,5 @@
 <div class="p-5 border rounded-xl text-sm mt-6">
-    <p-table [value]="declarationsStatus" size="small">
+    <p-table [value]="globalStatements" size="small">
         <ng-template #header>
             <tr>
                 <th>Status</th>
@@ -8,9 +8,30 @@
         </ng-template>
         <ng-template #body let-declaration>
             <tr>
-                <td>{{ declaration.name }}</td>
+                <td class="uppercase">
+                    @switch (declaration.status){
+                        @case ('deleted'){
+                            Eliminados
+                        }
+                        @case ('rejected'){
+                            Rechazados
+                        }
+                        @case ('created'){
+                            Creados
+                        }
+                        @case('under_review'){
+                            En revisión
+                        }
+                        @case('accepted'){
+                            Aceptados
+                        }
+                        @case ('total'){
+                            Total
+                        }
+                    }
+                </td>
                 <td>
-                    <span class="{{ declaration.styles }} p-1 rounded-md">{{ declaration.count }}</span>
+                    <span class="{{ declaration.styles }} p-1 rounded-md">{{ declaration.count | number }}</span>
                 </td>
             </tr>
         </ng-template>

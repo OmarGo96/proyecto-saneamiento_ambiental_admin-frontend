@@ -39,7 +39,9 @@ export class DashboardComponent implements OnInit {
     private alertsService = inject(AlertsService);
 
     public currentMonthStatements: any;
+    public acceptedStatements: any;
     public summary: any;
+    public globalStatements: any;
 
     public registrationRequest = RegistrationRequest;
     public declarationsStatus = DeclarationsStatus
@@ -51,9 +53,10 @@ export class DashboardComponent implements OnInit {
     getStatisticsReport(){
         this.dashboardService.getStatisticsReport().subscribe({
             next: data => {
-                console.log(data);
                 this.currentMonthStatements = data.current_month_statements;
+                this.acceptedStatements = data.accepted_statements;
                 this.summary = data.resumen;
+                this.globalStatements = data.global_statements;
             },
             error: err => {
                 this.alertsService.errorAlert(err.error.errors);

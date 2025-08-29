@@ -13,22 +13,27 @@
                     <p class="text-sm text-gray-500">Correspondientes a {{ currentMonthStatements.date | date:'MMMM y' }}</p>
                 </div>
 
-                <app-total-monthly-declarations-chart
-                    [totalMonthlyDeclarationsData]="currentMonthStatements"></app-total-monthly-declarations-chart>
+                <app-total-monthly-declarations-chart [totalMonthlyDeclarationsData]="currentMonthStatements"></app-total-monthly-declarations-chart>
             </div>
         }
-        <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
-            <div>
-                <h3 class="text-xl font-semibold ">Declaraciones en borrador</h3>
-                <p class="text-sm text-gray-500">Relacion anual de declaraciones en borrador</p>
-            </div>
-            <app-total-drafts-declarations-chart></app-total-drafts-declarations-chart>
-        </div>
 
+        @if (acceptedStatements) {
+            <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+                <div>
+                    <h3 class="text-xl font-semibold ">Declaraciones acceptadas</h3>
+                    <p class="text-sm text-gray-500">Correspondientes a {{ acceptedStatements.date | date:'MMMM y' }}</p>
+                </div>
+                <app-total-drafts-declarations-chart [totalAcceptedDeclarationsData]="acceptedStatements"></app-total-drafts-declarations-chart>
+            </div>
+        }
 
         <div class="col-span-2 space-y-6">
-            <app-statements-summary-cards></app-statements-summary-cards>
-            <app-statements-summary-by-status></app-statements-summary-by-status>
+            @if (summary) {
+                <app-statements-summary-cards [summaryData]="summary"></app-statements-summary-cards>
+            }
+            @if (globalStatements) {
+                <app-statements-summary-by-status [globalStatementsData]="globalStatements"></app-statements-summary-by-status>
+            }
         </div>
 
     </div>
