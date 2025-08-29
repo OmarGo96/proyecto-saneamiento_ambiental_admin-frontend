@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     public summary: any;
     public globalStatements: any;
 
-    public registrationRequest = RegistrationRequest;
+    public registrationRequest: any;
     public declarationsStatus = DeclarationsStatus
 
     ngOnInit() {
@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
                 this.acceptedStatements = data.accepted_statements;
                 this.summary = data.resumen;
                 this.globalStatements = data.global_statements;
+                this.registrationRequest = data.registration_requests;
             },
             error: err => {
                 this.alertsService.errorAlert(err.error.errors);
