@@ -13,4 +13,8 @@ export class ReportsService {
     generateGeneralReport(data: any): Observable<any> {
         return this.httpClient.post(`${this.url}/reports/general`, data, { responseType: 'blob' });
     }
+
+    getAnnualGrowth(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/annual-growth`);
+    }
 }

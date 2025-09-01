@@ -150,6 +150,66 @@ export const MenuItems = [
         role: []
     },
     {
+        path: 'reportes/crecimiento-anual',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Crecimiento anual',
+        icon: 'pi-chart-line',
+        class: '',
+        role: []
+    },
+    {
+        path: 'reportes/ocupacion-hotelera-anual',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Ocupación anual',
+        icon: 'pi-chart-scatter',
+        class: '',
+        role: []
+    },
+    {
+        path: 'reportes/ocupacion-hotelera-mensual',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Ocupación mensual',
+        icon: 'pi-calendar',
+        class: '',
+        role: []
+    },
+    {
+        path: 'reportes/declaraciones-por-empresa',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Declaraciones',
+        icon: 'pi-money-bill',
+        class: '',
+        role: []
+    },
+    {
+        path: 'reportes/hoteles-sin-declarar',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Hoteles sin declarar',
+        icon: 'pi-asterisk',
+        class: '',
+        role: []
+    },
+    {
+        path: 'reportes/cumplimiento',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Cumplimiento',
+        icon: 'pi-check-square',
+        class: '',
+        role: []
+    },
+    {
         path: '/usuarios',
         group: 'Usuarios',
         module: 'reports',
