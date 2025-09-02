@@ -17,9 +17,11 @@ import {RegistrationRequest} from '../../constants/demo';
 import {DashboardService} from '../../services/dashboard.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {ConfirmationService} from 'primeng/api';
-import {DatePipe} from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
 import {SkeletonModule} from 'primeng/skeleton';
 import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
+import {ReportsService} from '../../../reports/services/reports.service';
+import {FieldsetModule} from 'primeng/fieldset';
 
 @Component({
     selector: 'app-dashboard',
@@ -31,7 +33,9 @@ import {TableSkeletonComponent} from '../../../../shared/components/skeleton/tab
         StatementsSummaryByStatusComponent,
         SkeletonModule,
         DatePipe,
-        TableSkeletonComponent
+        TableSkeletonComponent,
+        DecimalPipe,
+        FieldsetModule
     ],
     providers: [AlertsService, ConfirmationService],
     templateUrl: './dashboard.component.html',
@@ -39,6 +43,7 @@ import {TableSkeletonComponent} from '../../../../shared/components/skeleton/tab
 })
 export class DashboardComponent implements OnInit {
 
+    private reportsService = inject(ReportsService);
     private dashboardService = inject(DashboardService);
     private alertsService = inject(AlertsService);
 
@@ -47,11 +52,27 @@ export class DashboardComponent implements OnInit {
     public summary: any;
     public globalStatements: any;
 
+    public statements: any;
+    public taxpayers: any;
+    public companies: any;
+
     public registrationRequest: any;
     public declarationsStatus = DeclarationsStatus
 
     ngOnInit() {
         this.getStatisticsReport();
+
+        this.reportsService.getAnnualGrowth().subscribe({
+            next: data => {
+                this.statements = data.statements;
+                this.taxpayers = data.taxpayers;
+                this.companies = data.companies;
+            },
+            error: err => {
+
+
+            }
+        })
     }
 
     getStatisticsReport(){

@@ -34,7 +34,7 @@ export default [
         component: StatementsByCompanyComponent
     },
     {
-        path: 'hoteles-sin-pagar',
+        path: 'hoteles-sin-declarar',
         component: HotelsWithoutStatementsComponent
     },
     {

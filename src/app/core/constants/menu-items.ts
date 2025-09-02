@@ -149,7 +149,7 @@ export const MenuItems = [
         class: '',
         role: []
     },
-    {
+   /* {
         path: 'reportes/crecimiento-anual',
         group: 'Reportes',
         module: 'reports',
@@ -158,7 +158,7 @@ export const MenuItems = [
         icon: 'pi-chart-line',
         class: '',
         role: []
-    },
+    },*/
     {
         path: 'reportes/ocupacion-hotelera-anual',
         group: 'Reportes',
@@ -180,7 +180,7 @@ export const MenuItems = [
         role: []
     },
     {
-        path: 'reportes/declaraciones-por-empresa',
+        path: 'reportes/declaraciones-pagadas',
         group: 'Reportes',
         module: 'reports',
         action: 'show',
@@ -200,7 +200,7 @@ export const MenuItems = [
         role: []
     },
     {
-        path: 'reportes/cumplimiento',
+        path: 'reportes/cumplimiento-por-empresas',
         group: 'Reportes',
         module: 'reports',
         action: 'show',

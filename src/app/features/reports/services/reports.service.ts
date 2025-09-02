@@ -17,4 +17,24 @@ export class ReportsService {
     getAnnualGrowth(): Observable<any> {
         return this.httpClient.get(`${this.url}/reports/annual-growth`);
     }
+
+    getHotelAnnualOccupancy(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/hotel-annual-occupancy`);
+    }
+
+    getHotelMonthlyOccupancy(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/hotel-monthly-occupancy`);
+    }
+
+    getStatementsByCompany(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/statements-by-company`);
+    }
+
+    getHotelWithoutStatements(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/hotels-without-statements`);
+    }
+
+    getCompanyCompliance(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/company-compliance`);
+    }
 }

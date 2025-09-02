@@ -1,1 +1,87 @@
-<p>hotels-without-statements works!</p>
+<div class="space-y-5">
+    <div class="flex items-center space-x-2">
+        <i class="pi pi-building"></i>
+        <h3 class="text-xl font-semibold ">Hoteles sin declarar</h3>
+    </div>
+
+    <p-iconfield iconPosition="left" class="w-1/3">
+        <p-inputicon styleClass="pi pi-search"/>
+        <input type="text"
+               pInputText
+               (input)="applyFilter($event)"
+               placeholder="Buscar registro por palabra clave"/>
+    </p-iconfield>
+
+    <div class="p-5 border rounded-xl text-sm">
+        @if (!isLoading) {
+            <p-table #table [value]="companies"
+                     [paginator]="true"
+                     [rows]="10"
+                     [showCurrentPageReport]="true"
+                     currentPageReportTemplate="Showing {first} to {last} from {totalRecords} records"
+                     [rowsPerPageOptions]="[10, 20, 30]"
+                     [globalFilterFields]="['nombre_establecimiento', 'licencia_funcionamiento_id', 'anio', 'mes', 'total_pagar']"
+                     size="small"
+            >
+                <ng-template pTemplate="header">
+                    <tr class="font-medium uppercase">
+                        <th>Hotel</th>
+                        <th>Licencia de funcionamiento</th>
+                        <th>RFC</th>
+                        <th>Representante</th>
+                        <th>Habitaciones</th>
+                        <th>Meses adeudados</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-company>
+                    <tr>
+                        <td>{{ company.hotel }}</td>
+                        <td>{{ company.licencia_funcionamiento }}</td>
+                        <td>{{ company.rfc }}</td>
+                        <td>
+                            <p>{{ company.representante }}</p>
+                            <p class="text-xs">{{ company.email }}</p>
+                            <p class="text-xs">{{ company.telefono }}</p>
+                        </td>
+                        <td>{{ company.habitaciones }}</td>
+                        <td>
+                            <p-button
+                                label="Ver meses"
+                                badge="{{ company.meses_adeudados.length }}"
+                                badgeSeverity="contrast"
+                                (click)="toggle($event, company.meses_adeudados)"
+                                [outlined]="true"
+                            />
+
+                            <p-popover #op>
+                                <div class="flex flex-col gap-2 p-3 w-[10rem]">
+                                    <span class="font-medium text-slate-500 block text-xs">Meses adeudados</span>
+                                    <ul class="list-none p-0 m-0 flex flex-col text-sm">
+                                        @for (month of selectedMonths; track month) {
+                                            <li class="flex items-center py-1">
+                                                {{ month }}
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </p-popover>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="10">
+                            <div class="flex flex-col text-center p-24 space-y-4">
+                                <i class="pi pi-box text-gray-400" style="font-size: 2.5rem"></i>
+                                <p class="font-medium text-lg text-gray-400">No se encontraron resultados</p>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        } @else {
+            <app-table-skeleton></app-table-skeleton>
+        }
+    </div>
+</div>
