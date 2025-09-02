@@ -14,6 +14,10 @@ export class ReportsService {
         return this.httpClient.post(`${this.url}/reports/general`, data, { responseType: 'blob' });
     }
 
+    getCollection(): Observable<any> {
+        return this.httpClient.get(`${this.url}/reports/collection`);
+    }
+
     getAnnualGrowth(): Observable<any> {
         return this.httpClient.get(`${this.url}/reports/annual-growth`);
     }

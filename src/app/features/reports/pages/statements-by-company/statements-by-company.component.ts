@@ -41,12 +41,14 @@ export class StatementsByCompanyComponent implements OnInit {
     }
 
     getStatementsByCompany() {
+        this.isLoading = true;
         this.reportsService.getStatementsByCompany().subscribe({
             next: data => {
-                console.log(data.companies)
+                this.isLoading = false;
                 this.companies = data.companies;
             },
             error: err => {
+                this.isLoading = false;
                 this.alertsService.errorAlert(err.error.errors);
             }
         })

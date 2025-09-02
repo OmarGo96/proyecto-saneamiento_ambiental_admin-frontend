@@ -1,7 +1,6 @@
 import {Routes} from '@angular/router';
 import {ReportsYearMonthComponent} from './pages/reports-year-month/reports-year-month.component';
 import {CollectionReportComponent} from './pages/collection-report/collection-report.component';
-import {AnnualGrowthComponent} from './pages/annual-growth/annual-growth.component';
 import {HotelAnnualOccupancyComponent} from './pages/hotel-annual-occupancy/hotel-annual-occupancy.component';
 import {HotelMonthlyOccupancyComponent} from './pages/hotel-monthly-occupancy/hotel-monthly-occupancy.component';
 import {StatementsByCompanyComponent} from './pages/statements-by-company/statements-by-company.component';
@@ -16,10 +15,6 @@ export default [
     {
         path: 'recaudacion',
         component: CollectionReportComponent
-    },
-    {
-        path: 'crecimiento-anual',
-        component: AnnualGrowthComponent
     },
     {
         path: 'ocupacion-hotelera-anual',

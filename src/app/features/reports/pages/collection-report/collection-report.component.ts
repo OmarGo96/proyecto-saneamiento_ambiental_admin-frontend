@@ -1,29 +1,64 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ChartModule} from 'primeng/chart';
+import {ReportsService} from '../../services/reports.service';
+import {AlertsService} from '../../../../core/services/alerts.service';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
-  selector: 'app-collection-report',
-  imports: [
-      ChartModule
-  ],
-  templateUrl: './collection-report.component.html',
-  styleUrl: './collection-report.component.scss'
+    selector: 'app-collection-report',
+    imports: [
+        ChartModule
+    ],
+    providers: [AlertsService, ConfirmationService],
+    templateUrl: './collection-report.component.html',
+    styleUrl: './collection-report.component.scss'
 })
 export class CollectionReportComponent implements OnInit {
 
-    data: any;
+    private reportsService = inject(ReportsService);
+    private alertsService = inject(AlertsService);
 
+    data: any;
     options: any;
 
+    public previousYear: any;
+    public currentYear: any;
+
     ngOnInit() {
-        this.initChart();
+
+
+        this.getCollectionReport();
     }
 
-    initChart(){
+    getCollectionReport() {
+        this.reportsService.getCollection().subscribe({
+            next: data => {
+                this.previousYear = data.previous_year;
+                this.currentYear = data.current_year;
+
+                this.initChart();
+            },
+            error: err => {
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        })
+    }
+
+    initChart() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--p-text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color');
         const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
+
+        const prevYearTotalValues = [];
+        const currYearTotalValues = [];
+        for (const value of this.previousYear) {
+            prevYearTotalValues.push(value.total);
+        }
+
+        for (const value of this.currentYear) {
+            currYearTotalValues.push(value.total);
+        }
 
         this.data = {
             labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -32,13 +67,13 @@ export class CollectionReportComponent implements OnInit {
                     label: 'Año anterior',
                     backgroundColor: documentStyle.getPropertyValue('--p-stone-500'),
                     borderColor: documentStyle.getPropertyValue('--p-stone-500'),
-                    data: [3036, 4488, 3959, 3126, 3967, 5530, 5961, 3782, 5129, 5796, 4608, 4557]
+                    data: prevYearTotalValues
                 },
                 {
                     label: 'Año en curso',
                     backgroundColor: documentStyle.getPropertyValue('--p-rose-900'),
                     borderColor: documentStyle.getPropertyValue('--p-rose-900'),
-                    data: [4756, 5237, 4134, 5905, 5386, 7097, 4443, 5403, 7572, 4976, 6590, 9635]
+                    data: currYearTotalValues
                 }
             ]
         };
