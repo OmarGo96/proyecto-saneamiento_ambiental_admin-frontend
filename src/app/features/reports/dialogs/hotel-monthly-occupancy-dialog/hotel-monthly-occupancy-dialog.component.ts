@@ -42,8 +42,8 @@ export class HotelMonthlyOccupancyDialogComponent {
             datasets: [
                 {
                     label: 'Porcentaje de ocupación',
-                    backgroundColor: documentStyle.getPropertyValue('--p-stone-500'),
-                    borderColor: documentStyle.getPropertyValue('--p-stone-500'),
+                    backgroundColor: documentStyle.getPropertyValue('--p-rose-900'),
+                    borderColor: documentStyle.getPropertyValue('--p-rose-900'),
                     data: occupancyAvarage
                 }
             ]

@@ -42,8 +42,8 @@ export class HotelAnnualOccupancyDialogComponent implements OnInit {
             datasets: [
                 {
                     label: 'Promedio de ocupación',
-                    backgroundColor: documentStyle.getPropertyValue('--p-stone-500'),
-                    borderColor: documentStyle.getPropertyValue('--p-stone-500'),
+                    backgroundColor: documentStyle.getPropertyValue('--p-rose-900'),
+                    borderColor: documentStyle.getPropertyValue('--p-rose-900'),
                     data: occupancyAvarage
                 }
             ]
