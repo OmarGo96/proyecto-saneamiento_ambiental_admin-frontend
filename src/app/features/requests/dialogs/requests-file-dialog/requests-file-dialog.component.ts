@@ -89,7 +89,7 @@ export class RequestsFileDialogComponent implements OnInit {
                 });
             },
             error: err => {
-                this.alertsService.errorAlert(err.error.message);
+                this.alertsService.errorAlert(err.error.errors);
             }
         })
     }

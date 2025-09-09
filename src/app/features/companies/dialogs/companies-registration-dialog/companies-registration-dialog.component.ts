@@ -53,7 +53,7 @@ export class CompaniesRegistrationDialogComponent implements OnInit {
             },
             error: err => {
                 this.isSearching = false;
-                this.alertsService.errorAlert([{message: err.error.errors}]);
+                this.alertsService.errorAlert(err.error.errors);
             }
         })
     }

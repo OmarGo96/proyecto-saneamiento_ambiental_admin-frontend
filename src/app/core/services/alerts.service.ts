@@ -32,7 +32,7 @@ export class AlertsService {
     errorAlert(messages: any) {
         let msg;
         messages.forEach((m: any) => {
-            msg = m.message;
+            msg = m;
         });
 
         Swal.fire({

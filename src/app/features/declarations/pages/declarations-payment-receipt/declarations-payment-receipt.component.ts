@@ -89,7 +89,7 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
             },
             error: err => {
                 this.spinner.hide();
-                this.alertsService.errorAlert([{message: err.error.errors}]);
+                this.alertsService.errorAlert(err.error.errors);
             }
         })
     }
