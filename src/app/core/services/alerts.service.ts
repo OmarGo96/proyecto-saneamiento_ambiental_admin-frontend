@@ -59,14 +59,14 @@ export class AlertsService {
                 message,
                 header: 'Confirmación',
                 icon: 'pi pi-question-circle',
-                rejectLabel: 'Cancel',
+                rejectLabel: 'Cancelar',
                 rejectButtonProps: {
                     label: 'Cancel',
                     severity: 'secondary',
                     outlined: true,
                 },
                 acceptButtonProps: {
-                    label: 'Continue',
+                    label: 'Continuar',
                     severity: 'pimary',
                 },
                 accept: () => {

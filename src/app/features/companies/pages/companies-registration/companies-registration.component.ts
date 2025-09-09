@@ -17,6 +17,8 @@ import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {
     CompaniesRegistrationDialogComponent
 } from '../../dialogs/companies-registration-dialog/companies-registration-dialog.component';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {ConfirmDialog} from 'primeng/confirmdialog';
 
 @Component({
     selector: 'app-companies-registration',
@@ -27,7 +29,8 @@ import {
         TableModule,
         PopoverModule,
         ButtonModule,
-        TableSkeletonComponent
+        TableSkeletonComponent,
+        ConfirmDialog
     ],
     providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './companies-registration.component.html',
@@ -38,6 +41,7 @@ export class CompaniesRegistrationComponent {
     @ViewChild('table') table: any | undefined;
 
     private companiesService = inject(CompaniesService);
+    private spinner = inject(NgxSpinnerService);
     private formBuilder = inject(FormBuilder);
     private dialogRef: DynamicDialogRef | undefined;
     private dialogService = inject(DialogService);
@@ -45,13 +49,12 @@ export class CompaniesRegistrationComponent {
     private router = inject(Router);
 
 
-
     public companies: any;
     public isLoading: boolean = false;
 
     public companiesStatus = CompaniesStatus;
 
-    public openSearchCompaniesDialog(){
+    public openSearchCompaniesDialog() {
         this.dialogRef = this.dialogService.open(CompaniesRegistrationDialogComponent, {
             header: 'Buscador de empresa',
             width: '40vw',
@@ -70,6 +73,28 @@ export class CompaniesRegistrationComponent {
                 this.companies = result;
             }
         });
+    }
+
+    saveCompany(company: any) {
+        this.alertsService.confirmRequest('¿Estás seguro de realizar esta acción?').subscribe({
+            next: res => {
+                this.spinner.show();
+                this.companiesService.saveCompany({...company}).subscribe({
+                    next: res => {
+                        this.spinner.hide();
+                        this.alertsService.successAlert(res.message).then(res => {
+                            if (res.isConfirmed) {
+                                this.companies = [];
+                            }
+                        });
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.alertsService.errorAlert(err.error.errors);
+                    }
+                });
+            }
+        })
     }
 
     public viewCompanyDetails(company: any) {
