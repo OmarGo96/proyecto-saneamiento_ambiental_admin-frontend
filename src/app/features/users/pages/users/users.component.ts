@@ -87,7 +87,7 @@ export class UsersComponent implements OnInit {
             data: {
                 user
             },
-            header: 'Update user',
+            header: 'Actualizar usuario',
             width: '20vw',
             closeOnEscape: false,
             modal: true,
