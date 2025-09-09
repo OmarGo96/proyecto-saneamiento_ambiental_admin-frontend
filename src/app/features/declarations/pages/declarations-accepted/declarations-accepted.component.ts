@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 import {DeclarationsStatus} from '../../constants/declarations-status';
 import {CurrencyPipe} from '@angular/common';
 import {ConfirmationService} from 'primeng/api';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'app-declarations-accepted',
@@ -36,6 +37,7 @@ export class DeclarationsAcceptedComponent implements OnInit {
 
     private declarationsService = inject(DeclarationsService)
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -51,12 +53,15 @@ export class DeclarationsAcceptedComponent implements OnInit {
 
     public getDeclarationsAccepted(){
         this.isLoading = true;
+        this.spinner.show();
         this.declarationsService.getDeclarationsByStatus('approved').subscribe({
             next: res => {
+                this.spinner.hide();
                 this.isLoading = false;
                 this.declarations = res.statements;
             },
             error: err => {
+                this.spinner.hide();
                 this.isLoading = false;
                 this.alertsService.errorAlert(err.error.errors);
             }

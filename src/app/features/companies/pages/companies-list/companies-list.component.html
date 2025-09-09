@@ -20,7 +20,7 @@
                      [showCurrentPageReport]="true"
                      currentPageReportTemplate="Showing {first} to {last} from {totalRecords} records"
                      [rowsPerPageOptions]="[10, 20, 30]"
-                     [globalFilterFields]="['nombre_establecimiento', 'licencia_funcionamiento_id', 'anio', 'mes', 'total_pagar']"
+                     [globalFilterFields]="['rfc', 'licencia_funcionamiento_id', 'nombre_establecimiento', 'habitaciones', 'propietario_nombre']"
                      size="small"
             >
                 <ng-template pTemplate="header">
@@ -32,7 +32,7 @@
                         <th>Habitaciones API</th>
                         <th>Propietario</th>
                         <th>Estatus</th>
-                        <th>Acciones</th>
+                        <th>Menú</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-company>

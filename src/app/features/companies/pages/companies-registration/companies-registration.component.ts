@@ -67,7 +67,7 @@ export class CompaniesRegistrationComponent {
 
         this.dialogRef.onClose.subscribe((result) => {
             if (result) {
-                console.log(result);
+                this.companies = result;
             }
         });
     }

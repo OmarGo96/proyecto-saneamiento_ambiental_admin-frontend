@@ -18,15 +18,15 @@
 
                     <form [formGroup]="loginForm" class="space-y-3" (keydown.enter)="onLogin()">
                         <div>
-                            <label>Email</label>
+                            <label>Correo electrónico</label>
                             <input type="text" pInputText formControlName="email"/>
                         </div>
                         <div>
-                            <label>Password</label>
+                            <label>Contraseña</label>
                             <p-password [feedback]="false" [toggleMask]="true" formControlName="password"/>
                         </div>
                         <p-button
-                            label="Login"
+                            label="Iniciar sesión"
                             size="small"
                             icon="pi pi-sign-in"
                             class="p-login-button"
@@ -48,6 +48,6 @@
             </div>
         </div>
 
-        <p class="text-white mt-3">&#64; {{ currentYear }} Company. All rights reserved.</p>
+        <p class="text-white mt-3">&#64; {{ currentYear }} H. Ayuntamiento de Playa del Carmen</p>
     </div>
 </div>

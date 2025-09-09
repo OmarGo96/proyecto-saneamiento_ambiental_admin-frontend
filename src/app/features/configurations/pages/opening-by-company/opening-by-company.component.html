@@ -10,7 +10,7 @@
             <input type="text"
                    (input)="applyFilter($event)"
                    pInputText
-                   placeholder="Buscar por palabra clave"/>
+                   placeholder="Buscar registro por palabra clave"/>
         </p-iconfield>
     </div>
 
@@ -22,7 +22,7 @@
                      [showCurrentPageReport]="true"
                      currentPageReportTemplate="Showing {first} to {last} from {totalRecords} records"
                      [rowsPerPageOptions]="[10, 20, 30]"
-                     [globalFilterFields]="['nombre_establecimiento', 'licencia_funcionamiento_id', 'anio', 'mes', 'total_pagar']"
+                     [globalFilterFields]="['rfc', 'licencia_funcionamiento_id', 'nombre_establecimiento', 'habitaciones', 'propietario_nombre']"
                      size="small"
             >
                 <ng-template pTemplate="header">
