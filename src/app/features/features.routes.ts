@@ -7,12 +7,17 @@ import {CompaniesComponent} from './companies/components/companies/companies.com
 import {ReportsComponent} from './reports/components/reports/reports.component';
 import {ConfigurationsComponent} from './configurations/components/configurations/configurations.component';
 import {DashboardComponent} from './dashboard/pages/dashboard/dashboard.component';
+import {GeolocationMapComponent} from './geolocation/pages/geolocation-map/geolocation-map.component';
 
 
 export default [
     {
         path: 'dashboard',
         component: DashboardComponent
+    },
+    {
+        path: 'geolocations',
+        component: GeolocationMapComponent
     },
     {
         path: 'declaraciones',

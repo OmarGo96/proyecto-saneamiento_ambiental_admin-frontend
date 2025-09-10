@@ -72,7 +72,7 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
         this.router.navigate(['/empresas/detalle']);
     }
 
-    public openGeolocationDialog(){
+    public openGeolocationDialog(company: any){
         this.dialogRef = this.dialogService.open(CompaniesGeolocationComponent, {
             header: 'Geolocalización de la empresa',
             width: '40vw',
@@ -83,6 +83,9 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
             breakpoints: {
                 '960px': '75vw',
                 '640px': '90vw'
+            },
+            data: {
+                company
             },
         });
 

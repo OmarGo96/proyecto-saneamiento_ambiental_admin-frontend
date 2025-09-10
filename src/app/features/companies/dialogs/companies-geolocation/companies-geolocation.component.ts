@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {environment} from '../../../../../environments/environment.development';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-companies-geolocation',
@@ -9,12 +10,20 @@ import {environment} from '../../../../../environments/environment.development';
   styleUrl: './companies-geolocation.component.scss'
 })
 export class CompaniesGeolocationComponent implements OnInit {
+
+    private dialogRef = inject(DynamicDialogRef);
+    private dialogConfig = inject(DynamicDialogConfig);
+
     public map: mapboxgl.Map;
     public style = `mapbox://styles/mapbox/streets-v12`;
     public zoom = 14;
 
+
+
     ngOnInit() {
-        this.initMap(Number(-87.0168141), Number(20.6991925));
+        const company = this.dialogConfig.data.company;
+
+        this.initMap(Number(company.longitude), Number(company.latitude));
     }
 
     initMap(lng: any, lat: any) {

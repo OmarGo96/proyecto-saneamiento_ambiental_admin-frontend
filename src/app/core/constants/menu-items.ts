@@ -10,6 +10,16 @@ export const MenuItems = [
         role: []
     },
     {
+        path: 'geolocations',
+        group: '',
+        module: 'geolocation',
+        action: 'show',
+        title: 'Geolocation',
+        icon: 'pi-map',
+        class: '',
+        role: []
+    },
+    {
         path: 'declaraciones/borradores',
         group: 'Declaraciones',
         module: 'Declaraciones',
