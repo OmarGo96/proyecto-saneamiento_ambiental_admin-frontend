@@ -15,6 +15,7 @@ import {ConfirmationService} from 'primeng/api';
 import {CurrencyPipe} from '@angular/common';
 import {TagModule} from 'primeng/tag';
 import {DividerModule} from 'primeng/divider';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
     selector: 'app-hotels-without-statements',
@@ -27,7 +28,6 @@ import {DividerModule} from 'primeng/divider';
         ButtonModule,
         TableSkeletonComponent,
         TagModule,
-        CurrencyPipe,
         DividerModule
     ],
     providers: [DialogService, AlertsService, ConfirmationService],
@@ -42,6 +42,7 @@ export class HotelsWithoutStatementsComponent implements OnInit {
     private reportsService = inject(ReportsService);
     private companiesService = inject(CompaniesService);
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -66,6 +67,20 @@ export class HotelsWithoutStatementsComponent implements OnInit {
                 this.alertsService.errorAlert(err.error.errors);
             }
         });
+    }
+
+    getSERPAPIInfo(serpToken: string){
+        this.spinner.show();
+        this.reportsService.getSERPAPIInfo(serpToken).subscribe({
+            next: data => {
+                this.spinner.hide();
+                console.log(data);
+            },
+            error: err => {
+                this.spinner.hide();
+                console.log(err);
+            }
+        })
     }
 
     toggle(event: any, months: any) {

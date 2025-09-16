@@ -41,4 +41,8 @@ export class ReportsService {
     getCompanyCompliance(): Observable<any> {
         return this.httpClient.get(`${this.url}/reports/company-compliance`);
     }
+
+    getSERPAPIInfo(serpToken: string): Observable<any> {
+        return this.httpClient.get(`${this.url}/search-in-google/${serpToken}`);
+    }
 }
