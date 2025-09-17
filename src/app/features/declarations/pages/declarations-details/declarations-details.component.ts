@@ -10,6 +10,8 @@ import {AlertsService} from '../../../../core/services/alerts.service';
 import {CurrencyPipe, Location, PercentPipe} from '@angular/common';
 import {ConfirmationService} from 'primeng/api';
 import {MessageModule} from 'primeng/message';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-declarations-details',
@@ -30,8 +32,9 @@ export class DeclarationsDetailsComponent implements OnInit {
 
 
     private declarationsService = inject(DeclarationsService);
-    private formBuilder = inject(FormBuilder);
+    private sanitizer = inject(DomSanitizer);
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private location = inject(Location);
 
     public declaration: any;
@@ -39,11 +42,32 @@ export class DeclarationsDetailsComponent implements OnInit {
     public isLoading: boolean = false;
     public isUpdating: boolean = false;
 
+    public pdfUrl: any;
+
     ngOnInit() {
         const declarationToken: any = localStorage.getItem(this.declarationsService.declarationToken);
         this.declaration = JSON.parse(atob(declarationToken));
 
-        console.log(this.declaration);
+    }
+
+    getDeclaractionFormat(declarationId: any){
+        this.spinner.show();
+        this.declarationsService.getStatementFormat(declarationId).subscribe({
+            next: data => {
+                this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+                window.open(this.pdfUrl.changingThisBreaksApplicationSecurity, '_blank')
+                this.spinner.hide();
+            },
+            error: err => {
+                console.log(err);
+                this.spinner.hide();
+                this.alertsService.errorAlert(['Ocurrio un error al obtener el documento. Intente de nuevo más tarde.']);
+            }
+        });
+    }
+
+    openPaseCaja(url: string) {
+        window.open(url, '_blank');
     }
 
     goBack() {

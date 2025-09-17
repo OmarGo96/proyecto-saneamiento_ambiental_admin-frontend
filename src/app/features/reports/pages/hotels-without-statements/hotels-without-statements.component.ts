@@ -74,43 +74,50 @@ export class HotelsWithoutStatementsComponent implements OnInit {
     }
 
     getSERPAPIInfo(company: any) {
-        this.spinner.show();
+       /* this.openSERPAPIInfoDialog(company, {
+            web_url: "https://www.barcelo.com/en-us/occidental-at-xcaret-destination/?utm_source=google&utm_medium=or…",
+            address: "Camino a Xcaret Carretera Federal Chetumal - Puerto, Avenida Benito Juárez, 282, 77710 Playa del Carmen, Q.R., Mexico",
+            hotel_class: "5-star hotel",
+            market_offer: []
+        });*/
 
-        setTimeout(()=> {
-            this.spinner.hide();
-            this.dialogRef = this.dialogService.open(HotelSerpInfoDialogComponent, {
-                header: company.hotel,
-                width: '40vw',
-                closeOnEscape: false,
-                modal: true,
-                closable: true,
-                baseZIndex: 1,
-                breakpoints: {
-                    '960px': '75vw',
-                    '640px': '90vw'
-                },
-                data: {
-                    company
-                },
-            });
 
-            this.dialogRef.onClose.subscribe((result) => {
-                if (result) {
-                    console.log(result);
-                }
-            });
-        }, 2500);
 
-        /*this.reportsService.getSERPAPIInfo(serpToken).subscribe({
-            next: data => {
+        this.reportsService.getSERPAPIInfo(company.property_token_serp_api).subscribe({
+            next: res => {
                 this.spinner.hide();
-                console.log(data);
+                this.openSERPAPIInfoDialog(company, res.data);
             },
             error: err => {
                 this.spinner.hide();
-                console.log(err);
+                this.alertsService.errorAlert(err.error.errors);
             }
-        })*/
+        })
+    }
+
+    openSERPAPIInfoDialog(company: any, serpInfo: any) {
+        this.dialogRef = this.dialogService.open(HotelSerpInfoDialogComponent, {
+            header: company.hotel,
+            width: '40vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                company,
+                serp_info: serpInfo
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                console.log(result);
+            }
+        });
     }
 
     toggle(event: any, months: any) {
