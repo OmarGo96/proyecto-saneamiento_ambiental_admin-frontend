@@ -15,6 +15,11 @@ import {ConfirmationService} from 'primeng/api';
 import {CurrencyPipe} from '@angular/common';
 import {TagModule} from 'primeng/tag';
 import {DividerModule} from 'primeng/divider';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {
+    CompaniesGeolocationComponent
+} from '../../../companies/dialogs/companies-geolocation/companies-geolocation.component';
+import {HotelSerpInfoDialogComponent} from '../../dialogs/hotel-serp-info-dialog/hotel-serp-info-dialog.component';
 
 @Component({
     selector: 'app-hotels-without-statements',
@@ -27,7 +32,6 @@ import {DividerModule} from 'primeng/divider';
         ButtonModule,
         TableSkeletonComponent,
         TagModule,
-        CurrencyPipe,
         DividerModule
     ],
     providers: [DialogService, AlertsService, ConfirmationService],
@@ -42,6 +46,7 @@ export class HotelsWithoutStatementsComponent implements OnInit {
     private reportsService = inject(ReportsService);
     private companiesService = inject(CompaniesService);
     private alertsService = inject(AlertsService);
+    private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -54,7 +59,7 @@ export class HotelsWithoutStatementsComponent implements OnInit {
         this.getHotelWithoutStatements();
     }
 
-    getHotelWithoutStatements(){
+    getHotelWithoutStatements() {
         this.isLoading = true;
         this.reportsService.getHotelWithoutStatements().subscribe({
             next: data => {
@@ -66,6 +71,46 @@ export class HotelsWithoutStatementsComponent implements OnInit {
                 this.alertsService.errorAlert(err.error.errors);
             }
         });
+    }
+
+    getSERPAPIInfo(company: any) {
+        this.spinner.show();
+
+        setTimeout(()=> {
+            this.spinner.hide();
+            this.dialogRef = this.dialogService.open(HotelSerpInfoDialogComponent, {
+                header: company.hotel,
+                width: '40vw',
+                closeOnEscape: false,
+                modal: true,
+                closable: true,
+                baseZIndex: 1,
+                breakpoints: {
+                    '960px': '75vw',
+                    '640px': '90vw'
+                },
+                data: {
+                    company
+                },
+            });
+
+            this.dialogRef.onClose.subscribe((result) => {
+                if (result) {
+                    console.log(result);
+                }
+            });
+        }, 2500);
+
+        /*this.reportsService.getSERPAPIInfo(serpToken).subscribe({
+            next: data => {
+                this.spinner.hide();
+                console.log(data);
+            },
+            error: err => {
+                this.spinner.hide();
+                console.log(err);
+            }
+        })*/
     }
 
     toggle(event: any, months: any) {

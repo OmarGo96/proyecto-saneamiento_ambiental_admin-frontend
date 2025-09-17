@@ -1,0 +1,31 @@
+<div class="space-y-3">
+    <h1 class="font-medium">Información recolectada de SERP API:</h1>
+
+    <div>
+        <p><span class="font-bold">Dirección:</span> {{ serpInfo.data.address }}</p>
+        <p><span class="font-bold">Clase de hotel:</span> {{ serpInfo.data.hotel_class }}</p>
+    </div>
+
+    <div>
+        <p-table [value]="serpInfo.data.market_offer" [tableStyle]="{ 'min-width': '100%' }" size="small">
+            <ng-template #header>
+                <tr>
+                    <th>Plataforma</th>
+                    <th>Num. habitaciones</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-market>
+                <tr>
+                    <td>{{ market.source }}</td>
+                    <td>{{ market.rooms }} habitaciones</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div>
+        <a href="{{ serpInfo.data.web_url }}" target="_blank" rel="noopener noreferrer" class="p-button font-bold">
+            Ver sitio oficial
+        </a>
+    </div>
+</div>

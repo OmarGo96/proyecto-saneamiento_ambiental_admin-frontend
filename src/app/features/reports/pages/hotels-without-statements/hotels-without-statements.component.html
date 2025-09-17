@@ -31,6 +31,7 @@
                         <th>Representante</th>
                         <th>Habitaciones</th>
                         <th>Meses adeudados</th>
+                        <th>SERP API</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-company>
@@ -65,6 +66,9 @@
                                     </ul>
                                 </div>
                             </p-popover>
+                        </td>
+                        <td>
+                            <p-button label="Consultar" (click)="getSERPAPIInfo(company)"/>
                         </td>
                     </tr>
                 </ng-template>
