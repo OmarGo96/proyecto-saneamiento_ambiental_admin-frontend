@@ -32,6 +32,7 @@
                         <th>Propietario</th>
                         <th>Estatus</th>
                         <th>Menú</th>
+                        <th>SERP API</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-company>
@@ -41,6 +42,7 @@
                         <td>{{ company.nombre_establecimiento }}</td>
                         <td>{{ company.habitaciones }}</td>
                         <td>{{ company.propietario_nombre }}</td>
+
                         <td>
                             @for (status of companiesStatus; track status){
                                 @if (company.estatus === status.value) {
@@ -99,6 +101,9 @@
                                     </ul>
                                 </div>
                             </p-popover>
+                        </td>
+                        <td>
+                            <p-button label="Consultar" (click)="getSERPAPIInfo(company)"/>
                         </td>
                     </tr>
                 </ng-template>

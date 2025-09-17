@@ -1,147 +1,149 @@
 @if (declaration) {
-    <div class="w-2/3 mx-auto space-y-5">
-        <div>
-            <div class="flex items-center justify-between space-x-2">
-                <div class="flex items-center space-x-2">
-                    <p-button
-                        icon="pi pi-arrow-left"
-                        [rounded]="true"
-                        severity="secondary"
-                        [outlined]="true"
-                        (click)="goBack()"
-                    />
-                    <h3 class="text-xl font-semibold ">Información de la declaración</h3>
-                </div>
-                @for (status of declarationsStatus; track status) {
-                    @if (status.value === declaration.status) {
-                        <span class="{{ status.styles }} font-medium me-2 px-2.5 py-0.5 rounded-full">
+    <div class="grid grid-cols-6">
+        <div class="col-start-2 col-span-4 space-y-5">
+            <div>
+                <div class="flex items-center justify-between space-x-2">
+                    <div class="flex items-center space-x-2">
+                        <p-button
+                            icon="pi pi-arrow-left"
+                            [rounded]="true"
+                            severity="secondary"
+                            [outlined]="true"
+                            (click)="goBack()"
+                        />
+                        <h3 class="text-xl font-semibold ">Información de la declaración</h3>
+                    </div>
+                    @for (status of declarationsStatus; track status) {
+                        @if (status.value === declaration.status) {
+                            <span class="{{ status.styles }} font-medium me-2 px-2.5 py-0.5 rounded-full">
                             {{ status.name }}
                         </span>
+                        }
                     }
-                }
+                </div>
             </div>
-        </div>
 
-        <div class="flex gap-5">
-            <section class="bg-white border rounded-xl">
-                <div class="p-5 mx-auto">
-                    <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">
-                        {{ declaration.nombre_establecimiento }}
-                    </h2>
-                    <dl>
-                        <dt class="mb-2 font-semibold leading-none text-gray-900">Licencia de funcionamiento</dt>
-                        <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                            {{ declaration.licencia_funcionamiento_id }}
-                        </dd>
-                    </dl>
-                    <dl class="grid grid-cols-3">
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Periodo de declaración</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ declaration.mes }} {{ declaration.anio }}</dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Tipo de declaración</dt>
+            <div class="flex gap-5">
+                <section class="bg-white border rounded-xl">
+                    <div class="p-5 mx-auto">
+                        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">
+                            {{ declaration.nombre_establecimiento }}
+                        </h2>
+                        <dl>
+                            <dt class="mb-2 font-semibold leading-none text-gray-900">Licencia de funcionamiento</dt>
                             <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                @if (declaration.tipo_declaracion === 1) {
-                                    <span>Normal</span>
-                                } @else if(declaration.tipo_declaracion === 2) {
-                                    <span>Complementaria</span>
-                                }
+                                {{ declaration.licencia_funcionamiento_id }}
                             </dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Total de habitaciones</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ declaration.habitaciones }}</dd>
-                        </div>
-                    </dl>
-                    <dl class="grid grid-cols-3">
+                        </dl>
+                        <dl class="grid grid-cols-3">
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Periodo de declaración</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ declaration.mes }} {{ declaration.anio }}</dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Tipo de declaración</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    @if (declaration.tipo_declaracion === 1) {
+                                        <span>Normal</span>
+                                    } @else if(declaration.tipo_declaracion === 2) {
+                                        <span>Complementaria</span>
+                                    }
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Total de habitaciones</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ declaration.habitaciones }}</dd>
+                            </div>
+                        </dl>
+                        <dl class="grid grid-cols-3">
 
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Ocupación declarada</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.ocupacion }}
-                            </dd>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Ocupación declarada</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.ocupacion }}
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Porcentaje de ocupación</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.porcentaje_ocupacion }} %
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Porcentaje de descuento</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.procentaje_descuento }} %
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="grid grid-cols-3">
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Importe derecho</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.importe_derecho | currency }}
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Importe de descuento</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.importe_descuento | currency}}
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Importa de actualización</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.importe_actualizacion | currency}}
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="grid grid-cols-3">
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Importe recargo</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.importe_recargo | currency}}
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Total a pagar</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    {{ declaration.total_pagar | currency }}
+                                </dd>
+                            </div>
+                        </dl>
+                        <div class="flex items-center space-x-4">
+                            <p-button icon="pi pi-file-pdf" label="Forma declarativa" />
+                            <p-button icon="pi pi-receipt" label="Pase a caja" />
                         </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Porcentaje de ocupación</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.porcentaje_ocupacion }} %
-                            </dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Porcentaje de descuento</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.procentaje_descuento }} %
-                            </dd>
-                        </div>
-                    </dl>
-                    <dl class="grid grid-cols-3">
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Importe derecho</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.importe_derecho | currency }}
-                            </dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Importe de descuento</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.importe_descuento | currency}}
-                            </dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Importa de actualización</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.importe_actualizacion | currency}}
-                            </dd>
-                        </div>
-                    </dl>
-                    <dl class="grid grid-cols-3">
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Importe recargo</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.importe_recargo | currency}}
-                            </dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Total a pagar</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                {{ declaration.total_pagar | currency }}
-                            </dd>
-                        </div>
-                    </dl>
-                    <div class="flex items-center space-x-4">
-                        <p-button icon="pi pi-file-pdf" label="Forma declarativa" />
-                        <p-button icon="pi pi-receipt" label="Pase a caja" />
                     </div>
-                </div>
-                <div class="p-5 mx-auto space-y-5 border-t">
-                    <h3 class="text-xl font-semibold ">Información de pago</h3>
+                    <div class="p-5 mx-auto space-y-5 border-t">
+                        <h3 class="text-xl font-semibold ">Información de pago</h3>
 
-                    <dl class="grid grid-cols-4">
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Banco emisor</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">NULL</dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Folio/Referencia/Serie</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                                NULL
-                            </dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Fecha de pago</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">NULL</dd>
-                        </div>
-                        <div>
-                            <dt class="mb-2 font-semibold leading-none text-gray-900">Monto pagado</dt>
-                            <dd class="mb-4 font-light text-gray-500 sm:mb-5">NULL</dd>
-                        </div>
+                        <dl class="grid grid-cols-4">
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Banco emisor</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">NULL</dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Folio/Referencia/Serie</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                                    NULL
+                                </dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Fecha de pago</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">NULL</dd>
+                            </div>
+                            <div>
+                                <dt class="mb-2 font-semibold leading-none text-gray-900">Monto pagado</dt>
+                                <dd class="mb-4 font-light text-gray-500 sm:mb-5">NULL</dd>
+                            </div>
 
-                    </dl>
-                </div>
-            </section>
-            <p-message severity="info">Ocupación obtenida desde API</p-message>
+                        </dl>
+                    </div>
+                </section>
+                <!--<p-message severity="info">Ocupación obtenida desde API</p-message>-->
+            </div>
+
         </div>
-
     </div>
 }

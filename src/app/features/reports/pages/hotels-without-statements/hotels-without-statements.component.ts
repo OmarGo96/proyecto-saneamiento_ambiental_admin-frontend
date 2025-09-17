@@ -16,6 +16,10 @@ import {CurrencyPipe} from '@angular/common';
 import {TagModule} from 'primeng/tag';
 import {DividerModule} from 'primeng/divider';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {
+    CompaniesGeolocationComponent
+} from '../../../companies/dialogs/companies-geolocation/companies-geolocation.component';
+import {HotelSerpInfoDialogComponent} from '../../dialogs/hotel-serp-info-dialog/hotel-serp-info-dialog.component';
 
 @Component({
     selector: 'app-hotels-without-statements',
@@ -55,7 +59,7 @@ export class HotelsWithoutStatementsComponent implements OnInit {
         this.getHotelWithoutStatements();
     }
 
-    getHotelWithoutStatements(){
+    getHotelWithoutStatements() {
         this.isLoading = true;
         this.reportsService.getHotelWithoutStatements().subscribe({
             next: data => {
@@ -69,9 +73,35 @@ export class HotelsWithoutStatementsComponent implements OnInit {
         });
     }
 
-    getSERPAPIInfo(serpToken: string){
+    getSERPAPIInfo(company: any) {
         this.spinner.show();
-        this.reportsService.getSERPAPIInfo(serpToken).subscribe({
+
+        setTimeout(()=> {
+            this.spinner.hide();
+            this.dialogRef = this.dialogService.open(HotelSerpInfoDialogComponent, {
+                header: company.hotel,
+                width: '40vw',
+                closeOnEscape: false,
+                modal: true,
+                closable: true,
+                baseZIndex: 1,
+                breakpoints: {
+                    '960px': '75vw',
+                    '640px': '90vw'
+                },
+                data: {
+                    company
+                },
+            });
+
+            this.dialogRef.onClose.subscribe((result) => {
+                if (result) {
+                    console.log(result);
+                }
+            });
+        }, 2500);
+
+        /*this.reportsService.getSERPAPIInfo(serpToken).subscribe({
             next: data => {
                 this.spinner.hide();
                 console.log(data);
@@ -80,7 +110,7 @@ export class HotelsWithoutStatementsComponent implements OnInit {
                 this.spinner.hide();
                 console.log(err);
             }
-        })
+        })*/
     }
 
     toggle(event: any, months: any) {
