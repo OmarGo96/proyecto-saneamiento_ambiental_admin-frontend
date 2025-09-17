@@ -142,7 +142,7 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
 
     openSERPAPIInfoDialog(company: any, serpInfo: any) {
         this.dialogRef = this.dialogService.open(HotelSerpInfoDialogComponent, {
-            header: company.hotel,
+            header: company.nombre_establecimiento,
             width: '40vw',
             closeOnEscape: false,
             modal: true,
