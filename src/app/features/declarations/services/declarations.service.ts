@@ -30,6 +30,6 @@ export class DeclarationsService {
     }
 
     getStatementFormat(declarationId: any): Observable<any> {
-        return this.httpClient.get(`${this.url}statement/format-admin/${declarationId}`, { responseType: 'blob' });
+        return this.httpClient.get(`${this.url}/statement/format-admin/${declarationId}`, { responseType: 'blob' });
     }
 }
