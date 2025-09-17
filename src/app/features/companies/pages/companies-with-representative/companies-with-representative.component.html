@@ -31,8 +31,8 @@
                         <th>Habitaciones</th>
                         <th>Propietario</th>
                         <th>Estatus</th>
+                        <th>Google API</th>
                         <th>Menú</th>
-                        <th>SERP API</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-company>
@@ -51,6 +51,9 @@
                                     </span>
                                 }
                             }
+                        </td>
+                        <td>
+                            <p-button label="Consultar" severity="success" icon="pi pi-search" class="text-xs"  (click)="getSERPAPIInfo(company)"/>
                         </td>
                         <td class="space-x-3">
                             <p-button icon="pi pi-ellipsis-v"
@@ -102,9 +105,7 @@
                                 </div>
                             </p-popover>
                         </td>
-                        <td>
-                            <p-button label="Consultar" (click)="getSERPAPIInfo(company)"/>
-                        </td>
+
                     </tr>
                 </ng-template>
 

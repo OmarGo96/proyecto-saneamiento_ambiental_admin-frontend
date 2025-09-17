@@ -31,7 +31,7 @@
                         <th>Representante</th>
                         <th>Habitaciones</th>
                         <th>Meses adeudados</th>
-                        <th>SERP API</th>
+                        <th>Google API</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-company>
@@ -52,6 +52,7 @@
                                 badgeSeverity="contrast"
                                 (click)="toggle($event, company.meses_adeudados)"
                                 [outlined]="true"
+                                class="text-xs"
                             />
 
                             <p-popover #op>
@@ -68,7 +69,7 @@
                             </p-popover>
                         </td>
                         <td>
-                            <p-button label="Consultar" (click)="getSERPAPIInfo(company)"/>
+                            <p-button label="Consultar" severity="success" icon="pi pi-search" class="text-xs"  (click)="getSERPAPIInfo(company)"/>
                         </td>
                     </tr>
                 </ng-template>

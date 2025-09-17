@@ -28,4 +28,8 @@ export class DeclarationsService {
     attachPaymentReceipt(declarationId: any, data: any){
         return this.httpClient.post(`${this.url}/statement/attach-receipt/${declarationId}`, data);
     }
+
+    getStatementFormat(declarationId: any): Observable<any> {
+        return this.httpClient.get(`${this.url}statement/format-admin/${declarationId}`, { responseType: 'blob' });
+    }
 }

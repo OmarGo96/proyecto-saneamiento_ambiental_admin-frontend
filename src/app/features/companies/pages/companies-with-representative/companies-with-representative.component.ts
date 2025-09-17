@@ -19,6 +19,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {
     HotelSerpInfoDialogComponent
 } from '../../../reports/dialogs/hotel-serp-info-dialog/hotel-serp-info-dialog.component';
+import {ReportsService} from '../../../reports/services/reports.service';
 
 @Component({
     selector: 'app-companies-with-representative',
@@ -39,6 +40,7 @@ import {
 export class CompaniesWithRepresentativeComponent implements OnInit {
     @ViewChild('table') table: any | undefined;
 
+    private reportsService = inject(ReportsService);
     private companiesService = inject(CompaniesService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
@@ -126,41 +128,41 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
     getSERPAPIInfo(company: any) {
         this.spinner.show();
 
-        setTimeout(()=> {
-            this.spinner.hide();
-            this.dialogRef = this.dialogService.open(HotelSerpInfoDialogComponent, {
-                header: company.nombre_establecimiento,
-                width: '40vw',
-                closeOnEscape: false,
-                modal: true,
-                closable: true,
-                baseZIndex: 1,
-                breakpoints: {
-                    '960px': '75vw',
-                    '640px': '90vw'
-                },
-                data: {
-                    company
-                },
-            });
-
-            this.dialogRef.onClose.subscribe((result) => {
-                if (result) {
-                    console.log(result);
-                }
-            });
-        }, 2500);
-
-        /*this.reportsService.getSERPAPIInfo(serpToken).subscribe({
-            next: data => {
+        this.reportsService.getSERPAPIInfo(company.property_token_serp_api).subscribe({
+            next: res => {
                 this.spinner.hide();
-                console.log(data);
+                this.openSERPAPIInfoDialog(company, res.data);
             },
             error: err => {
                 this.spinner.hide();
-                console.log(err);
+                this.alertsService.errorAlert(err.error.errors);
             }
-        })*/
+        })
+    }
+
+    openSERPAPIInfoDialog(company: any, serpInfo: any) {
+        this.dialogRef = this.dialogService.open(HotelSerpInfoDialogComponent, {
+            header: company.hotel,
+            width: '40vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                company,
+                serp_info: serpInfo
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                console.log(result);
+            }
+        });
     }
 
     public disableCompany(company: any){
