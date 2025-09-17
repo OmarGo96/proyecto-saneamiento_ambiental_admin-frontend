@@ -81,7 +81,7 @@ export class HotelsWithoutStatementsComponent implements OnInit {
             market_offer: []
         });*/
 
-
+        this.spinner.show();
 
         this.reportsService.getSERPAPIInfo(company.property_token_serp_api).subscribe({
             next: res => {
