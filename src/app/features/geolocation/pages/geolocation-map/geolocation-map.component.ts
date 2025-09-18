@@ -3,16 +3,21 @@ import {GeolocationService} from '../../services/geolocation.service';
 import * as mapboxgl from 'mapbox-gl';
 import {environment} from '../../../../../environments/environment.development';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {forkJoin} from 'rxjs';
+import {AlertsService} from '../../../../core/services/alerts.service';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
-  selector: 'app-geolocation-map',
-  imports: [],
-  templateUrl: './geolocation-map.component.html',
-  styleUrl: './geolocation-map.component.scss'
+    selector: 'app-geolocation-map',
+    imports: [],
+    providers: [AlertsService, ConfirmationService],
+    templateUrl: './geolocation-map.component.html',
+    styleUrl: './geolocation-map.component.scss'
 })
 export class GeolocationMapComponent implements OnInit {
 
     private geolocationService = inject(GeolocationService);
+    private alertsService = inject(AlertsService);
     private spinner = inject(NgxSpinnerService);
 
     public map: mapboxgl.Map;
@@ -23,15 +28,12 @@ export class GeolocationMapComponent implements OnInit {
     public companiesFeatures: any[] = [];
 
     ngOnInit() {
-        this.initMap(Number(-87.1800222), Number(20.5653963));
-        this.getGeolocation();
-    }
-
-    getGeolocation() {
-        this.spinner.show();
-        this.geolocationService.getCompaniesGeolocation().subscribe({
-            next: data => {
-                for (let feature of data.companies) {
+        forkJoin({
+            companies: this.geolocationService.getCompaniesGeolocation()
+        }).subscribe({
+            next: ({companies}) => {
+                this.initMap(Number(-87.1800222), Number(20.5653963));
+                for (let feature of companies.companies) {
                     this.companiesFeatures.push(
                         {
                             geometry: {
@@ -47,6 +49,18 @@ export class GeolocationMapComponent implements OnInit {
                         },
                     );
                 }
+            },
+            error: err => {
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        });
+    }
+
+    getGeolocation() {
+        this.spinner.show();
+        this.geolocationService.getCompaniesGeolocation().subscribe({
+            next: data => {
+
 
                 this.spinner.hide();
             },
@@ -57,7 +71,7 @@ export class GeolocationMapComponent implements OnInit {
     }
 
     initMap(lng: any, lat: any) {
-        if (this.map){
+        if (this.map) {
             this.map.remove();
         }
 
@@ -100,7 +114,7 @@ export class GeolocationMapComponent implements OnInit {
             // location of the feature, with description HTML from its properties.
             this.map.addInteraction('companies-click-interaction', {
                 type: 'click',
-                target: { layerId: 'companies-points' },
+                target: {layerId: 'companies-points'},
                 handler: (e) => {
                     // Copy coordinates array.
                     const coordinates: any = [e.lngLat.lng, e.lngLat.lat];
@@ -116,7 +130,7 @@ export class GeolocationMapComponent implements OnInit {
             // Change the cursor to a pointer when the mouse is over a POI.
             this.map.addInteraction('places-mouseenter-interaction', {
                 type: 'mouseenter',
-                target: { layerId: 'companies-points' },
+                target: {layerId: 'companies-points'},
                 handler: () => {
                     this.map.getCanvas().style.cursor = 'pointer';
                 }
@@ -125,7 +139,7 @@ export class GeolocationMapComponent implements OnInit {
             // Change the cursor back to a pointer when it stops hovering over a POI.
             this.map.addInteraction('places-mouseleave-interaction', {
                 type: 'mouseleave',
-                target: { layerId: 'companies-points' },
+                target: {layerId: 'companies-points'},
                 handler: () => {
                     this.map.getCanvas().style.cursor = '';
                 }
@@ -133,8 +147,6 @@ export class GeolocationMapComponent implements OnInit {
 
             this.map.resize();
         });
-
-
 
 
     }

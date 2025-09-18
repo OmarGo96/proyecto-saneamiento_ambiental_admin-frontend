@@ -1,6 +1,6 @@
-import {ApplicationConfig, LOCALE_ID, provideZoneChangeDetection} from '@angular/core';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { providePrimeNG } from 'primeng/config';
+import {ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID, provideZoneChangeDetection} from '@angular/core';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {providePrimeNG} from 'primeng/config';
 import {provideRouter, withComponentInputBinding} from '@angular/router';
 import {routes} from './app.routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
@@ -27,6 +27,7 @@ export const appConfig: ApplicationConfig = {
         }),
         provideRouter(routes, withComponentInputBinding()),
         provideHttpClient(withInterceptors([jwtInterceptor])),
-        { provide: LOCALE_ID, useValue: 'es' },
+        {provide: LOCALE_ID, useValue: 'es'},
+        {provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN'}
     ]
 };
