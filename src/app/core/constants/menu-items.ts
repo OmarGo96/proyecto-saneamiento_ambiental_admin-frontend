@@ -14,7 +14,7 @@ export const MenuItems = [
         group: '',
         module: 'geolocation',
         action: 'show',
-        title: 'Geolocation',
+        title: 'Geolocalización',
         icon: 'pi-map',
         class: '',
         role: []
