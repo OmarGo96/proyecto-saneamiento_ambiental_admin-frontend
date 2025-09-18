@@ -27,6 +27,6 @@ export const appConfig: ApplicationConfig = {
         }),
         provideRouter(routes, withComponentInputBinding()),
         provideHttpClient(withInterceptors([jwtInterceptor])),
-        { provide: LOCALE_ID, useValue: 'es' },
+        { provide: LOCALE_ID, useValue: 'es-MX' },
     ]
 };
