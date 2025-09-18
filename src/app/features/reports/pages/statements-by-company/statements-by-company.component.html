@@ -40,9 +40,9 @@
                         <td>{{ company.habitaciones }}</td>
                         <td>
                             @if (company.monto_recaudado > 0) {
-                                <span class="text-green-500">{{ company.monto_recaudado | currency }}</span>
+                                <span class="text-green-500">$ {{ company.monto_recaudado | currency:'MXN' }}</span>
                             } @else {
-                                <span class="text-red-500">{{ company.monto_recaudado | currency }}</span>
+                                <span class="text-red-500">$ {{ company.monto_recaudado | currency:'MXN' }}</span>
                             }
                         </td>
                     </tr>

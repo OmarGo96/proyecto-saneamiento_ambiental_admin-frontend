@@ -51,7 +51,7 @@
                                 <span>Complementaria</span>
                             }
                         </td>
-                        <td>{{ declaration.total_pagar | currency }}</td>
+                        <td>{{ declaration.total_pagar | currency }} MXN</td>
                         <td>
                             @for (status of declarationsStatus; track status){
                                 @if (declaration.estatus === status.value) {
