@@ -14,6 +14,9 @@ import {DeclarationsStatus} from '../../constants/declarations-status';
 import {CurrencyPipe} from '@angular/common';
 import {ConfirmationService} from 'primeng/api';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {
+    UploadDeclarationPaymentReceiptDialogComponent
+} from '../../dialogs/upload-declaration-payment-receipt-dialog/upload-declaration-payment-receipt-dialog.component';
 
 @Component({
     selector: 'app-declarations-accepted',
@@ -71,6 +74,30 @@ export class DeclarationsAcceptedComponent implements OnInit {
     public viewDeclarationDetails(declaration: any) {
         localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
         this.router.navigate(['/declaraciones/detalle']);
+    }
+
+    public openUploadPaymentReceipt(declaration: any){
+        this.dialogRef = this.dialogService.open(UploadDeclarationPaymentReceiptDialogComponent, {
+            header: 'Adjuntar recibo de pago',
+            width: '40vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                declaration
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getDeclarationsAccepted();
+            }
+        });
     }
 
     applyFilter(event: Event) {
