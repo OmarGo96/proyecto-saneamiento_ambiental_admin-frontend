@@ -17,6 +17,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {
     UploadDeclarationPaymentReceiptDialogComponent
 } from '../../dialogs/upload-declaration-payment-receipt-dialog/upload-declaration-payment-receipt-dialog.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-declarations-accepted',
@@ -41,6 +42,7 @@ export class DeclarationsAcceptedComponent implements OnInit {
     private declarationsService = inject(DeclarationsService)
     private alertsService = inject(AlertsService);
     private spinner = inject(NgxSpinnerService);
+    private sanitizer = inject(DomSanitizer);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -49,6 +51,8 @@ export class DeclarationsAcceptedComponent implements OnInit {
     public declarationsStatus = DeclarationsStatus;
     public isLoading: boolean = false;
     public isDeleting: boolean = false;
+
+    public pdfUrl: any;
 
     ngOnInit() {
         this.getDeclarationsAccepted()
@@ -98,6 +102,21 @@ export class DeclarationsAcceptedComponent implements OnInit {
                 this.getDeclarationsAccepted();
             }
         });
+    }
+
+    public getDeclarationReceipt(fileName: string){
+        this.spinner.show();
+        this.declarationsService.getDeclarationReceipt(fileName).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(res));
+                window.open(this.pdfUrl.changingThisBreaksApplicationSecurity, '_blank')
+            },
+            error: err => {
+                this.spinner.hide();
+                this.alertsService.errorAlert(['Ocurrio un error al obtener el documento. Intente de nuevo más tarde.']);
+            }
+        })
     }
 
     applyFilter(event: Event) {
