@@ -77,7 +77,7 @@
                                                 <span>Ver detalle</span>
                                             </a>
                                         </li>
-                                        @if (declaration.estatus == 1 && !declaration.banco && declaration.ceros == 0) {
+                                        @if (!declaration.banco && declaration.ceros == 0) {
                                             <li>
                                                 <a (click)="validatePayment(declaration)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                     <i class="pi pi-receipt"></i>
@@ -86,13 +86,13 @@
                                             </li>
                                         }
 
-                                        @if (!declaration.recibo && declaration.banco == 'OPERGOB' || declaration.estatus == 2 && declaration.recibo) {
+                                        @if (!declaration.recibo && declaration.banco == 'OPERGOB' || declaration.recibo) {
                                             <li>
                                                 <a (click)="openUploadPaymentReceipt(declaration)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                     <i class="pi pi-upload"></i>
                                                     @if (!declaration.recibo && declaration.banco == 'OPERGOB') {
                                                         <span>Adjuntar recibo</span>
-                                                    } @else if(declaration.estatus == 2 && declaration.recibo){
+                                                    } @else if(declaration.recibo){
                                                         <span>Resubir recibo </span>
                                                     }
                                                 </a>

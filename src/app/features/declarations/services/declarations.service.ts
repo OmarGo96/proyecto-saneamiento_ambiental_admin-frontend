@@ -29,6 +29,11 @@ export class DeclarationsService {
         return this.httpClient.post(`${this.url}/statement/attach-receipt/${declarationId}`, data);
     }
 
+    getDeclarationReceipt(fileName: any): Observable<any> {
+        return this.httpClient.get(`${this.url}/statement/file/${fileName}/receipts`, { responseType: 'blob' });
+    }
+
+
     getStatementFormat(declarationId: any): Observable<any> {
         return this.httpClient.get(`${this.url}/statement/format-admin/${declarationId}`, { responseType: 'blob' });
     }

@@ -13,6 +13,9 @@ import {DeclarationsService} from '../../services/declarations.service';
 import {CurrencyPipe} from '@angular/common';
 import {DeclarationsStatus} from '../../constants/declarations-status';
 import {ConfirmationService} from 'primeng/api';
+import {
+    RejectDeclarationDialogComponent
+} from '../../dialogs/reject-declaration-dialog/reject-declaration-dialog.component';
 
 @Component({
     selector: 'app-declarations-draft',
@@ -67,6 +70,30 @@ export class DeclarationsDraftComponent implements OnInit {
     public viewDeclarationDetails(declaration: any) {
         localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
         this.router.navigate(['/declaraciones/detalle']);
+    }
+
+    rejectDeclaration(declaration: any){
+        this.dialogRef = this.dialogService.open(RejectDeclarationDialogComponent, {
+            header: 'Rechazo de declaración',
+            width: '30vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                declaration
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getDraftDeclarations();
+            }
+        });
     }
 
     applyFilter(event: Event) {
