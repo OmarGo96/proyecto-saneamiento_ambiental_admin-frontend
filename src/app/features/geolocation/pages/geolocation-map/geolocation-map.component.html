@@ -1,10 +1,30 @@
-
 <div class="space-y-5">
     <div class="flex items-center space-x-2">
         <i class="pi pi-map"></i>
         <h3 class="text-xl font-semibold ">Geolocalización de empresas</h3>
     </div>
 
+    <div class="w-full flex gap-3 items-center">
+        <p-iconfield class="w-full">
+            <p-inputicon class="pi pi-search"/>
+            <input
+                type="text"
+                pInputText
+                fluid
+                pSize="large"
+                placeholder="Buscar empresa por licencia de funcionamiento"
+                [(ngModel)]="value"/>
+        </p-iconfield>
+        <p-button
+            label="Buscar"
+            icon="pi pi-search"
+            size="large"
+            (click)="searchCompany()"
+        />
+        @if (value) {
+            <p-button icon="pi pi-times" size="large" severity="secondary" outlined (click)="loadingInitialData()"/>
+        }
+    </div>
     <div id="map" class="w-full rounded-xl"></div>
 </div>
 

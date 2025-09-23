@@ -45,4 +45,8 @@ export class CompaniesService {
         return this.httpClient.put(`${this.url}/companies/enable/${companyId}`, {});
     }
 
+    getLimitations(companyId: any): Observable<any> {
+        return this.httpClient.get(`${this.url}/limitations/show/${companyId}`);
+    }
+
 }

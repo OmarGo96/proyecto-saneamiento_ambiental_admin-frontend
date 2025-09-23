@@ -6,10 +6,21 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {forkJoin} from 'rxjs';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {ConfirmationService} from 'primeng/api';
+import {InputTextModule} from 'primeng/inputtext';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+import {ButtonModule} from 'primeng/button';
+import {FormsModule} from '@angular/forms';
 
 @Component({
     selector: 'app-geolocation-map',
-    imports: [],
+    imports: [
+        InputTextModule,
+        IconFieldModule,
+        InputIconModule,
+        ButtonModule,
+        FormsModule
+    ],
     providers: [AlertsService, ConfirmationService],
     templateUrl: './geolocation-map.component.html',
     styleUrl: './geolocation-map.component.scss'
@@ -24,15 +35,24 @@ export class GeolocationMapComponent implements OnInit {
     public style = `mapbox://styles/mapbox/streets-v12`;
     public zoom = 10;
 
-
+    public companies: any;
     public companiesFeatures: any[] = [];
 
+    public value: string;
+
     ngOnInit() {
+        this.loadingInitialData();
+    }
+
+    loadingInitialData(){
         forkJoin({
             companies: this.geolocationService.getCompaniesGeolocation()
         }).subscribe({
             next: ({companies}) => {
-                this.initMap(Number(-87.1800222), Number(20.5653963));
+                this.companies = companies.companies;
+                this.value = '';
+                this.zoom = 10;
+                this.initMap(Number(-87.1800222), Number(20.5653963), 6);
                 for (let feature of companies.companies) {
                     this.companiesFeatures.push(
                         {
@@ -56,21 +76,28 @@ export class GeolocationMapComponent implements OnInit {
         });
     }
 
-    getGeolocation() {
-        this.spinner.show();
-        this.geolocationService.getCompaniesGeolocation().subscribe({
-            next: data => {
-
-
-                this.spinner.hide();
+    searchCompany(){
+        this.companiesFeatures = [];
+        this.zoom = 13;
+        const filteredResult = this.companies.find((company: any) => company.licencia_funcionamiento_id == this.value);
+        this.initMap(Number(filteredResult.longitude), Number(filteredResult.latitude), 10);
+        this.companiesFeatures.push(
+            {
+                geometry: {
+                    type: "Point",
+                    coordinates: [Number(filteredResult.longitude), Number(filteredResult.latitude)],
+                },
+                type: "Feature",
+                properties: {
+                    habitaciones: filteredResult.habitaciones,
+                    description: filteredResult.nombre_establecimiento,
+                    licencia: filteredResult.licencia_funcionamiento_id
+                }
             },
-            error: err => {
-                console.log(err);
-            }
-        })
+        );
     }
 
-    initMap(lng: any, lat: any) {
+    initMap(lng: any, lat: any, pointer: any) {
         if (this.map) {
             this.map.remove();
         }
@@ -85,7 +112,6 @@ export class GeolocationMapComponent implements OnInit {
 
         this.map.addControl(new mapboxgl.NavigationControl());
         // Se agrega metodo resize para cargar completamente el mapa
-
 
         this.map.on('load', () => {
             this.map.addSource('companies-location', {
@@ -103,7 +129,7 @@ export class GeolocationMapComponent implements OnInit {
                 type: 'circle',
                 source: 'companies-location',
                 paint: {
-                    'circle-radius': 6,
+                    'circle-radius': pointer,
                     'circle-color': '#A10046',
                     'circle-stroke-width': 1,
                     'circle-stroke-color': '#ffffff'
@@ -147,13 +173,5 @@ export class GeolocationMapComponent implements OnInit {
 
             this.map.resize();
         });
-
-
-    }
-
-    buildMarker(lng: any, lat: any) {
-        const marker = new mapboxgl.Marker({
-            draggable: false
-        }).setLngLat([lng, lat]).addTo(this.map);
     }
 }
