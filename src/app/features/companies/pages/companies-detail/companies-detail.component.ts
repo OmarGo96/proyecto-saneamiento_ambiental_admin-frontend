@@ -96,6 +96,21 @@ export class CompaniesDetailComponent implements OnInit {
         })
     }
 
+    updateLimitations(){
+        this.isUpdating = true;
+        const data = this.limitationsForm.value;
+        this.companiesService.updateLimitations(this.company.id, data).subscribe({
+            next: data => {
+                this.isUpdating = false;
+                this.alertsService.successAlert(data.message);
+            },
+            error: err => {
+                this.isUpdating = false;
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        })
+    }
+
     goBack() {
         localStorage.removeItem(this.companiesService.companyToken);
         this.location.back();
