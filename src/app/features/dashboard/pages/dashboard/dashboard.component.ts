@@ -33,7 +33,6 @@ import {FieldsetModule} from 'primeng/fieldset';
         StatementsSummaryByStatusComponent,
         SkeletonModule,
         DatePipe,
-        TableSkeletonComponent,
         DecimalPipe,
         FieldsetModule
     ],

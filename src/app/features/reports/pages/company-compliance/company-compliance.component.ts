@@ -27,7 +27,6 @@ import {DividerModule} from 'primeng/divider';
         ButtonModule,
         TableSkeletonComponent,
         TagModule,
-        CurrencyPipe,
         DividerModule,
         DecimalPipe
     ],
