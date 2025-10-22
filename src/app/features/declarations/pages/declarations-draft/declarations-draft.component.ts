@@ -69,7 +69,8 @@ export class DeclarationsDraftComponent implements OnInit {
 
     public viewDeclarationDetails(declaration: any) {
         localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
-        this.router.navigate(['/declaraciones/detalle']);
+        const url = this.router.serializeUrl(this.router.createUrlTree(['/declaraciones/detalle']));
+        window.open(url, '_blank');
     }
 
     rejectDeclaration(declaration: any){
