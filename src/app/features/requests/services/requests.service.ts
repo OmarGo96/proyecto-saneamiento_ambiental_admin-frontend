@@ -23,6 +23,6 @@ export class RequestsService {
     }
 
     getDocument(name: string): Observable<any> {
-        return this.httpClient.get(`${this.url}registration/file/${name}/requests`, { responseType: 'blob' });
+        return this.httpClient.get(`${this.url}/registration/file/${name}/requests`, { responseType: 'blob' });
     }
 }
