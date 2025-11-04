@@ -15,6 +15,7 @@ import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Router} from '@angular/router';
 import {RequestsFileDialogComponent} from '../../dialogs/requests-file-dialog/requests-file-dialog.component';
 import {ConfirmationService} from 'primeng/api';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-requests-accepted',
@@ -40,6 +41,7 @@ export class RequestsAcceptedComponent implements OnInit {
     private requestsService = inject(RequestsService)
     private alertsService = inject(AlertsService);
     private spinner = inject(NgxSpinnerService);
+    private sanitizer = inject(DomSanitizer);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
@@ -47,6 +49,8 @@ export class RequestsAcceptedComponent implements OnInit {
     public isLoading = false;
 
     public requests: any;
+
+    public pdfUrl: any;
 
     ngOnInit() {
         this.getAcceptedRequests();
@@ -68,7 +72,7 @@ export class RequestsAcceptedComponent implements OnInit {
     }
 
     public openRequestsFileDialog(request: any){
-        this.dialogRef = this.dialogService.open(RequestsFileDialogComponent, {
+        /*this.dialogRef = this.dialogService.open(RequestsFileDialogComponent, {
             header: 'Documento de la Solicitud',
             width: '40vw',
             closeOnEscape: false,
@@ -88,7 +92,19 @@ export class RequestsAcceptedComponent implements OnInit {
             if (result) {
                 this.getAcceptedRequests();
             }
-        });
+        });*/
+
+        this.spinner.show();
+        this.requestsService.getDocument(request.pdf).subscribe({
+            next: data => {
+                this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+                window.open(this.pdfUrl.changingThisBreaksApplicationSecurity, '_blank')
+                this.spinner.hide();
+            },
+            error: err => {
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        })
     }
 
 

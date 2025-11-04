@@ -73,7 +73,7 @@ export class DeclarationsDraftComponent implements OnInit {
         window.open(url, '_blank');
     }
 
-    rejectDeclaration(declaration: any){
+    rejectDeclaration(declaration: any) {
         this.dialogRef = this.dialogService.open(RejectDeclarationDialogComponent, {
             header: 'Rechazo de declaración',
             width: '30vw',

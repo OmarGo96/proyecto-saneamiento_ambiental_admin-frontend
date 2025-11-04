@@ -16,6 +16,7 @@ import {RequestsFileDialogComponent} from '../../dialogs/requests-file-dialog/re
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {RejectRequestsDialogComponent} from '../../dialogs/reject-requests-dialog/reject-requests-dialog.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-requests-registrations',
@@ -43,11 +44,14 @@ export class RequestsRegistrationsComponent implements OnInit {
     private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
+    private sanitizer = inject(DomSanitizer);
     private router = inject(Router);
 
     public isLoading = false;
 
     public requests: any;
+
+    public pdfUrl: any;
 
     ngOnInit() {
         this.getCreatedRequests();
@@ -69,7 +73,7 @@ export class RequestsRegistrationsComponent implements OnInit {
     }
 
     public openRequestsFileDialog(request: any){
-        this.dialogRef = this.dialogService.open(RequestsFileDialogComponent, {
+        /*this.dialogRef = this.dialogService.open(RequestsFileDialogComponent, {
             header: 'Documento de la Solicitud',
             width: '40vw',
             closeOnEscape: false,
@@ -89,7 +93,19 @@ export class RequestsRegistrationsComponent implements OnInit {
             if (result) {
                 this.getCreatedRequests();
             }
-        });
+        });*/
+
+        this.spinner.show();
+        this.requestsService.getDocument(request.pdf).subscribe({
+            next: data => {
+                this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+                window.open(this.pdfUrl.changingThisBreaksApplicationSecurity, '_blank')
+                this.spinner.hide();
+            },
+            error: err => {
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        })
     }
 
     public acceptRequest(request: any){

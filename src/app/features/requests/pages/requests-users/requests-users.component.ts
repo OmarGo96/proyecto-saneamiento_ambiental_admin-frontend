@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 import {RequestsFileDialogComponent} from '../../dialogs/requests-file-dialog/requests-file-dialog.component';
 import {RejectRequestsDialogComponent} from '../../dialogs/reject-requests-dialog/reject-requests-dialog.component';
 import {ConfirmationService} from 'primeng/api';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-requests-users',
@@ -41,12 +42,15 @@ export class RequestsUsersComponent implements OnInit {
     private alertsService = inject(AlertsService);
     private spinner = inject(NgxSpinnerService);
     private dialogService = inject(DialogService);
+    private sanitizer = inject(DomSanitizer);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
 
     public isLoading = false;
 
     public requests: any;
+
+    public pdfUrl: any;
 
     ngOnInit() {
         this.getUsersRequests();
@@ -68,7 +72,7 @@ export class RequestsUsersComponent implements OnInit {
     }
 
     public openRequestsFileDialog(request: any) {
-        this.dialogRef = this.dialogService.open(RequestsFileDialogComponent, {
+        /*this.dialogRef = this.dialogService.open(RequestsFileDialogComponent, {
             header: 'Documento de la Solicitud',
             width: '40vw',
             closeOnEscape: false,
@@ -88,7 +92,19 @@ export class RequestsUsersComponent implements OnInit {
             if (result) {
                 this.getUsersRequests();
             }
-        });
+        });*/
+
+        this.spinner.show();
+        this.requestsService.getDocument(request.pdf).subscribe({
+            next: data => {
+                this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(data));
+                window.open(this.pdfUrl.changingThisBreaksApplicationSecurity, '_blank')
+                this.spinner.hide();
+            },
+            error: err => {
+                this.alertsService.errorAlert(err.error.errors);
+            }
+        })
     }
 
     public acceptRequest(request: any) {
