@@ -9,6 +9,7 @@ import {
 import {CompaniesRegistrationComponent} from './pages/companies-registration/companies-registration.component';
 import {DeclarationsDetailsComponent} from '../declarations/pages/declarations-details/declarations-details.component';
 import {CompaniesDetailComponent} from './pages/companies-detail/companies-detail.component';
+import {CompaniesFilesComponent} from './pages/companies-files/companies-files.component';
 
 export default [
     {
@@ -30,6 +31,10 @@ export default [
     {
         path: 'detalle',
         component: CompaniesDetailComponent
+    },
+    {
+        path: 'documentos/:companyId',
+        component: CompaniesFilesComponent
     }
 
 ] as Routes;

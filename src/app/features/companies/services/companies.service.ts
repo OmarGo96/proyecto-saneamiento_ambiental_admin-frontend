@@ -25,6 +25,10 @@ export class CompaniesService {
         return this.httpClient.post(`${this.url}/companies/search`, data);
     }
 
+    getCompaniesFiles(companyId: any): Observable<any> {
+        return this.httpClient.get(`${this.url}/documentation/show/${companyId}`);
+    }
+
     updateBedrooms(companyId: any, data: any): Observable<any> {
         return this.httpClient.put(`${this.url}/companies/updateBedrooms/${companyId}`, data);
     }
