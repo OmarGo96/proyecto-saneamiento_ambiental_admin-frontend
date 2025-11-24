@@ -67,6 +67,12 @@
                                 <div class="w-48">
                                     <ul class="py-2 text-sm text-gray-700">
                                         <li>
+                                            <a [routerLink]="['/empresas/documentos', company.id]" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                <i class="pi pi-folder-open"></i>
+                                                <span>Ver documentos</span>
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a (click)="viewCompanyDetails(company)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                 <i class="pi pi-external-link"></i>
                                                 <span>Ver detalle</span>

@@ -1,7 +1,7 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {CompaniesService} from '../../services/companies.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {CompaniesStatus} from '../../constants/companies-status';
 import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
@@ -21,7 +21,8 @@ import {ConfirmationService} from 'primeng/api';
         TableModule,
         PopoverModule,
         ButtonModule,
-        TableSkeletonComponent
+        TableSkeletonComponent,
+        RouterLink
     ],
     providers: [AlertsService, ConfirmationService],
     templateUrl: './companies-without-representative.component.html',

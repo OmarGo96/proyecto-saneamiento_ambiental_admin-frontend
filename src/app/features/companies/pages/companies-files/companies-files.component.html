@@ -1,4 +1,4 @@
-<div class="w-1/2 sm:w-2/3 xs:w-full mx-auto space-y-5">
+<div class="xs:w-full mx-auto space-y-5">
     <div>
         <div class="flex items-center justify-between space-x-2">
             <div class="flex items-center space-x-2">
@@ -7,8 +7,9 @@
                     [rounded]="true"
                     severity="secondary"
                     [outlined]="true"
+                    (click)="goBack()"
                 />
-                <h3 class="text-xl font-semibold ">Información de la empresa</h3>
+                <h3 class="text-xl font-semibold ">Documentos de la empresa</h3>
             </div>
             <!--@for (status of companiesStatus; track status) {
                 @if (status.value === company.status) {
@@ -18,5 +19,30 @@
                 }
             }-->
         </div>
+    </div>
+    <div class="grid grid-cols-5 gap-3">
+        <div (click)="openAddCompaniesDocumentationDialog()" class="flex items-center justify-center w-full">
+            <div
+                class="flex flex-col items-center justify-center w-full h-52 bg-gray-100 rounded-lg border border-dashed border-default-strong rounded-base cursor-pointer hover:bg-gray-200">
+                <div class="flex flex-col items-center justify-center text-body pt-5 pb-6">
+                    <i class="pi pi-upload mb-5 text-gray-600" style="font-size: 2.5rem"></i>
+                    <p class="mb-2 text-sm text-gray-600"><span class="font-semibold">Da click para subir un nuevo archivo</span>
+                    </p>
+                    <p class="text-xs text-gray-600">PDF (MAX. 2MB)</p>
+                </div>
+            </div>
+        </div>
+        @if (documentation.length >= 1) {
+            @for (document of documentation; track document) {
+                <div class="flex flex-col items-center justify-center p-6 rounded-lg border shadow-xs space-y-3">
+                    <i class="pi pi-file-pdf" style="font-size: 2rem"></i>
+                    <div class="text-center ">
+                        <h5 class="font-medium tracking-tight text-heading">{{ document.file }}</h5>
+                        <p class="text-sm text-gray-500 tracking-tight text-heading">{{ document.type }}</p>
+                        <p class="text-sm text-gray-500 tracking-tight text-heading">{{ document.date | date:'dd/MM/yyyy' }}</p>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>

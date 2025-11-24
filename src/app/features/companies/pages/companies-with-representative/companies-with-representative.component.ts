@@ -8,7 +8,7 @@ import {ButtonModule} from 'primeng/button';
 import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
 import {CompaniesService} from '../../services/companies.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {CompaniesStatus} from '../../constants/companies-status';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {UnlinkCompaniesDialogComponent} from '../../dialogs/unlink-companies-dialog/unlink-companies-dialog.component';
@@ -31,7 +31,8 @@ import {ReportsService} from '../../../reports/services/reports.service';
         PopoverModule,
         ButtonModule,
         TableSkeletonComponent,
-        ConfirmDialog
+        ConfirmDialog,
+        RouterLink
     ],
     providers: [DialogService, AlertsService, ConfirmationService],
     templateUrl: './companies-with-representative.component.html',
