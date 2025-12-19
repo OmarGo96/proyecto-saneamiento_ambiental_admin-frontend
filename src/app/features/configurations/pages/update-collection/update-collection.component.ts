@@ -1,15 +1,15 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ButtonModule} from 'primeng/button';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MultiSelectModule} from 'primeng/multiselect';
 import {SelectModule} from 'primeng/select';
 import {OpeningService} from '../../services/opening.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {AlertsService} from '../../../../core/services/alerts.service';
+import {MultiSelectModule} from 'primeng/multiselect';
 import {ConfirmationService} from 'primeng/api';
 
 @Component({
-    selector: 'app-opening-statements',
+    selector: 'app-update-collection',
     imports: [
         SelectModule,
         ReactiveFormsModule,
@@ -17,10 +17,10 @@ import {ConfirmationService} from 'primeng/api';
         MultiSelectModule
     ],
     providers: [AlertsService, ConfirmationService],
-    templateUrl: './opening-statements.component.html',
-    styleUrl: './opening-statements.component.scss'
+    templateUrl: './update-collection.component.html',
+    styleUrl: './update-collection.component.scss'
 })
-export class OpeningStatementsComponent implements OnInit {
+export class UpdateCollectionComponent {
     public yearForm: FormGroup;
     public openingForm: FormGroup;
 
@@ -42,34 +42,26 @@ export class OpeningStatementsComponent implements OnInit {
         this.years = this.generateYearsArray();
 
         this.initYearForm();
-        this.initOpeningForm();
     }
 
     initYearForm() {
         this.yearForm = this.formBuilder.group({
             year: ['', Validators.required],
-        })
+        });
     }
-
-    initOpeningForm() {
-        this.openingForm = this.formBuilder.group({
-            anio: [''],
-            mes: ['', Validators.required]
-        })
-    }
-
 
     getOpeningList() {
         this.isLoading = true;
         const data = this.yearForm.value;
         this.openingService.getListByYear(data.year).subscribe({
             next: data => {
+                console.log(data.openings);
                 this.openingList = data.openings
-                const selected: any[] = this.openingList.filter((opening: any) => opening.estatus == 1).map((item: any) => {
+                /*const selected: any[] = this.openingList.filter((opening: any) => opening.estatus == 1).map((item: any) => {
                     this.openingToAttach.push(item.id)
                     return item.id
                 })
-                this.toppings = new FormControl(selected)
+                this.toppings = new FormControl(selected)*/
                 this.isLoading = false;
             },
             error: err => {
@@ -77,29 +69,6 @@ export class OpeningStatementsComponent implements OnInit {
                 this.alertsService.errorAlert(err.error.errors);
             }
         })
-    }
-
-    openingAction() {
-        this.isOpening = true;
-        const data = {
-            openings: this.toppings.value,
-            anio: this.yearForm.value.year
-        }
-
-        this.openingService.opening(data).subscribe({
-            next: data => {
-                this.isOpening = false;
-                this.alertsService.successAlert(data.message).then(res => {
-                    if (res.isConfirmed) {
-                        window.location.reload();
-                    }
-                })
-            },
-            error: err => {
-                this.isOpening = false;
-                this.alertsService.errorAlert(err.error.errors);
-            }
-        });
     }
 
     public generateYearsArray(): any[] {

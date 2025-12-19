@@ -39,13 +39,20 @@ export class ReportsYearMonthComponent implements OnInit {
     initReportForm() {
         this.reportForm = this.formBuilder.group({
             year: ['', Validators.required],
-            month: ['', Validators.required]
+            month: ['', Validators.required],
+            ceros: ['']
         });
     }
 
-    generateReport() {
+    generateReport(ceros?: number) {
         this.spinner.show();
-        const data = this.reportForm.value;
+        console.log(ceros);
+        let data: any;
+        if (ceros === 1) {
+            data = {...this.reportForm.value, ceros}
+        } else {
+            data = this.reportForm.value;
+        }
         this.reportsService.generateGeneralReport(data).subscribe({
             next: data => {
                 this.spinner.hide();

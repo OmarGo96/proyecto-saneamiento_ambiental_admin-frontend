@@ -230,6 +230,16 @@ export const MenuItems = [
         role: []
     },
     {
+        path: 'configuracion/actualizar-recaudacion',
+        group: 'Configuración',
+        module: 'configuracion',
+        action: 'show',
+        title: 'Actualizar recaudación',
+        icon: 'pi-sync',
+        class: '',
+        role: []
+    },
+    {
         path: 'configuracion/apertura-declaraciones',
         group: 'Configuración',
         module: 'configuracion',
