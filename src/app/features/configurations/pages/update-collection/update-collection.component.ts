@@ -7,6 +7,17 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {ConfirmationService} from 'primeng/api';
+import {TableModule} from 'primeng/table';
+import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
+import {CompaniesStatus} from '../../../companies/constants/companies-status';
+import {DatePipe} from '@angular/common';
+import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {
+    OpeningByCompanyDialogComponent
+} from '../../dialogs/opening-by-company-dialog/opening-by-company-dialog.component';
+import {
+    UpdateCollectionDialogComponent
+} from '../../dialogs/update-collection-dialog/update-collection-dialog.component';
 
 @Component({
     selector: 'app-update-collection',
@@ -14,9 +25,12 @@ import {ConfirmationService} from 'primeng/api';
         SelectModule,
         ReactiveFormsModule,
         ButtonModule,
-        MultiSelectModule
+        MultiSelectModule,
+        TableModule,
+        TableSkeletonComponent,
+        DatePipe
     ],
-    providers: [AlertsService, ConfirmationService],
+    providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './update-collection.component.html',
     styleUrl: './update-collection.component.scss'
 })
@@ -27,6 +41,8 @@ export class UpdateCollectionComponent {
     private openingService = inject(OpeningService);
     private spinner = inject(NgxSpinnerService);
     private alertsService = inject(AlertsService);
+    private dialogService = inject(DialogService);
+    private dialogRef: DynamicDialogRef | undefined;
     private formBuilder = inject(FormBuilder);
 
     public openingToAttach: any[] = []
@@ -55,20 +71,38 @@ export class UpdateCollectionComponent {
         const data = this.yearForm.value;
         this.openingService.getListByYear(data.year).subscribe({
             next: data => {
-                console.log(data.openings);
                 this.openingList = data.openings
-                /*const selected: any[] = this.openingList.filter((opening: any) => opening.estatus == 1).map((item: any) => {
-                    this.openingToAttach.push(item.id)
-                    return item.id
-                })
-                this.toppings = new FormControl(selected)*/
                 this.isLoading = false;
             },
             error: err => {
                 this.isLoading = false;
                 this.alertsService.errorAlert(err.error.errors);
             }
-        })
+        });
+    }
+
+    public openUpdateCollectionDialog(opening: any) {
+        this.dialogRef = this.dialogService.open(UpdateCollectionDialogComponent, {
+            header: 'Actualizar recaudación',
+            width: '30vw',
+            closeOnEscape: false,
+            modal: true,
+            closable: true,
+            baseZIndex: 1,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            data: {
+                opening
+            },
+        });
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                // this.getAllCompanies();
+            }
+        });
     }
 
     public generateYearsArray(): any[] {
@@ -81,4 +115,6 @@ export class UpdateCollectionComponent {
 
         return yearsArray;
     }
+
+    protected readonly companiesStatus = CompaniesStatus;
 }

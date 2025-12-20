@@ -18,6 +18,10 @@ export class OpeningService {
         return this.httpClient.post(`${this.url}/opening/store`, data);
     }
 
+    updateCollection(collectionId: number, data: any): Observable<any> {
+        return this.httpClient.put(`${this.url}/opening/actualizar-recaudacion/${collectionId}`, data);
+    }
+
     exception(companyId: any, data: any): Observable<any> {
         return this.httpClient.post(`${this.url}/exceptions/store/${companyId}`, data);
     }

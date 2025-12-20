@@ -1,0 +1,15 @@
+<form [formGroup]="updateCollectionForm" class="space-y-5">
+    <div>
+        <label for=""></label>
+        <p-input-number inputId="integeronly" formControlName="recaudacion" class="w-full" />
+    </div>
+
+    <div>
+        <p-button
+            (click)="updateCollection()"
+            label="Actualizar"
+            icon="pi pi-sync"
+            class="w-full"
+        />
+    </div>
+</form>
