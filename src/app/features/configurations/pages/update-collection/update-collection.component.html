@@ -35,18 +35,18 @@
         @if (!isLoading) {
             <p-table #table [value]="openingList"
                      [paginator]="true"
-                     [rows]="10"
+                     [rows]="15"
                      [showCurrentPageReport]="true"
                      currentPageReportTemplate="Showing {first} to {last} from {totalRecords} records"
-                     [rowsPerPageOptions]="[10, 20, 30]"
-                     [globalFilterFields]="['rfc', 'licencia_funcionamiento_id', 'nombre_establecimiento', 'habitaciones', 'propietario_nombre']"
+                     [rowsPerPageOptions]="[15, 30, 40]"
+                     [globalFilterFields]="['anio', 'mes_letras', 'recaudacion', 'created_at']"
                      size="small"
             >
                 <ng-template pTemplate="header">
                     <tr class="font-medium uppercase">
                         <th>Año</th>
                         <th>Mes</th>
-                        <th>Estatus</th>
+                        <th>Recaudación</th>
                         <th>Fecha de creación</th>
                         <th>Actualizar</th>
                     </tr>
@@ -55,7 +55,7 @@
                     <tr>
                         <td>{{ opening.anio }}</td>
                         <td>{{ opening.mes_letras }}</td>
-                        <td>{{ opening.estatus }}</td>
+                        <td>{{ opening.recaudacion | currency }}</td>
                         <td>{{ opening.created_at | date }}</td>
                         <!--<td>
                             @for (status of companiesStatus; track status) {

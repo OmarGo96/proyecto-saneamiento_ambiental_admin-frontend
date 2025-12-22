@@ -10,7 +10,7 @@ import {ConfirmationService} from 'primeng/api';
 import {TableModule} from 'primeng/table';
 import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
 import {CompaniesStatus} from '../../../companies/constants/companies-status';
-import {DatePipe} from '@angular/common';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {
     OpeningByCompanyDialogComponent
@@ -28,7 +28,8 @@ import {
         MultiSelectModule,
         TableModule,
         TableSkeletonComponent,
-        DatePipe
+        DatePipe,
+        CurrencyPipe
     ],
     providers: [AlertsService, ConfirmationService, DialogService],
     templateUrl: './update-collection.component.html',
@@ -100,7 +101,7 @@ export class UpdateCollectionComponent {
 
         this.dialogRef.onClose.subscribe((result) => {
             if (result) {
-                // this.getAllCompanies();
+                this.getOpeningList();
             }
         });
     }

@@ -36,7 +36,7 @@ export class UpdateCollectionDialogComponent implements OnInit {
 
     initUpdateCollectionForm(){
         this.updateCollectionForm = this.formBuilder.group({
-            recaudacion: ['', Validators.required],
+            recaudacion: [this.opening.recaudacion, Validators.required],
         });
     }
 

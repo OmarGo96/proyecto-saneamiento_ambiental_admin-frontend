@@ -1,7 +1,7 @@
 <form [formGroup]="updateCollectionForm" class="space-y-5">
     <div>
-        <label for=""></label>
-        <p-input-number inputId="integeronly" formControlName="recaudacion" class="w-full" />
+        <label for="">Monto de recaudación</label>
+        <p-inputnumber formControlName="recaudacion" inputId="currency-us" class="w-full" mode="currency" currency="USD" locale="en-US" />
     </div>
 
     <div>
