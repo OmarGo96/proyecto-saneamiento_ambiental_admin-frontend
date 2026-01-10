@@ -51,9 +51,9 @@ export class DashboardComponent implements OnInit {
     public summary: any;
     public globalStatements: any;
 
-    public statements: any;
-    public taxpayers: any;
-    public companies: any;
+    public statements: any = {};
+    public taxpayers: any = {};
+    public companies: any = {};
 
     public registrationRequest: any;
     public declarationsStatus = DeclarationsStatus

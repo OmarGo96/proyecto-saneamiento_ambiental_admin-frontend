@@ -111,7 +111,7 @@ export class RequestsUsersComponent implements OnInit {
         this.alertsService.confirmRequest("¿Está seguro de realizar esta acción?").subscribe({
             next: res => {
                 this.spinner.show();
-                const data = {register_id: request.id, estatus: '1'}
+                const data = {register_id: request.uuid, estatus: '1'}
                 this.requestsService.processRequest(data).subscribe({
                     next: res => {
                         this.spinner.hide();

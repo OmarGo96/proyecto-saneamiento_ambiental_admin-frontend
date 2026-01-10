@@ -46,7 +46,7 @@ export class UpdateUsersDialogComponent implements OnInit {
 
     initUpdateUserForm() {
         this.updateUserForm = this.formBuilder.group({
-            id: [this.user.id],
+            id: [this.user.uuid],
             rol: [this.user.rol.toString(), Validators.required],
             nombre: [this.user.nombre, Validators.required],
             apellidos: [this.user.apellidos, Validators.required],
@@ -57,7 +57,7 @@ export class UpdateUsersDialogComponent implements OnInit {
     updateUser(){
         this.isLoading = true;
         const data = this.updateUserForm.value;
-        this.usersService.updateUser(this.user.id, data).subscribe({
+        this.usersService.updateUser(this.user.uuid, data).subscribe({
             next: data => {
                 this.isLoading = false;
                 this.alertsService.successAlert(data.message).then(res => {

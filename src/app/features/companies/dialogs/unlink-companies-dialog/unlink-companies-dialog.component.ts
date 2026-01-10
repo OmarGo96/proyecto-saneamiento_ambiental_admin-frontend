@@ -87,7 +87,7 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
 
     unlinkCompany() {
         const data = this.unlinkForm.value;
-        this.companiesService.unlinkCompany(data, this.company.id).subscribe({
+        this.companiesService.unlinkCompany(data, this.company.uuid).subscribe({
             next: res => {
                 this.isLoading = false;
                 this.alertsService.successAlert(res.message).then(
@@ -106,7 +106,7 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
     }
 
     releaseCompany() {
-        this.companiesService.releaseCompany(this.company.id).subscribe({
+        this.companiesService.releaseCompany(this.company.uuid).subscribe({
             next: res => {
                 this.isLoading = false;
                 this.alertsService.successAlert(res.message).then(

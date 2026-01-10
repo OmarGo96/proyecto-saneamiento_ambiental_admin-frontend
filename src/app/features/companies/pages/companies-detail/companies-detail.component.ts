@@ -52,7 +52,7 @@ export class CompaniesDetailComponent implements OnInit {
 
     loadInitialData(){
         forkJoin({
-            limitations: this.companiesService.getLimitations(this.company.id)
+            limitations: this.companiesService.getLimitations(this.company.uuid)
         }).subscribe({
             next: ({limitations}) => {
                 this.limitations = limitations.limitation;
@@ -84,7 +84,7 @@ export class CompaniesDetailComponent implements OnInit {
     updateBedrooms() {
         this.isUpdating = true;
         const data = this.bedroomsForm.value;
-        this.companiesService.updateBedrooms(this.company.id, data).subscribe({
+        this.companiesService.updateBedrooms(this.company.uuid, data).subscribe({
             next: data => {
                 this.isUpdating = false;
                 this.alertsService.successAlert(data.message);
@@ -99,7 +99,7 @@ export class CompaniesDetailComponent implements OnInit {
     updateLimitations(){
         this.isUpdating = true;
         const data = this.limitationsForm.value;
-        this.companiesService.updateLimitations(this.company.id, data).subscribe({
+        this.companiesService.updateLimitations(this.company.uuid, data).subscribe({
             next: data => {
                 this.isUpdating = false;
                 this.alertsService.successAlert(data.message);

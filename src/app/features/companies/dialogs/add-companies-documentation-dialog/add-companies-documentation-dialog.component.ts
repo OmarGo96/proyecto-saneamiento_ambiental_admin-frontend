@@ -8,7 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {ConfirmationService} from 'primeng/api';
 import {ButtonModule} from 'primeng/button';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 
 @Component({
     selector: 'app-add-companies-documentation-dialog',
@@ -28,12 +28,15 @@ export class AddCompaniesDocumentationDialogComponent implements OnInit {
     private alertsService = inject(AlertsService);
     private spinner = inject(NgxSpinnerService);
     private dialogRef = inject(DynamicDialogRef);
+    private dialogConfig = inject(DynamicDialogConfig);
 
     public uploadedFiles: any[] = [];
     public documentTypes: any;
     public selectedDocumentType: any;
+    public companyId: any;
 
     ngOnInit() {
+        this.companyId = this.dialogConfig.data.companyId;
         this.loadInitialData();
     }
 
@@ -60,7 +63,7 @@ export class AddCompaniesDocumentationDialogComponent implements OnInit {
             formData.append('type_document_id', this.selectedDocumentType);
         }
 
-        this.filesService.createCompaniesDocumentation(this.selectedDocumentType, formData).subscribe({
+        this.filesService.createCompaniesDocumentation(this.companyId, formData).subscribe({
             next: data => {
                 this.spinner.hide();
                 this.alertsService.successAlert(data.message).then(res => {

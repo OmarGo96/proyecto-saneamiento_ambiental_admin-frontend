@@ -25,7 +25,6 @@ export class TotalDraftsDeclarationsChartComponent {
 
     initChart() {
         const data = this.totalAcceptedDeclarationsData;
-        console.log(data)
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--p-text-color');
         this.data = {

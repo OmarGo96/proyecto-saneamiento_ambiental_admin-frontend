@@ -43,7 +43,7 @@ export class UpdateCollectionDialogComponent implements OnInit {
     updateCollection(){
         this.spinner.show();
         const data = this.updateCollectionForm.value;
-        this.openingService.updateCollection(this.opening.id, data).subscribe({
+        this.openingService.updateCollection(this.opening.uuid, data).subscribe({
             next: data => {
                 this.spinner.hide();
                 this.alertsService.successAlert(data.message).then(

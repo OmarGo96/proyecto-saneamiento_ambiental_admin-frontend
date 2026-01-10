@@ -171,7 +171,7 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
             .subscribe({
                 next: res => {
                     this.spinner.show();
-                    this.companiesService.disableCompany(company.id).subscribe({
+                    this.companiesService.disableCompany(company.uuid).subscribe({
                         next: res => {
                             this.spinner.hide();
                             this.alertsService.successAlert(res.message).then(res => {
@@ -194,7 +194,7 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
             .subscribe({
                 next: res => {
                     this.spinner.show();
-                    this.companiesService.enableCompany(company.id).subscribe({
+                    this.companiesService.enableCompany(company.uuid).subscribe({
                         next: res => {
                             this.spinner.hide();
                             this.alertsService.successAlert(res.message).then(res => {

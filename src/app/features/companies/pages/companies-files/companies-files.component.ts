@@ -63,6 +63,9 @@ export class CompaniesFilesComponent implements OnInit {
             breakpoints: {
                 '960px': '75vw',
                 '640px': '90vw'
+            },
+            data: {
+                companyId: this.companyId
             }
         });
 

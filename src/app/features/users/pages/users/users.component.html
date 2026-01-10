@@ -71,7 +71,7 @@
                                         </li>
                                         @if (user.estatus == '1') {
                                             <li>
-                                                <a (click)="deleteUser(user.id)"
+                                                <a (click)="deleteUser(user.uuid)"
                                                    class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
                                                     <i class="pi pi-trash"></i>
                                                     <span>Desactivar</span>
@@ -79,7 +79,7 @@
                                             </li>
                                         } @else if (user.estatus == '-1') {
                                             <li>
-                                                <a (click)="reactiveUser(user.id)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                <a (click)="reactiveUser(user.uuid)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
                                                     <i class="pi pi-check-circle"></i>
                                                     <span>Reactivar</span>
                                                 </a>

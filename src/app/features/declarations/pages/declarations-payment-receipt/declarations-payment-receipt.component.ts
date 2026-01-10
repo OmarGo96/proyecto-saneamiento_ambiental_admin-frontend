@@ -77,8 +77,9 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
     }
 
     public validatePayment(declaration: any){
+        console.log(declaration);
         this.spinner.show();
-        this.declarationsService.validatePayment(declaration.id).subscribe({
+        this.declarationsService.validatePayment(declaration.uuid).subscribe({
             next: res => {
                 this.spinner.hide();
                 this.alertsService.successAlert(res.message).then(res => {
@@ -98,7 +99,7 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
         this.alertsService.confirmRequest('¿Estás seguro de aceptar esta declaración?').subscribe({
             next: res => {
                 this.spinner.show();
-                const data = { estatus: 2, statement_id: declaration.id };
+                const data = { estatus: 2, statement_id: declaration.uuid };
                 this.declarationsService.processDeclaration(data).subscribe({
                     next: (res: any) => {
                         this.spinner.hide();

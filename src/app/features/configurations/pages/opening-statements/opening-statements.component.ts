@@ -66,8 +66,8 @@ export class OpeningStatementsComponent implements OnInit {
             next: data => {
                 this.openingList = data.openings
                 const selected: any[] = this.openingList.filter((opening: any) => opening.estatus == 1).map((item: any) => {
-                    this.openingToAttach.push(item.id)
-                    return item.id
+                    this.openingToAttach.push(item.uuid)
+                    return item.uuid
                 })
                 this.toppings = new FormControl(selected)
                 this.isLoading = false;

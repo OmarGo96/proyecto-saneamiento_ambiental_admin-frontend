@@ -51,7 +51,7 @@ export class UploadDeclarationPaymentReceiptDialogComponent implements OnInit {
                     formData.append('file', file);
                 }
 
-                this.declarationService.attachPaymentReceipt(this.declaration.id, formData).subscribe({
+                this.declarationService.attachPaymentReceipt(this.declaration.uuid, formData).subscribe({
                     next: (res: any) => {
                         this.isUploading = false;
                         this.alertsService.successAlert(res.message).then(res => {
