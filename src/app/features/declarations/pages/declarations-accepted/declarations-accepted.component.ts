@@ -11,7 +11,7 @@ import {DeclarationsService} from '../../services/declarations.service';
 import {AlertsService} from '../../../../core/services/alerts.service';
 import {Router} from '@angular/router';
 import {DeclarationsStatus} from '../../constants/declarations-status';
-import {CurrencyPipe} from '@angular/common';
+import {APP_BASE_HREF, CurrencyPipe} from '@angular/common';
 import {ConfirmationService} from 'primeng/api';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {
@@ -46,6 +46,7 @@ export class DeclarationsAcceptedComponent implements OnInit {
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
+    private baseHref = inject(APP_BASE_HREF);
 
     public declarations: any;
     public declarationsStatus = DeclarationsStatus;
@@ -77,8 +78,8 @@ export class DeclarationsAcceptedComponent implements OnInit {
 
     public viewDeclarationDetails(declaration: any) {
         localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
-        const url = this.router.serializeUrl(this.router.createUrlTree(['/administrador/declaraciones/detalle']));
-        window.open(url, '_blank');
+        const url = this.router.serializeUrl(this.router.createUrlTree(['/declaraciones/detalle']));
+        window.open(`${window.location.origin}${this.baseHref}${url}`, '_blank');
     }
 
     public openUploadPaymentReceipt(declaration: any){

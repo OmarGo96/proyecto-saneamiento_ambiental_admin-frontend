@@ -6,7 +6,7 @@ import {routes} from './app.routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {jwtInterceptor} from './core/interceptors/jwt.interceptor';
 import {DsaTheme} from './core/constants/theme-presets/dsa-theme';
-import {registerLocaleData} from '@angular/common';
+import {APP_BASE_HREF, registerLocaleData} from '@angular/common';
 import localeEs from '@angular/common/locales/es-MX';
 
 registerLocaleData(localeEs)
@@ -28,6 +28,7 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes, withComponentInputBinding()),
         provideHttpClient(withInterceptors([jwtInterceptor])),
         {provide: LOCALE_ID, useValue: 'es-MX'},
-        {provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN'}
+        {provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN'},
+        {provide: APP_BASE_HREF, useFactory: () => document.querySelector('base')?.getAttribute('href') ?? '/'}
     ]
 };

@@ -10,7 +10,7 @@ import {AlertsService} from '../../../../core/services/alerts.service';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Router} from '@angular/router';
 import {DeclarationsService} from '../../services/declarations.service';
-import {CurrencyPipe} from '@angular/common';
+import {APP_BASE_HREF, CurrencyPipe} from '@angular/common';
 import {DeclarationsStatus} from '../../constants/declarations-status';
 import {ConfirmationService} from 'primeng/api';
 import {
@@ -42,6 +42,7 @@ export class DeclarationsDraftComponent implements OnInit {
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
+    private baseHref = inject(APP_BASE_HREF);
 
     public declarations: any;
     public isLoading: boolean = false;
@@ -70,7 +71,7 @@ export class DeclarationsDraftComponent implements OnInit {
     public viewDeclarationDetails(declaration: any) {
         localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
         const url = this.router.serializeUrl(this.router.createUrlTree(['/declaraciones/detalle']));
-        window.open(url, '_blank');
+        window.open(`${window.location.origin}${this.baseHref}${url}`, '_blank');
     }
 
     rejectDeclaration(declaration: any) {
