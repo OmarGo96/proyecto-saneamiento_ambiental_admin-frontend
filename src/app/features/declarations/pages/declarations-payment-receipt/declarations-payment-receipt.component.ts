@@ -100,7 +100,7 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
         this.alertsService.confirmRequest('¿Estás seguro de aceptar esta declaración?').subscribe({
             next: res => {
                 this.spinner.show();
-                const data = { estatus: 2, statement_id: declaration.uuid };
+                const data = { estatus: 2, uuid: declaration.uuid };
                 this.declarationsService.processDeclaration(data).subscribe({
                     next: (res: any) => {
                         this.spinner.hide();

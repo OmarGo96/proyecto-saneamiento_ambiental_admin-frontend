@@ -38,7 +38,7 @@ export class RejectDeclarationDialogComponent implements OnInit {
 
     initRejectDeclarationForm() {
         this.rejectForm = this.formBuilder.group({
-            statement_id: [this.declaration.uuid.toString()],
+            uuid: [this.declaration.uuid.toString()],
             estatus: ['-1', Validators.required],
             observaciones: ['', Validators.required]
         });
