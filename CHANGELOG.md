@@ -2,6 +2,18 @@
 
 Todos los cambios notables del proyecto estaran documentados en este archivo.
 
+## [Feature/Fix] - 2026-01-12
+
+### 🐛 Correcciones
+
+#### Desvinculación de empresas
+- **unlink-companies-dialog.component.ts**: Deshabilitada opción "Adjuntar un contribuyente existente"
+  - Comentada la opción `user_in_system` del array `unlinkTypes`
+- **unlink-companies-dialog.component.html**: Deshabilitado bloque condicional para usuarios existentes
+  - Comentado el bloque `@else if` que permitía seleccionar usuarios del sistema
+
+---
+
 ## [Feature/Fix] - 2026-01-11
 
 ### ✨ Nuevas características

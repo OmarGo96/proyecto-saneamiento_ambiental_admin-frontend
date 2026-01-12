@@ -43,7 +43,7 @@ export class UnlinkCompaniesDialogComponent implements OnInit {
     public unlinkTypes = [
         {name: 'Liberar empresa', value: 'release'},
         {name: 'Adjuntar un nuevo contribuyente', value: 'new_user'},
-        {name: 'Adjuntar un contribuyente existente', value: 'user_in_system'}
+        // {name: 'Adjuntar un contribuyente existente', value: 'user_in_system'}
     ];
 
     ngOnInit() {
