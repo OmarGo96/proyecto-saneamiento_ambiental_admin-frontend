@@ -2,6 +2,29 @@
 
 Todos los cambios notables del proyecto estaran documentados en este archivo.
 
+## [Feature/Fix] - 2026-01-11
+
+### ✨ Nuevas características
+
+#### Tabla de declaraciones con pase a caja
+- **declarations-payment-receipt.component.html**: Agregada nueva columna "Aplicado en sygem"
+  - Muestra "Si" con badge verde cuando `declaration.serie != null`
+  - Muestra "No" con badge naranja cuando `declaration.serie == null`
+  - Estilo consistente con la columna de estatus
+
+### 🐛 Correcciones
+
+#### Navegación de declaraciones
+- **declarations-payment-receipt.component.ts**: Corregido problema de doble barra diagonal (`//`) en la URL al abrir detalles de declaración
+  - Se eliminan barras diagonales redundantes del `baseHref` para evitar URLs malformadas
+
+#### Vista de detalles de declaración
+- **declarations-details.component.html**: Cambiado icono de navegación por icono de información
+  - Reemplazado icono de flecha (`pi-arrow-left`) por icono de información (`pi-info-circle`)
+  - Eliminada funcionalidad de navegación del botón
+
+---
+
 ## [Refactor] - 2026-01-10
 
 ### 🔧 Refactorización
