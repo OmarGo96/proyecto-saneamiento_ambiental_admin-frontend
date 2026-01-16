@@ -6,6 +6,7 @@ import {HotelMonthlyOccupancyComponent} from './pages/hotel-monthly-occupancy/ho
 import {StatementsByCompanyComponent} from './pages/statements-by-company/statements-by-company.component';
 import {HotelsWithoutStatementsComponent} from './pages/hotels-without-statements/hotels-without-statements.component';
 import {CompanyComplianceComponent} from './pages/company-compliance/company-compliance.component';
+import { ConcilationReportComponent } from './pages/concilation-report/concilation-report.component';
 
 export default [
     {
@@ -35,5 +36,9 @@ export default [
     {
         path: 'cumplimiento-por-empresas',
         component: CompanyComplianceComponent
+    },
+    {
+        path: 'conciliacion',
+        component: ConcilationReportComponent
     }
 ] as Routes;

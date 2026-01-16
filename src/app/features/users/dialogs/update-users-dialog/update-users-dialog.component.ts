@@ -40,7 +40,6 @@ export class UpdateUsersDialogComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.dialogConfig.data.user;
-        console.log(this.user);
         this.initUpdateUserForm();
     }
 

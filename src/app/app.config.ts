@@ -8,6 +8,9 @@ import {jwtInterceptor} from './core/interceptors/jwt.interceptor';
 import {DsaTheme} from './core/constants/theme-presets/dsa-theme';
 import {APP_BASE_HREF, registerLocaleData} from '@angular/common';
 import localeEs from '@angular/common/locales/es-MX';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AlertsService } from './core/services/alerts.service';
 
 registerLocaleData(localeEs)
 
@@ -29,6 +32,10 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(withInterceptors([jwtInterceptor])),
         {provide: LOCALE_ID, useValue: 'es-MX'},
         {provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN'},
-        {provide: APP_BASE_HREF, useFactory: () => document.querySelector('base')?.getAttribute('href') ?? '/'}
+        {provide: APP_BASE_HREF, useFactory: () => document.querySelector('base')?.getAttribute('href') ?? '/'},
+        AlertsService,
+        ConfirmationService,
+        MessageService,
+        DialogService
     ]
 };

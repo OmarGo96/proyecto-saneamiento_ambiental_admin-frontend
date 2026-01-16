@@ -42,7 +42,13 @@ export class ReportsService {
         return this.httpClient.get(`${this.url}/reports/company-compliance`);
     }
 
+    getConcilation(data: any): Observable<any> {
+        return this.httpClient.post(`${this.url}/reports/conciliation`, data);
+    }
+
     getSERPAPIInfo(serpToken: string): Observable<any> {
         return this.httpClient.get(`${this.url}/search-in-google/${serpToken}`);
     }
+
+    
 }

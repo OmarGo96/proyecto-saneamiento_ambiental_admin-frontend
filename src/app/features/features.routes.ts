@@ -8,6 +8,7 @@ import {ReportsComponent} from './reports/components/reports/reports.component';
 import {ConfigurationsComponent} from './configurations/components/configurations/configurations.component';
 import {DashboardComponent} from './dashboard/pages/dashboard/dashboard.component';
 import {GeolocationMapComponent} from './geolocation/pages/geolocation-map/geolocation-map.component';
+import { ContribuyentesListComponent } from './contribuyentes/pages/contribuyentes-list/contribuyentes-list.component';
 
 
 export default [
@@ -59,6 +60,13 @@ export default [
         path: 'usuarios',
         component: UsersComponent,
     },
+
+    {
+        path: 'contribuyentes',
+        component: ContribuyentesListComponent,
+    },
+
+
     {
         path: 'configuracion',
         component: ConfigurationsComponent,

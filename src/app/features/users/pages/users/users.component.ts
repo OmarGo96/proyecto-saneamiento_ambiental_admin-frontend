@@ -1,19 +1,19 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {IconFieldModule} from 'primeng/iconfield';
-import {InputIconModule} from 'primeng/inputicon';
-import {InputTextModule} from 'primeng/inputtext';
-import {ButtonModule} from 'primeng/button';
-import {UsersService} from '../../../../core/services/users.service';
-import {AlertsService} from '../../../../core/services/alerts.service';
-import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
-import {Router} from '@angular/router';
-import {CreateUsersDialogComponent} from '../../dialogs/create-users-dialog/create-users-dialog.component';
-import {TableModule} from 'primeng/table';
-import {PopoverModule} from 'primeng/popover';
-import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
-import {UpdateUsersDialogComponent} from '../../dialogs/update-users-dialog/update-users-dialog.component';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {NgxSpinnerService} from 'ngx-spinner';
+import { Component, inject, OnInit } from '@angular/core';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { UsersService } from '../../../../core/services/users.service';
+import { AlertsService } from '../../../../core/services/alerts.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Router } from '@angular/router';
+import { CreateUsersDialogComponent } from '../../dialogs/create-users-dialog/create-users-dialog.component';
+import { TableModule } from 'primeng/table';
+import { PopoverModule } from 'primeng/popover';
+import { TableSkeletonComponent } from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
+import { UpdateUsersDialogComponent } from '../../dialogs/update-users-dialog/update-users-dialog.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-users',

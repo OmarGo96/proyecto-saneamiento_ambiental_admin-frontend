@@ -28,12 +28,13 @@ label {
     @apply w-full;
 }
 
-.p-login-button {
+.p-login-button, .p-w-full-button {
     .p-button {
         width: 100% !important;
         margin-top: 1rem;
     }
 }
+
 
 .p-popover-content {
     padding: 0 !important;

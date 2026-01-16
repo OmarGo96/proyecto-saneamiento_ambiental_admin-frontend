@@ -220,11 +220,31 @@ export const MenuItems = [
         role: []
     },
     {
+        path: 'reportes/conciliacion',
+        group: 'Reportes',
+        module: 'reports',
+        action: 'show',
+        title: 'Conciliación',
+        icon: 'pi-file-edit',
+        class: '',
+        role: []
+    },
+    {
         path: '/usuarios',
         group: 'Usuarios',
         module: 'reports',
         action: 'show',
-        title: 'Ver todos',
+        title: 'Administradores',
+        icon: 'pi-cog',
+        class: '',
+        role: []
+    },
+    {
+        path: '/contribuyentes',
+        group: 'Usuarios',
+        module: 'reports',
+        action: 'show',
+        title: 'Contribuyentes',
         icon: 'pi-users',
         class: '',
         role: []
