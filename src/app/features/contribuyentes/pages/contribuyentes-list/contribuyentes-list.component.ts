@@ -13,6 +13,9 @@ import { PopoverModule } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
 import { TableSkeletonComponent } from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
 import { ContribuyentesChangePasswordDialogComponent } from '../../dialogs/contribuyentes-change-password-dialog/contribuyentes-change-password-dialog.component';
+import {
+    ContribuyentesCompaniesDialogComponent
+} from '../../dialogs/contribuyentes-companies-dialog/contribuyentes-companies-dialog.component';
 
 @Component({
     selector: 'app-contribuyentes-list',
@@ -78,6 +81,28 @@ export class ContribuyentesListComponent {
                     '960px': '75vw',
                     '640px': '90vw',
                 },
+            },
+        );
+
+        this.dialogRef.onClose.subscribe((result) => {
+            if (result) {
+                this.getContribuyentes();
+            }
+        });
+    }
+
+    openContribuyentesCompaniesDialog(contribuyente: any) {
+        this.dialogRef = this.dialogService.open(
+            ContribuyentesCompaniesDialogComponent,
+            {
+                data: {
+                    contribuyente,
+                },
+                header: 'Empresas del contribuyente',
+                closeOnEscape: false,
+                modal: true,
+                closable: true,
+                baseZIndex: 1
             },
         );
 

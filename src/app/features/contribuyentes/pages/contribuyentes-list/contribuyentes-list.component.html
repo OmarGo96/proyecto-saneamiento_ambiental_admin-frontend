@@ -6,7 +6,7 @@
 
     <div class="flex justify-between">
         <p-iconfield iconPosition="left" class="w-1/3">
-            <p-inputicon styleClass="pi pi-search" />
+            <p-inputicon styleClass="pi pi-search"/>
             <input
                 type="text"
                 pInputText
@@ -41,7 +41,7 @@
                         <th>Nombre</th>
                         <th>Correo eletrónico</th>
                         <th>Teléfono</th>
-                        <th>Estatus</th>
+                        <!--<th>Estatus</th>-->
                         <th>Empresas</th>
                         <th>Menú</th>
                     </tr>
@@ -51,8 +51,15 @@
                         <td>{{ contribuyente.nombre }}</td>
                         <td>{{ contribuyente.email }}</td>
                         <td>{{ contribuyente.telefono }}</td>
-                        <td>{{ contribuyente.estatus }}</td>
-                        <td>Ver empresas</td>
+                        <!--<td>{{ contribuyente.estatus }}</td>-->
+                        <td>
+                            <p-button
+                                label="Ver empresas"
+                                class="text-xs"
+                                (click)="openContribuyentesCompaniesDialog(contribuyente)"
+                                badge="{{ contribuyente.empresas.length }}"
+                            />
+                        </td>
                         <td class="space-x-3">
                             <p-button
                                 icon="pi pi-ellipsis-v"
@@ -67,11 +74,7 @@
                                         <li>
                                             <a
                                                 class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer"
-                                                (click)="
-                                                    openContribuyentesChangePasswordDialog(
-                                                        contribuyente
-                                                    )
-                                                "
+                                                (click)="openContribuyentesChangePasswordDialog(contribuyente)"
                                             >
                                                 <i class="pi pi-lock"></i>
                                                 <span>Cambiar contraseña</span>

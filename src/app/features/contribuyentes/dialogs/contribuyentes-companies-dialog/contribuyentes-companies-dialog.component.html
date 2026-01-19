@@ -1,0 +1,18 @@
+<p-table [value]="contribuyente.empresas" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
+        <tr class="font-medium uppercase">
+            <th>Nombre</th>
+            <th>Licencia de func.</th>
+            <th>RFC</th>
+            <th>Habitaciones</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-empresa>
+        <tr>
+            <td>{{ empresa.nombre_establecimiento }}</td>
+            <td>{{ empresa.licencia_funcionamiento_id }}</td>
+            <td>{{ empresa.rfc }}</td>
+            <td>{{ empresa.habitaciones }}</td>
+        </tr>
+    </ng-template>
+</p-table>
