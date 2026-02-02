@@ -1,13 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {TableModule} from 'primeng/table';
-import {TableSkeletonComponent} from '../../../../shared/components/skeleton/table-skeleton/table-skeleton.component';
 
 @Component({
   selector: 'app-contribuyentes-companies-dialog',
   imports: [
-      TableModule,
-      TableSkeletonComponent
+      TableModule
   ],
   templateUrl: './contribuyentes-companies-dialog.component.html',
   styleUrl: './contribuyentes-companies-dialog.component.scss'
