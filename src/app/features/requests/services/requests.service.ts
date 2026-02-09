@@ -22,6 +22,10 @@ export class RequestsService {
         return this.httpClient.post(`${this.url}/registration/process`, data);
     }
 
+    processUserRequest(data: any): Observable<any> {
+        return this.httpClient.post(`${this.url}/user-request/process`, data);
+    }
+
     getDocument(name: string): Observable<any> {
         return this.httpClient.get(`${this.url}/registration/file/${name}/requests`, { responseType: 'blob' });
     }

@@ -20,7 +20,7 @@
                      [showCurrentPageReport]="true"
                      currentPageReportTemplate="Showing {first} to {last} from {totalRecords} records"
                      [rowsPerPageOptions]="[10, 20, 30]"
-                     [globalFilterFields]="['representante', 'email', 'telefono', 'licencia_funcionamiento', 'nombre_establecimiento', 'created_at']"
+                     [globalFilterFields]="['representante', 'email', 'telefono', 'licencia_funcionamiento', 'nombre_establecimiento', 'created_at', 'estatus']"
                      size="small"
             >
                 <ng-template pTemplate="header">
@@ -31,6 +31,7 @@
                         <th>Licencia de funcionamiento</th>
                         <th>Nombre del establecimiento</th>
                         <th>Fecha de solicitud</th>
+                        <th>Estatus</th>
                         <th>Menú</th>
                     </tr>
                 </ng-template>
@@ -42,6 +43,11 @@
                         <td>{{ request.licencia_funcionamiento }}</td>
                         <td>{{ request.nombre_establecimiento }}</td>
                         <td>{{ request.created_at | date: 'longDate' }}</td>
+                        <td>
+                            <span class="{{ getStatusLabel(request.estatus).styles }} text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                                {{ getStatusLabel(request.estatus).name }}
+                            </span>
+                        </td>
                         <td class="space-x-3">
                             <p-button icon="pi pi-ellipsis-v"
                                       [rounded]="true"
@@ -59,18 +65,22 @@
                                                 <span>Ver PDF</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a (click)="acceptRequest(request)" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
-                                                <i class="pi pi-check-circle"></i>
-                                                <span>Aceptar</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a (click)="openRejectRequestDialog(request)" class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
-                                                <i class="pi pi-times"></i>
-                                                <span>Rechazar</span>
-                                            </a>
-                                        </li>
+                                        @if (request.estatus === 0) {
+                                            <li>
+                                                <a (click)="acceptRequest(request)"
+                                                   class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-100 hover:cursor-pointer">
+                                                    <i class="pi pi-check-circle"></i>
+                                                    <span>Aceptar</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a (click)="openRejectRequestDialog(request)"
+                                                   class="flex items-center space-x-2 px-4 py-2 text-red-500 hover:bg-red-100 hover:cursor-pointer">
+                                                    <i class="pi pi-times"></i>
+                                                    <span>Rechazar</span>
+                                                </a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </p-popover>

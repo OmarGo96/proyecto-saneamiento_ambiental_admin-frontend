@@ -112,7 +112,7 @@ export class RequestsUsersComponent implements OnInit {
             next: res => {
                 this.spinner.show();
                 const data = {uuid: request.uuid, estatus: '1'}
-                this.requestsService.processRequest(data).subscribe({
+                this.requestsService.processUserRequest(data).subscribe({
                     next: res => {
                         this.spinner.hide();
                         this.alertsService.successAlert(res.message).then(res => {
@@ -158,5 +158,19 @@ export class RequestsUsersComponent implements OnInit {
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.table?.filterGlobal(filterValue, 'contains');
+    }
+
+    public getStatusLabel(status: number | string): { name: string; styles: string } {
+        const normalized = typeof status === 'string' ? Number(status) : status;
+        switch (normalized) {
+            case 0:
+                return { name: 'En proceso', styles: 'bg-blue-100 text-blue-800' };
+            case 1:
+                return { name: 'Aceptada', styles: 'bg-green-100 text-green-800' };
+            case -1:
+                return { name: 'Rechazado', styles: 'bg-red-100 text-red-800' };
+            default:
+                return { name: 'Desconocido', styles: 'bg-gray-100 text-gray-800' };
+        }
     }
 }
