@@ -65,7 +65,7 @@ export class DeclarationsRejectedComponent implements OnInit {
     }
 
     public viewDeclarationDetails(declaration: any) {
-        localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
+        localStorage.setItem(this.declarationsService.declarationToken, btoa(encodeURIComponent(JSON.stringify(declaration))));
         const url = this.router.serializeUrl(this.router.createUrlTree(['/declaraciones/detalle']));
         window.open(`${window.location.origin}${this.baseHref}${url}`, '_blank');
     }

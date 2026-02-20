@@ -44,7 +44,7 @@ export class CompaniesDetailComponent implements OnInit {
 
     ngOnInit() {
         const companyToken: any = localStorage.getItem(this.companiesService.companyToken);
-        this.company = JSON.parse(atob(companyToken));
+        this.company = JSON.parse(decodeURIComponent(atob(companyToken)));
 
         this.loadInitialData();
 

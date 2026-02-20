@@ -46,7 +46,7 @@ export class DeclarationsDetailsComponent implements OnInit {
 
     ngOnInit() {
         const declarationToken: any = localStorage.getItem(this.declarationsService.declarationToken);
-        this.declaration = JSON.parse(atob(declarationToken));
+        this.declaration = JSON.parse(decodeURIComponent(atob(declarationToken)));
 
     }
 

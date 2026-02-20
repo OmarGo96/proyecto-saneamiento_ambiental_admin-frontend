@@ -169,7 +169,7 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
 
     public viewDeclarationDetails(declaration: any) {
         console.log(declaration);
-        localStorage.setItem(this.declarationsService.declarationToken, btoa(JSON.stringify(declaration)));
+        localStorage.setItem(this.declarationsService.declarationToken, btoa(encodeURIComponent(JSON.stringify(declaration))));
         const url = this.router.serializeUrl(this.router.createUrlTree(['/declaraciones/detalle']));
         const baseHref = this.baseHref.endsWith('/') ? this.baseHref.slice(0, -1) : this.baseHref;
         window.open(`${window.location.origin}${baseHref}${url}`, '_blank');

@@ -74,7 +74,7 @@ export class CompaniesWithRepresentativeComponent implements OnInit {
     }
 
     public viewCompanyDetails(company: any) {
-        localStorage.setItem(this.companiesService.companyToken, btoa(JSON.stringify(company)));
+        localStorage.setItem(this.companiesService.companyToken, btoa(encodeURIComponent(JSON.stringify(company))));
         this.router.navigate(['/empresas/detalle']);
     }
 
