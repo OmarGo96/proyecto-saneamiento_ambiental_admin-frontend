@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment.development';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {CompanyDocumentsResponse} from '../models/company-document.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class CompaniesService {
         return this.httpClient.post(`${this.url}/companies/search`, data);
     }
 
-    getCompaniesFiles(companyId: any): Observable<any> {
-        return this.httpClient.get(`${this.url}/documentation/show/${companyId}`);
+    getCompaniesFiles(companyUuid: string, year: number): Observable<CompanyDocumentsResponse> {
+        return this.httpClient.get<CompanyDocumentsResponse>(`${this.url}/company-documents/${companyUuid}/${year}`);
     }
 
     updateBedrooms(companyId: any, data: any): Observable<any> {

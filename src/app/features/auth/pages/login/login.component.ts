@@ -1,13 +1,18 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {SessionService} from '../../../../core/services/session.service';
-import {AlertsService} from '../../../../core/services/alerts.service';
-import {Router} from '@angular/router';
-import {InputTextModule} from 'primeng/inputtext';
-import {PasswordModule} from 'primeng/password';
-import {ButtonModule} from 'primeng/button';
+import { Component, inject, OnInit } from '@angular/core';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
+import { SessionService } from '../../../../core/services/session.service';
+import { AlertsService } from '../../../../core/services/alerts.service';
+import { Router } from '@angular/router';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
 import moment from 'moment';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-login',
@@ -15,11 +20,11 @@ import {ConfirmationService} from 'primeng/api';
         ReactiveFormsModule,
         InputTextModule,
         PasswordModule,
-        ButtonModule
+        ButtonModule,
     ],
     providers: [AlertsService, ConfirmationService],
     templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+    styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
     public loginForm: any;
@@ -49,7 +54,7 @@ export class LoginComponent implements OnInit {
         const data = this.loginForm.value;
 
         this.sessionService.login(data).subscribe({
-            next: res => {
+            next: (res) => {
                 const token = res.token;
 
                 sessionStorage.setItem(this.sessionService.jwtToken, token);
@@ -58,10 +63,10 @@ export class LoginComponent implements OnInit {
 
                 this.isLoading = false;
             },
-            error: err => {
+            error: (err) => {
                 this.isLoading = false;
                 this.alertsService.errorAlert(err.error.errors);
-            }
-        })
+            },
+        });
     }
 }

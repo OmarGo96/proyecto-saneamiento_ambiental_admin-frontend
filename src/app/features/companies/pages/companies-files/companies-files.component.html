@@ -9,40 +9,145 @@
                     [outlined]="true"
                     (click)="goBack()"
                 />
-                <h3 class="text-xl font-semibold ">Documentos de la empresa</h3>
+                <h3 class="text-xl font-semibold">Documentos de la empresa</h3>
             </div>
-            <!--@for (status of companiesStatus; track status) {
-                @if (status.value === company.status) {
-                    <span class="{{ status.styles }} font-medium me-2 px-2.5 py-0.5 rounded-full">
-                            {{ status.name }}
-                        </span>
-                }
-            }-->
+            <div class="flex items-center space-x-2">
+                <span class="text-sm text-gray-600">Año: <strong>{{ currentYear }}</strong></span>
+            </div>
         </div>
     </div>
-    <div class="grid grid-cols-5 gap-3">
-        <div (click)="openAddCompaniesDocumentationDialog()" class="flex items-center justify-center w-full">
-            <div
-                class="flex flex-col items-center justify-center w-full h-52 bg-gray-100 rounded-lg border border-dashed border-default-strong rounded-base cursor-pointer hover:bg-gray-200">
-                <div class="flex flex-col items-center justify-center text-body pt-5 pb-6">
-                    <i class="pi pi-upload mb-5 text-gray-600" style="font-size: 2.5rem"></i>
-                    <p class="mb-2 text-sm text-gray-600"><span class="font-semibold">Da click para subir un nuevo archivo</span>
-                    </p>
-                    <p class="text-xs text-gray-600">PDF</p>
-                </div>
-            </div>
-        </div>
-        @if (documentation && documentation.length >= 1) {
-            @for (document of documentation; track document) {
-                <div class="flex flex-col items-center justify-center p-6 rounded-lg border shadow-xs space-y-3">
-                    <i class="pi pi-file-pdf" style="font-size: 2rem"></i>
-                    <div class="text-center ">
-                        <h5 class="font-medium tracking-tight text-heading">{{ document.file }}</h5>
-                        <p class="text-sm text-gray-500 tracking-tight text-heading">{{ document.type }}</p>
-                        <p class="text-sm text-gray-500 tracking-tight text-heading">{{ document.date | date:'dd/MM/yyyy' }}</p>
+
+    @if (documents && documents.length > 0) {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @for (document of documents; track $index) {
+                <div class="bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow">
+                    <div class="p-4 sm:p-5">
+                        @if (hasFile(document)) {
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="flex-shrink-0 mt-1">
+                                    @if (hasFile(document)) {
+                                        <i class="pi pi-check-circle text-green-600 text-2xl"></i>
+                                    } @else {
+                                        <i class="pi pi-circle text-gray-300 text-2xl"></i>
+                                    }
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-gray-900 line-clamp-2">
+                                        {{ document.type_document_name }}
+                                    </h4>
+                                    @if (document.file) {
+                                        <p class="text-xs text-gray-600 mb-1 truncate" [title]="document.file">
+                                            <i class="pi pi-file mr-1"></i>
+                                            {{ document.file }}
+                                        </p>
+                                    }
+
+                                </div>
+                            </div>
+
+                            <!-- Estado del documento -->
+                            @if (document.status === 'APROBADO' || document.status === 'approved') {
+                                <p-message
+                                    severity="success"
+                                    styleClass="w-full">
+                                    <div class="flex flex-col gap-1">
+                                        <span class="font-semibold"><i class="pi pi-check"></i> Documento aprobado</span>
+                                        @if (document.reviewed_at) {
+                                            <span class="text-xs">Revisado el {{ document.reviewed_at | date:'dd/MM/yyyy HH:mm' }}</span>
+                                        }
+                                    </div>
+                                </p-message>
+                            }
+
+                            @if (document.status === 'PENDIENTE' || document.status === 'pending') {
+                                <p-message
+                                    severity="warn"
+                                    styleClass="w-full">
+                                    <div class="flex flex-col gap-1">
+                                        <span class="font-semibold"><i class="pi pi-hourglass"></i> Pendiente de revisión</span>
+                                        <span class="text-xs">Este documento está esperando ser revisado</span>
+                                    </div>
+                                </p-message>
+                            }
+
+                            @if (document.status === 'RECHAZADO' || document.status === 'rejected') {
+                                <p-message
+                                    severity="error"
+                                    styleClass="w-full">
+                                    <div class="flex flex-col gap-1">
+                                        <span class="font-semibold"><i class="pi pi-times"></i> Documento rechazado</span>
+                                        @if (document.reviewed_at) {
+                                            <span class="text-xs">Rechazado el {{ document.reviewed_at | date:'dd/MM/yyyy HH:mm' }}</span>
+                                        }
+                                        @if (document.rejection_reason) {
+                                            <span class="text-xs mt-1 block">
+                                                <strong>Motivo:</strong> {{ document.rejection_reason }}
+                                            </span>
+                                        }
+                                    </div>
+                                </p-message>
+                            }
+
+                            <div class="flex flex-col gap-2">
+                                <div class="p-w-full-button">
+                                    <p-button
+                                        label="Ver Documento"
+                                        icon="pi pi-eye"
+                                        severity="info"
+                                        [outlined]="true"
+                                        (click)="viewDocument(document)"
+                                    />
+                                </div>
+
+                                <div class="flex gap-2">
+                                    @if (document.status !== 'aprobado' && document.status !== 'approved') {
+                                        <div class="p-w-full-button flex-1">
+                                            <p-button
+                                                label="Aprobar"
+                                                icon="pi pi-check"
+                                                severity="success"
+                                                (click)="approveDocument(document)"
+                                            />
+                                        </div>
+                                    }
+
+                                    @if (document.status !== 'rechazado' && document.status !== 'rejected') {
+                                        <div class="p-w-full-button flex-1">
+                                            <p-button
+                                                label="Rechazar"
+                                                icon="pi pi-times"
+                                                severity="danger"
+                                                (click)="rejectDocument(document)"
+                                            />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        } @else {
+                            <!-- Sin documento -->
+                            <div class="flex flex-col items-center justify-center py-8 text-center">
+                                <i class="pi pi-file text-gray-300 text-4xl mb-2"></i>
+                                <p class="text-sm text-gray-500">
+                                    Documento no subido
+                                </p>
+                                <p class="text-xs text-gray-400 mt-1">
+                                    Esperando que el contribuyente suba el archivo
+                                </p>
+                            </div>
+
+                        }
+
                     </div>
                 </div>
             }
-        }
-    </div>
+        </div>
+    } @else {
+        <div class="flex flex-col items-center justify-center py-12 px-4">
+            <i class="pi pi-inbox text-gray-400 text-6xl mb-4"></i>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">No hay documentos configurados</h3>
+            <p class="text-sm text-gray-600 text-center max-w-md">
+                No se encontraron tipos de documentos para esta empresa en el año {{ currentYear }}.
+            </p>
+        </div>
+    }
 </div>
