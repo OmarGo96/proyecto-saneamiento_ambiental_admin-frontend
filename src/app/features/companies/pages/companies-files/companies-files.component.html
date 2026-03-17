@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        @if (documentation.length >= 1) {
+        @if (documentation && documentation.length >= 1) {
             @for (document of documentation; track document) {
                 <div class="flex flex-col items-center justify-center p-6 rounded-lg border shadow-xs space-y-3">
                     <i class="pi pi-file-pdf" style="font-size: 2rem"></i>
