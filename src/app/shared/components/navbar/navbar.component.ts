@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, output} from '@angular/core';
 import {ButtonModule} from 'primeng/button';
 import {MenuModule} from 'primeng/menu';
 import {Router} from '@angular/router';
@@ -17,6 +17,8 @@ export class NavbarComponent implements OnInit {
     private router = inject(Router)
     public items: MenuItem[] | undefined;
 
+    public toggleSidebar = output<void>();
+
     ngOnInit() {
         this.items = [
             {
@@ -33,5 +35,9 @@ export class NavbarComponent implements OnInit {
                 ]
             }
         ];
+    }
+
+    onToggleSidebar() {
+        this.toggleSidebar.emit();
     }
 }

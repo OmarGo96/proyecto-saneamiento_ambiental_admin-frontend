@@ -1,20 +1,20 @@
 @if (declaration) {
 
-    <div class="grid grid-cols-12">
-        <div class="col-start-4 col-span-6 space-y-5 ">
-            <div class="flex items-center justify-between space-x-2">
-                <div class="flex items-center space-x-2">
+    <div class="w-full lg:w-3/4 xl:w-2/3 2xl:w-1/2 mx-auto px-2 sm:px-0">
+        <div class="space-y-4 md:space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
                     <p-button
                         icon="pi pi-info-circle"
                         [rounded]="true"
                         severity="secondary"
                         [outlined]="true"
                     />
-                    <h3 class="text-xl font-semibold ">Información de la declaración</h3>
+                    <h3 class="text-lg sm:text-xl font-semibold">Información de la declaración</h3>
                 </div>
                 @for (status of declarationsStatus; track status) {
                     @if (status.value === declaration.status) {
-                        <span class="{{ status.styles }} font-medium me-2 px-2.5 py-0.5 rounded-full">
+                        <span class="{{ status.styles }} font-medium px-2.5 py-0.5 rounded-full text-sm">
                             {{ status.name }}
                         </span>
                     }
@@ -22,8 +22,8 @@
             </div>
 
             <section class="bg-white border rounded-xl">
-                <div class="p-5 mx-auto">
-                    <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">
+                <div class="p-4 sm:p-5 mx-auto">
+                    <h2 class="mb-2 text-lg sm:text-xl md:text-2xl font-semibold leading-none text-gray-900">
                         {{ declaration.nombre_establecimiento }}
                     </h2>
                     <dl>
@@ -32,7 +32,7 @@
                             {{ declaration.licencia_funcionamiento_id }}
                         </dd>
                     </dl>
-                    <dl class="grid grid-cols-3">
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
                             <dt class="mb-2 font-semibold leading-none text-gray-900">Periodo de declaración</dt>
                             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ declaration.mes }} {{ declaration.anio }}</dd>
@@ -52,7 +52,7 @@
                             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ declaration.habitaciones }}</dd>
                         </div>
                     </dl>
-                    <dl class="grid grid-cols-3">
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
                         <div>
                             <dt class="mb-2 font-semibold leading-none text-gray-900">Ocupación declarada</dt>
@@ -73,7 +73,7 @@
                             </dd>
                         </div>
                     </dl>
-                    <dl class="grid grid-cols-3">
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
                             <dt class="mb-2 font-semibold leading-none text-gray-900">Importe derecho</dt>
                             <dd class="mb-4 font-light text-gray-500 sm:mb-5">
@@ -93,7 +93,7 @@
                             </dd>
                         </div>
                     </dl>
-                    <dl class="grid grid-cols-3">
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
                             <dt class="mb-2 font-semibold leading-none text-gray-900">Importe recargo</dt>
                             <dd class="mb-4 font-light text-gray-500 sm:mb-5">
@@ -107,15 +107,15 @@
                             </dd>
                         </div>
                     </dl>
-                    <div class="flex items-center space-x-4">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                         <p-button icon="pi pi-file-pdf" label="Forma declarativa" (click)="getDeclaractionFormat(declaration.uuid)" />
                         <p-button icon="pi pi-receipt" label="Pase a caja" (click)="openPaseCaja(declaration.url)" />
                     </div>
                 </div>
-                <div class="p-5 mx-auto space-y-5 border-t">
-                    <h3 class="text-xl font-semibold ">Información de pago</h3>
+                <div class="p-4 sm:p-5 mx-auto space-y-5 border-t">
+                    <h3 class="text-lg sm:text-xl font-semibold">Información de pago</h3>
 
-                    <dl class="grid grid-cols-4">
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
                             <dt class="mb-2 font-semibold leading-none text-gray-900">Banco emisor</dt>
                             <dd class="mb-4 font-light text-gray-500 sm:mb-5">NULL</dd>

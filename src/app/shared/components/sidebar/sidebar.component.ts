@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, input, OnInit, output} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MenuItems} from '../../../core/constants/menu-items';
 import {PanelModule} from 'primeng/panel';
@@ -25,7 +25,8 @@ import {NgClass} from '@angular/common';
     styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
-
+    public isOpen = input<boolean>(false);
+    public closeSidebar = output<void>();
 
     public menuItems: any;
     public menu: any;

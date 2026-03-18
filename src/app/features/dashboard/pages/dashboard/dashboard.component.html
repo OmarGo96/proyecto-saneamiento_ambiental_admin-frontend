@@ -1,95 +1,95 @@
 <div class="space-y-5">
     <div>
-        <h3 class="text-xl font-semibold ">Bienvenido de nuevo</h3>
+        <h3 class="text-lg sm:text-xl font-semibold">Bienvenido de nuevo</h3>
         <p class="text-sm text-gray-500">Conoce el resumen de actividades y resultados</p>
     </div>
 
     <!-- Grid -->
     <p-fieldset legend="Reporte de crecimiento anual">
-        <div class="grid grid-cols-3 gap-5">
-            <div class="flex justify-between items-center p-4 w-full border-r-2 pr-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 w-full xl:border-r-2 gap-4">
                 <div>
                     <h2 class="font-medium mb-3">Declaraciones</h2>
 
                     <div class="flex gap-5">
                         <div>
                             <h5 class="text-sm text-gray-500">Año anterior</h5>
-                            <h2 class="text-xl font-medium">{{ statements.previous_year }}</h2>
+                            <h2 class="text-lg sm:text-xl font-medium">{{ statements.previous_year }}</h2>
                         </div>
                         <div>
                             <h5 class="text-sm text-gray-500">Año actual</h5>
-                            <h2 class="text-xl font-medium">{{ statements.current_year }}</h2>
+                            <h2 class="text-lg sm:text-xl font-medium">{{ statements.current_year }}</h2>
                         </div>
                     </div>
                 </div>
 
                 @if (statements.growth_percent > 0) {
-                    <div class="space-x-1 flex items-center">
-                        <i class="pi pi-arrow-up-right text-5xl text-green-500"></i>
-                        <span class="text-green-500 text-4xl">{{ statements.growth_percent | number: '1.0-0' }}%</span>
+                    <div class="flex items-center gap-1">
+                        <i class="pi pi-arrow-up-right text-3xl sm:text-5xl text-green-500"></i>
+                        <span class="text-green-500 text-2xl sm:text-4xl">{{ statements.growth_percent | number: '1.0-0' }}%</span>
                     </div>
                 } @else {
-                    <div class="space-x-1 flex items-center">
-                        <i class="pi pi-arrow-down-right text-5xl text-red-500"></i>
-                        <span class="text-red-500 text-4xl">{{ statements.growth_percent | number: '1.0-0' }}%</span>
+                    <div class="flex items-center gap-1">
+                        <i class="pi pi-arrow-down-right text-3xl sm:text-5xl text-red-500"></i>
+                        <span class="text-red-500 text-2xl sm:text-4xl">{{ statements.growth_percent | number: '1.0-0' }}%</span>
                     </div>
                 }
 
             </div>
-            <div class="flex justify-between items-center p-4 w-full border-r-2 pr-16">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 w-full xl:border-r-2 gap-4">
                 <div>
                     <h2 class="font-medium mb-3">Contribuyentes</h2>
 
                     <div class="flex gap-5">
                         <div>
                             <h5 class="text-sm text-gray-500">Año anterior</h5>
-                            <h2 class="text-xl font-medium">{{ taxpayers.previous_year }}</h2>
+                            <h2 class="text-lg sm:text-xl font-medium">{{ taxpayers.previous_year }}</h2>
                         </div>
                         <div>
                             <h5 class="text-sm text-gray-500">Año actual</h5>
-                            <h2 class="text-xl font-medium">{{ taxpayers.current_year }}</h2>
+                            <h2 class="text-lg sm:text-xl font-medium">{{ taxpayers.current_year }}</h2>
                         </div>
                     </div>
                 </div>
 
                 @if (taxpayers.growth_percent > 0) {
-                    <div class="space-x-1 flex items-center">
-                        <i class="pi pi-arrow-up-right text-5xl text-green-500"></i>
-                        <span class="text-green-500 text-4xl">{{ taxpayers.growth_percent | number: '1.0-0' }}%</span>
+                    <div class="flex items-center gap-1">
+                        <i class="pi pi-arrow-up-right text-3xl sm:text-5xl text-green-500"></i>
+                        <span class="text-green-500 text-2xl sm:text-4xl">{{ taxpayers.growth_percent | number: '1.0-0' }}%</span>
                     </div>
                 } @else {
-                    <div class="space-x-1 flex items-center">
-                        <i class="pi pi-arrow-down-right text-5xl text-red-500"></i>
-                        <span class="text-red-500 text-4xl">{{ taxpayers.growth_percent | number: '1.0-0' }}%</span>
+                    <div class="flex items-center gap-1">
+                        <i class="pi pi-arrow-down-right text-3xl sm:text-5xl text-red-500"></i>
+                        <span class="text-red-500 text-2xl sm:text-4xl">{{ taxpayers.growth_percent | number: '1.0-0' }}%</span>
                     </div>
                 }
 
             </div>
-            <div class="flex justify-between items-center p-4 w-full pr-16">
-                <div class="">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 w-full gap-4">
+                <div>
                     <h2 class="font-medium mb-3">Empresas</h2>
 
                     <div class="flex gap-5">
                         <div>
                             <h5 class="text-sm text-gray-500">Año anterior</h5>
-                            <h2 class="text-xl font-medium">{{ companies.previous_year }}</h2>
+                            <h2 class="text-lg sm:text-xl font-medium">{{ companies.previous_year }}</h2>
                         </div>
                         <div>
                             <h5 class="text-sm text-gray-500">Año actual</h5>
-                            <h2 class="text-xl font-medium">{{ companies.current_year }}</h2>
+                            <h2 class="text-lg sm:text-xl font-medium">{{ companies.current_year }}</h2>
                         </div>
                     </div>
                 </div>
 
                 @if (companies.growth_percent > 0) {
-                    <div class="space-x-1 flex items-center">
-                        <i class="pi pi-arrow-up-right text-5xl text-green-500"></i>
-                        <span class="text-green-500 text-4xl">{{ companies.growth_percent | number: '1.0-0' }}%</span>
+                    <div class="flex items-center gap-1">
+                        <i class="pi pi-arrow-up-right text-3xl sm:text-5xl text-green-500"></i>
+                        <span class="text-green-500 text-2xl sm:text-4xl">{{ companies.growth_percent | number: '1.0-0' }}%</span>
                     </div>
                 } @else {
-                    <div class="space-x-1 flex items-center">
-                        <i class="pi pi-arrow-down-right text-5xl text-red-500"></i>
-                        <span class="text-red-500 text-4xl">{{ companies.growth_percent | number: '1.0-0' }}%</span>
+                    <div class="flex items-center gap-1">
+                        <i class="pi pi-arrow-down-right text-3xl sm:text-5xl text-red-500"></i>
+                        <span class="text-red-500 text-2xl sm:text-4xl">{{ companies.growth_percent | number: '1.0-0' }}%</span>
                     </div>
                 }
 
@@ -98,11 +98,11 @@
     </p-fieldset>
 
 
-    <div class="grid grid-cols-4 gap-6">
-        <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
+        <div class="flex flex-col space-y-6 md:space-y-10 p-4 md:p-5 bg-white border border-gray-200 shadow-sm rounded-xl">
             @if (currentMonthStatements) {
                 <div>
-                    <h3 class="text-xl font-semibold ">Declaraciones mensuales</h3>
+                    <h3 class="text-lg md:text-xl font-semibold">Declaraciones mensuales</h3>
                     <p class="text-sm text-gray-500">Correspondientes
                         a {{ currentMonthStatements.date | date:'MMMM y' }}</p>
                 </div>
@@ -111,7 +111,7 @@
             } @else {
                 <div class="space-y-2">
                     <div>
-                        <p-skeleton width="15rem" borderRadius="16px"/>
+                        <p-skeleton width="100%" styleClass="max-w-60" borderRadius="16px"/>
                     </div>
                     <div>
                         <p-skeleton width="8rem" borderRadius="16px"/>
@@ -120,7 +120,7 @@
                 </div>
 
                 <div class="mx-auto block">
-                    <p-skeleton shape="circle" size="18rem"/>
+                    <p-skeleton shape="circle" size="12rem" styleClass="md:!w-72 md:!h-72"/>
                 </div>
             }
 
@@ -128,10 +128,10 @@
         </div>
 
 
-        <div class="flex flex-col space-y-10 p-5 bg-white border border-gray-200 shadow-2xs rounded-xl">
+        <div class="flex flex-col space-y-6 md:space-y-10 p-4 md:p-5 bg-white border border-gray-200 shadow-sm rounded-xl">
             @if (acceptedStatements) {
                 <div>
-                    <h3 class="text-xl font-semibold ">Declaraciones acceptadas</h3>
+                    <h3 class="text-lg md:text-xl font-semibold">Declaraciones acceptadas</h3>
                     <p class="text-sm text-gray-500">Correspondientes
                         a {{ acceptedStatements.date | date:'MMMM y' }}</p>
                 </div>
@@ -141,7 +141,7 @@
             } @else {
                 <div class="space-y-2">
                     <div>
-                        <p-skeleton width="15rem" borderRadius="16px"/>
+                        <p-skeleton width="100%" styleClass="max-w-60" borderRadius="16px"/>
                     </div>
                     <div>
                         <p-skeleton width="8rem" borderRadius="16px"/>
@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="mx-auto block">
-                    <p-skeleton shape="circle" size="18rem"/>
+                    <p-skeleton shape="circle" size="12rem" styleClass="md:!w-72 md:!h-72"/>
                 </div>
             }
 
@@ -158,11 +158,11 @@
         </div>
 
 
-        <div class="col-span-2 space-y-6">
+        <div class="md:col-span-2 space-y-4 md:space-y-6">
             @if (summary) {
                 <app-statements-summary-cards [summaryData]="summary"></app-statements-summary-cards>
             } @else {
-                <div class="grid grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                     <p-skeleton width="100%" height="92px" />
                     <p-skeleton width="100%" height="92px" />
                     <p-skeleton width="100%" height="92px" />
