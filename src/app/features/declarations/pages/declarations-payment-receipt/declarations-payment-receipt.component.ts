@@ -10,7 +10,7 @@ import {AlertsService} from '../../../../core/services/alerts.service';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Router} from '@angular/router';
 import {DeclarationsService} from '../../services/declarations.service';
-import {APP_BASE_HREF, CurrencyPipe} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 import {DeclarationsStatus} from '../../constants/declarations-status';
 import {ConfirmationService} from 'primeng/api';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -52,7 +52,6 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
-    private baseHref = inject(APP_BASE_HREF);
 
     public declarations: any;
     public declarationsStatus = DeclarationsStatus;
@@ -170,9 +169,7 @@ export class DeclarationsPaymentReceiptComponent implements OnInit {
     public viewDeclarationDetails(declaration: any) {
         console.log(declaration);
         localStorage.setItem(this.declarationsService.declarationToken, btoa(encodeURIComponent(JSON.stringify(declaration))));
-        const url = this.router.serializeUrl(this.router.createUrlTree(['/declaraciones/detalle']));
-        const baseHref = this.baseHref.endsWith('/') ? this.baseHref.slice(0, -1) : this.baseHref;
-        window.open(`${window.location.origin}${baseHref}${url}`, '_blank');
+        this.router.navigate(['/declaraciones/detalle']);
     }
 
     public applyFilter(event: Event) {

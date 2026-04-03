@@ -3,7 +3,7 @@ import {Button, ButtonModule} from 'primeng/button';
 import {IconField, IconFieldModule} from 'primeng/iconfield';
 import {InputIcon, InputIconModule} from 'primeng/inputicon';
 import {InputText, InputTextModule} from 'primeng/inputtext';
-import {APP_BASE_HREF, CurrencyPipe} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 import {Popover, PopoverModule} from 'primeng/popover';
 import {ConfirmationService, PrimeTemplate} from 'primeng/api';
 import {TableModule} from 'primeng/table';
@@ -39,7 +39,6 @@ export class DeclarationsRejectedComponent implements OnInit {
     private dialogService = inject(DialogService);
     private dialogRef: DynamicDialogRef | undefined;
     private router = inject(Router);
-    private baseHref = inject(APP_BASE_HREF);
 
     public declarations: any;
     public declarationsStatus = DeclarationsStatus;
@@ -66,8 +65,7 @@ export class DeclarationsRejectedComponent implements OnInit {
 
     public viewDeclarationDetails(declaration: any) {
         localStorage.setItem(this.declarationsService.declarationToken, btoa(encodeURIComponent(JSON.stringify(declaration))));
-        const url = this.router.serializeUrl(this.router.createUrlTree(['/declaraciones/detalle']));
-        window.open(`${window.location.origin}${this.baseHref}${url}`, '_blank');
+        this.router.navigate(['/declaraciones/detalle']);
     }
 
     applyFilter(event: Event) {
