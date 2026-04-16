@@ -127,18 +127,31 @@ export class CompaniesFilesComponent implements OnInit {
     }
 
     viewDocument(document: CompanyDocument) {
+
+        console.log(document);
         if (!document.file) {
             this.alertsService.errorAlert(['No hay archivo disponible para visualizar']);
             return;
         }
 
-        // Normalizar el nombre del tipo de documento para la URL
-        const documentType = document.type_document_name
+        const documentTypeMap: Record<string, string> = {
+            'acta constitutiva': 'actas',
+            'poder notarial': 'notariales',
+            'constancia de situación fiscal': 'constancias',
+            'licencia de funcionamiento': 'licencias_funcionamiento',
+        };
+
+        const normalizedName = document.type_document_name
             .toLowerCase()
             .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '') // Eliminar acentos
-            .replace(/\s+/g, '-') // Reemplazar espacios con guiones
-            .replace(/[()]/g, ''); // Eliminar paréntesis
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[()]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+        const documentType = Object.entries(documentTypeMap).find(([key]) =>
+            normalizedName.includes(key.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
+        )?.[1] ?? (normalizedName.includes('identificac') ? 'identificaciones' : normalizedName);
 
         this.spinner.show();
 
@@ -254,6 +267,12 @@ export class CompaniesFilesComponent implements OnInit {
     goBack() {
         localStorage.removeItem(this.companiesService.companyToken);
         this.location.back();
+    }
+
+    isReviewed(document: CompanyDocument): boolean {
+        if (!document.status) return false;
+        const status = document.status.toLowerCase();
+        return status === 'aprobado' || status === 'approved' || status === 'rechazado' || status === 'rejected';
     }
 
 }

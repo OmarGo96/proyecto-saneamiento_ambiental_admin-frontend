@@ -99,8 +99,8 @@
                                     />
                                 </div>
 
-                                <div class="flex gap-2">
-                                    @if (document.status !== 'aprobado' && document.status !== 'approved') {
+                                @if (!isReviewed(document)) {
+                                    <div class="flex gap-2">
                                         <div class="p-w-full-button flex-1">
                                             <p-button
                                                 label="Aprobar"
@@ -109,9 +109,7 @@
                                                 (click)="approveDocument(document)"
                                             />
                                         </div>
-                                    }
 
-                                    @if (document.status !== 'rechazado' && document.status !== 'rejected') {
                                         <div class="p-w-full-button flex-1">
                                             <p-button
                                                 label="Rechazar"
@@ -120,8 +118,8 @@
                                                 (click)="rejectDocument(document)"
                                             />
                                         </div>
-                                    }
-                                </div>
+                                    </div>
+                                }
                             </div>
                         } @else {
                             <!-- Sin documento -->
