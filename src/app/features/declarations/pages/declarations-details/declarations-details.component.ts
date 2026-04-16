@@ -7,7 +7,7 @@ import {ToggleSwitchModule} from 'primeng/toggleswitch';
 import {InputTextModule} from 'primeng/inputtext';
 import {SelectModule} from 'primeng/select';
 import {AlertsService} from '../../../../core/services/alerts.service';
-import {CurrencyPipe, Location, PercentPipe} from '@angular/common';
+import {CurrencyPipe, Location} from '@angular/common';
 import {ConfirmationService} from 'primeng/api';
 import {MessageModule} from 'primeng/message';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -26,7 +26,8 @@ import {DomSanitizer} from '@angular/platform-browser';
     ],
     providers: [AlertsService, ConfirmationService],
     templateUrl: './declarations-details.component.html',
-    styleUrl: './declarations-details.component.scss'
+    styleUrl: './declarations-details.component.scss',
+    standalone: true
 })
 export class DeclarationsDetailsComponent implements OnInit {
 
@@ -47,6 +48,7 @@ export class DeclarationsDetailsComponent implements OnInit {
     ngOnInit() {
         const declarationToken: any = localStorage.getItem(this.declarationsService.declarationToken);
         this.declaration = JSON.parse(decodeURIComponent(atob(declarationToken)));
+        console.log(this.declaration);
 
     }
 

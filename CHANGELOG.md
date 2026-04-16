@@ -2,6 +2,63 @@
 
 Todos los cambios notables del proyecto estaran documentados en este archivo.
 
+## [Feature/Refactor] - 2026-04-03
+
+### ✨ Nuevas características
+
+#### Vista de detalles de declaración mejorada
+- **declarations-details.component.html**: Rediseño completo de la vista de detalles
+  - Organizada información en **6 secciones** con iconos descriptivos:
+    - 📋 Información del Establecimiento (nombre, licencia, periodo, tipo, habitaciones, fechas)
+    - 📊 Ocupación (total, real, porcentaje y desglose por número de huéspedes)
+    - 💰 Cálculo de Importes (importes por huéspedes, descuentos, actualizaciones y recargos)
+    - 💳 Información de Pago (banco, serie, fechas, montos, línea de captura)
+    - 📄 Formatos (botones de acción organizados)
+  - **Desglose por número de huéspedes**: Muestra siempre las 4 opciones (1, 2, 3, 4 huéspedes)
+    - Ocupación con tarjetas azules mostrando cantidad de habitaciones ocupadas
+    - Importes con tarjetas verdes mostrando el monto por número de huéspedes
+  - Campos adicionales mostrados:
+    - `ocupacion_real`, `ocupacion1`, `ocupacion2`, `ocupacion3`, `ocupacion4`
+    - `importe_derecho1`, `importe_derecho2`, `importe_derecho3`, `importe_derecho4`
+    - `inicio_declaracion`, `fin_declaracion`, `created_at`
+    - `linea_captura`, `fecha_vencimiento_pase`, `observacion`
+  - Colores diferenciados para mejor UX:
+    - Verde para descuentos (`text-green-600`)
+    - Azul para actualización (`text-blue-600`)
+    - Naranja para recargos (`text-orange-600`)
+  - Total a pagar destacado con fondo azul
+  - Vista más amplia (lg:w-11/12 xl:w-10/12 2xl:w-9/12)
+  - Sección "Formatos" con título e icono
+  - Botón "Volver" posicionado a la derecha
+
+### 🔧 Refactorización
+
+#### Navegación de declaraciones
+- **Múltiples componentes**: Migración de navegación con `window.open(_blank)` a navegación nativa de Angular
+  - **declarations-draft.component.ts**: Cambiado a `router.navigate(['/declaraciones/detalle'])`
+  - **declarations-accepted.component.ts**: Cambiado a `router.navigate(['/declaraciones/detalle'])`
+  - **declarations-rejected.component.ts**: Cambiado a `router.navigate(['/declaraciones/detalle'])`
+  - **declarations-payment-receipt.component.ts**: Cambiado a `router.navigate(['/declaraciones/detalle'])`
+  - **declarations-details.component.ts**: 
+    - Eliminado `Router` y agregado `Location`
+    - Simplificado `goBack()` usando `location.back()`
+    - Eliminado workaround con localStorage para rutas de retorno
+  - Eliminadas todas las referencias a `APP_BASE_HREF` (ya no necesarias)
+  - Código más limpio y simple
+  - Navegación compatible con historial del navegador
+
+### 🐛 Correcciones
+
+#### Vista de detalles de declaración
+- **declarations-details.component.html**: 
+  - Corregido campo de estatus: cambiado de `declaration.status` a `declaration.estatus`
+  - Movido "Línea de captura" de sección administrativa a "Información de Pago"
+  - Eliminada sección "Información Administrativa" (datos no relevantes para el usuario)
+  - Validación consistente: muestra 0 o $0.00 cuando los valores son nulos
+  - Mejorado manejo de valores nulos con operador `|| 'N/A'` o `|| 'Pendiente'`
+
+---
+
 ## [Feature/Fix] - 2026-01-12
 
 ### 🐛 Correcciones
