@@ -45,6 +45,7 @@ export class CompaniesFilesComponent implements OnInit {
 
     public documents: CompanyDocument[] = [];
     public currentYear: number;
+    public isDownloading: boolean = false;
 
     ngOnInit() {
         this.currentYear = new Date().getFullYear();
@@ -139,6 +140,7 @@ export class CompaniesFilesComponent implements OnInit {
             'poder notarial': 'notariales',
             'constancia de situación fiscal': 'constancias',
             'licencia de funcionamiento': 'licencias_funcionamiento',
+            'licencia estatal': 'licencias_estatales',
         };
 
         const normalizedName = document.type_document_name
@@ -273,6 +275,75 @@ export class CompaniesFilesComponent implements OnInit {
         if (!document.status) return false;
         const status = document.status.toLowerCase();
         return status === 'aprobado' || status === 'approved' || status === 'rechazado' || status === 'rejected';
+    }
+
+    /**
+     * Verifica si hay documentos disponibles para descargar (aprobados o pendientes)
+     */
+    hasDocumentsToDownload(): boolean {
+        return this.documents.some(doc => {
+            if (!doc.status || !doc.file) return false;
+            const status = doc.status.toLowerCase();
+            return (status === 'aprobado' || status === 'approved' || 
+                    status === 'pendiente' || status === 'pending');
+        });
+    }
+
+    /**
+     * Descargar todos los documentos de la empresa en formato ZIP
+     */
+    downloadAllDocuments(): void {
+        if (!this.companyUuid) {
+            this.alertsService.errorAlert(['No se ha seleccionado ninguna empresa']);
+            return;
+        }
+
+        if (!this.hasDocumentsToDownload()) {
+            this.alertsService.errorAlert(['No hay documentos disponibles para descargar']);
+            return;
+        }
+
+        this.isDownloading = true;
+        this.spinner.show();
+
+        this.companiesService.downloadAllDocuments(this.companyUuid).subscribe({
+            next: (blob: Blob) => {
+                // Crear URL temporal del blob
+                const url = window.URL.createObjectURL(blob);
+                
+                // Crear elemento <a> temporal
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `documentos-empresa-${this.currentYear}.zip`;
+                
+                // Simular click para descargar
+                document.body.appendChild(a);
+                a.click();
+                
+                // Limpiar
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                this.isDownloading = false;
+                this.spinner.hide();
+                
+                this.alertsService.successAlert('Documentos descargados correctamente');
+            },
+            error: (err) => {
+                this.isDownloading = false;
+                this.spinner.hide();
+                
+                let errorMessage = 'Error al descargar los documentos';
+                
+                if (err.status === 404) {
+                    errorMessage = 'Empresa no encontrada';
+                } else if (err.status === 400) {
+                    errorMessage = 'No hay documentos disponibles para descargar';
+                }
+                
+                this.alertsService.errorAlert([err?.error?.message || errorMessage]);
+            }
+        });
     }
 
 }

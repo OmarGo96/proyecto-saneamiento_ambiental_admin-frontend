@@ -58,4 +58,18 @@ export class CompaniesService {
         return this.httpClient.put(`${this.url}/limitations/update/${companyId}`, data);
     }
 
+    /**
+     * Descargar todos los documentos de una empresa en formato ZIP
+     * @param companyUuid UUID de la empresa
+     * @returns Observable<Blob>
+     */
+    downloadAllDocuments(companyUuid: string): Observable<Blob> {
+        return this.httpClient.get(
+            `${this.url}/company-documents/${companyUuid}/download`,
+            {
+                responseType: 'blob'
+            }
+        );
+    }
+
 }

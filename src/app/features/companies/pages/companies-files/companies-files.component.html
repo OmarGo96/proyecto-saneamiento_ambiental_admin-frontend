@@ -13,6 +13,18 @@
             </div>
             <div class="flex items-center gap-2">
                 <span class="text-sm text-gray-600">Año: <strong>{{ currentYear }}</strong></span>
+
+                @if (documents && documents.length > 0 && hasDocumentsToDownload()) {
+                    <p-button
+                        label="Descargar ZIP"
+                        icon="pi pi-download"
+                        severity="primary"
+                        [outlined]="true"
+                        [loading]="isDownloading"
+                        (click)="downloadAllDocuments()"
+                        [disabled]="isDownloading"
+                    />
+                }
             </div>
         </div>
     </div>
