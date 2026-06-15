@@ -30,9 +30,11 @@ export class RejectRequestsDialogComponent implements OnInit {
 
     public request: any;
     public isRejecting: boolean = false;
+    private useUserRequest: boolean = false;
 
     ngOnInit() {
         this.request = this.dialogConfig.data.request;
+        this.useUserRequest = this.dialogConfig.data.useUserRequest ?? false;
         this.initRejectDeclarationForm()
     }
 
@@ -47,7 +49,10 @@ export class RejectRequestsDialogComponent implements OnInit {
     public rejectRequest(){
         this.isRejecting = true;
         const data = this.rejectForm.value;
-        this.requestsService.processRequest(data).subscribe({
+        const request$ = this.useUserRequest
+            ? this.requestsService.processUserRequest(data)
+            : this.requestsService.processRequest(data);
+        request$.subscribe({
             next: res => {
                 this.isRejecting = false;
                 this.alertsService.successAlert(res.message).then(res => {

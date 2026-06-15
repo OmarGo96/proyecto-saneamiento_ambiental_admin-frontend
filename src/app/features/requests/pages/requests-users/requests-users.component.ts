@@ -143,7 +143,8 @@ export class RequestsUsersComponent implements OnInit {
                 '640px': '90vw'
             },
             data: {
-                request
+                request,
+                useUserRequest: true
             },
         });
 
